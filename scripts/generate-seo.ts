@@ -47,9 +47,11 @@ async function generateSeo() {
     const desc = escapeHtml(item.description || "Zero-paywall developer tool curated on DevShelf.");
     const category = escapeHtml(item.category || "Developer Tools");
     const lang = escapeHtml(item.language || "");
-    const license = escapeHtml(item.license || "Free / FOSS");
+    const license = escapeHtml(item.license || "");
     const auth = escapeHtml(item.auth || "");
-    const freeTier = escapeHtml(item.freeTier || "");
+    const pricing =
+      item.freeTier || item.rateLimit || "See the official site for free access and limits.";
+    const freeTier = escapeHtml(pricing);
 
     const alternativeTo = escapeHtml(item.alternativeTo || "");
     const dockerCompose = item.dockerCompose || "";
@@ -68,8 +70,8 @@ async function generateSeo() {
 
     const faqs = [
       {
-        question: `Is ${name} really free to use?`,
-        answer: `Yes. ${name} is verified on DevShelf under the ${license || "open-source"} license. Pricing: ${freeTier || "100% Free / FOSS"} with no upfront credit card requirement.`,
+        question: `What free access does ${item.name} offer?`,
+        answer: `${pricing}${item.license ? ` License: ${item.license}.` : ""}`,
       },
       ...(alternativeTo
         ? [
@@ -80,10 +82,10 @@ async function generateSeo() {
           ]
         : []),
       {
-        question: `What are the authentication and access requirements for ${name}?`,
-        answer: auth
-          ? `Authentication requirement: ${auth}.`
-          : "No mandatory credit card or paywalled account needed to get started.",
+        question: `What are the authentication and access requirements for ${item.name}?`,
+        answer: item.auth
+          ? `Authentication requirement: ${item.auth}.`
+          : "See the official site for authentication and access requirements.",
       },
     ];
 
@@ -104,7 +106,7 @@ async function generateSeo() {
             price: "0",
             priceCurrency: "USD",
             availability: "https://schema.org/InStock",
-            description: item.freeTier || "Verified permanent free or open-source tier",
+            description: pricing,
           },
           ...(item.license ? { license: item.license } : {}),
           ...(item.language ? { programmingLanguage: item.language } : {}),
@@ -319,7 +321,7 @@ async function generateSeo() {
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 p-5 rounded-xl bg-slate-950/80 border border-slate-800 text-xs font-mono">
         <div>
           <span class="text-slate-500 block mb-1">Pricing Model</span>
-          <span class="text-emerald-400 font-semibold">100% Free / FOSS</span>
+          <span class="text-emerald-400 font-semibold">Free access; limits may apply</span>
         </div>
         ${lang ? `<div><span class="text-slate-500 block mb-1">Language</span><span class="text-cyan-300 font-semibold">${lang}</span></div>` : ""}
         ${license ? `<div><span class="text-slate-500 block mb-1">License</span><span class="text-purple-300 font-semibold">${license}</span></div>` : ""}
@@ -483,7 +485,7 @@ async function generateSeo() {
           </div>
           <p class="text-sm text-slate-300 leading-relaxed mb-4">${escapeHtml(tool.description)}</p>
           <div class="flex flex-wrap gap-2 text-xs font-mono">
-            <span class="px-2.5 py-1 rounded-lg bg-emerald-950/80 text-emerald-300 border border-emerald-500/30">💎 Free: ${escapeHtml(tool.freeTier || "100% Free / FOSS")}</span>
+            <span class="px-2.5 py-1 rounded-lg bg-emerald-950/80 text-emerald-300 border border-emerald-500/30">💎 Free: ${escapeHtml(tool.freeTier || tool.rateLimit || "See official site for free access and limits")}</span>
             ${tool.language ? `<span class="px-2.5 py-1 rounded-lg bg-cyan-950/80 text-cyan-300 border border-cyan-500/30">${escapeHtml(tool.language)}</span>` : ""}
             ${tool.license ? `<span class="px-2.5 py-1 rounded-lg bg-slate-800 text-slate-300 border border-slate-700">${escapeHtml(tool.license)}</span>` : ""}
           </div>
@@ -512,7 +514,7 @@ async function generateSeo() {
                   <a href="../tools/${slugify(t.name)}.html" class="hover:text-purple-300 transition">${escapeHtml(t.name)}</a>
                 </td>
                 <td class="p-3.5 text-slate-400">${escapeHtml(t.category || "Tool")}</td>
-                <td class="p-3.5 text-emerald-400">${escapeHtml(t.freeTier || "100% Free")}</td>
+                <td class="p-3.5 text-emerald-400">${escapeHtml(t.freeTier || t.rateLimit || "See official site for free access and limits")}</td>
                 <td class="p-3.5 text-cyan-300">${escapeHtml(t.language || "Multi-platform")}</td>
                 <td class="p-3.5 text-right font-sans">
                   <a href="../tools/${slugify(t.name)}.html" class="text-purple-400 hover:text-purple-300 font-bold">Specs →</a>
@@ -798,7 +800,7 @@ async function generateSeo() {
           </div>
           <p class="text-sm text-slate-300 leading-relaxed mb-4">${escapeHtml(tool.description)}</p>
           <div class="flex flex-wrap gap-2 text-xs font-mono">
-            <span class="px-2.5 py-1 rounded-lg bg-emerald-950/80 text-emerald-300 border border-emerald-500/30">💎 Free: ${escapeHtml(tool.freeTier || "100% Free / FOSS")}</span>
+            <span class="px-2.5 py-1 rounded-lg bg-emerald-950/80 text-emerald-300 border border-emerald-500/30">💎 Free: ${escapeHtml(tool.freeTier || tool.rateLimit || "See official site for free access and limits")}</span>
             ${tool.auth ? `<span class="px-2.5 py-1 rounded-lg bg-amber-950/80 text-amber-300 border border-amber-500/30">🔑 ${escapeHtml(tool.auth)}</span>` : ""}
             ${tool.language ? `<span class="px-2.5 py-1 rounded-lg bg-cyan-950/80 text-cyan-300 border border-cyan-500/30">${escapeHtml(tool.language)}</span>` : ""}
           </div>
@@ -967,7 +969,7 @@ async function generateSeo() {
                 <p class="text-xs text-slate-400 line-clamp-2 mb-3 leading-relaxed">${escapeHtml(item.description || "")}</p>
               </div>
               <div class="pt-2 border-t border-slate-800/60 flex items-center justify-between text-[11px] font-mono">
-                <span class="text-emerald-400 truncate max-w-[150px]">💎 ${escapeHtml(item.freeTier || "100% Free")}</span>
+                <span class="text-emerald-400 truncate max-w-[150px]">💎 ${escapeHtml(item.freeTier || item.rateLimit || "See official site for free access and limits")}</span>
                 <a href="tools/${slugify(item.name)}.html" class="text-purple-400 hover:text-purple-300 font-bold">Details →</a>
               </div>
             </div>`,
@@ -1164,7 +1166,9 @@ ${topAltsMarkdown}
   for (const item of resources) {
     llmsFullLines.push(`### ${item.name}`);
     llmsFullLines.push(`- **Category**: ${item.category || item.section || "Tool"}`);
-    llmsFullLines.push(`- **Pricing Model**: ${item.freeTier || "100% Free / FOSS"}`);
+    llmsFullLines.push(
+      `- **Pricing Model**: ${item.freeTier || item.rateLimit || "See official site for free access and limits"}`,
+    );
     if (item.alternativeTo) llmsFullLines.push(`- **Alternative To**: ${item.alternativeTo}`);
     if (item.license) llmsFullLines.push(`- **License**: ${item.license}`);
     if (item.language) llmsFullLines.push(`- **Language**: ${item.language}`);
