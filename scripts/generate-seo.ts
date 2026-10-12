@@ -31,8 +31,9 @@ async function generateSeo() {
   const resources: any[] = data.resources || [];
 
   const domain = "https://devshelf.ritualdev.in";
+  const today = new Date().toISOString().split("T")[0];
   const sitemapUrls: string[] = [
-    `  <url>\n    <loc>${domain}/</loc>\n    <changefreq>daily</changefreq>\n    <priority>1.0</priority>\n  </url>`,
+    `  <url>\n    <loc>${domain}/</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>daily</changefreq>\n    <priority>1.0</priority>\n  </url>`,
   ];
 
   console.log(
@@ -65,7 +66,7 @@ async function generateSeo() {
       : `${name}, free developer tool, ${category}, open source tools`;
 
     sitemapUrls.push(
-      `  <url>\n    <loc>${pageUrl}</loc>\n    <changefreq>weekly</changefreq>\n    <priority>0.8</priority>\n  </url>`,
+      `  <url>\n    <loc>${pageUrl}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.8</priority>\n  </url>`,
     );
 
     const faqs = [
@@ -399,7 +400,7 @@ async function generateSeo() {
     const desc = `Explore ${altTools.length} verified free and open-source alternatives to ${escapeHtml(targetName)}. Zero paywalls, honest pricing, and active community maintenance.`;
 
     sitemapUrls.push(
-      `  <url>\n    <loc>${pageUrl}</loc>\n    <changefreq>weekly</changefreq>\n    <priority>0.9</priority>\n  </url>`,
+      `  <url>\n    <loc>${pageUrl}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.9</priority>\n  </url>`,
     );
 
     const altFaqs = [
@@ -748,7 +749,7 @@ async function generateSeo() {
     const pageUrl = `${domain}/collections/${col.slug}.html`;
 
     sitemapUrls.push(
-      `  <url>\n    <loc>${pageUrl}</loc>\n    <changefreq>weekly</changefreq>\n    <priority>0.9</priority>\n  </url>`,
+      `  <url>\n    <loc>${pageUrl}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>weekly</changefreq>\n    <priority>0.9</priority>\n  </url>`,
     );
 
     const jsonLd = {
@@ -926,7 +927,7 @@ async function generateSeo() {
   // =========================================================================
   const directoryUrl = `${domain}/directory.html`;
   sitemapUrls.push(
-    `  <url>\n    <loc>${directoryUrl}</loc>\n    <changefreq>daily</changefreq>\n    <priority>0.95</priority>\n  </url>`,
+    `  <url>\n    <loc>${directoryUrl}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>daily</changefreq>\n    <priority>0.95</priority>\n  </url>`,
   );
 
   const categoriesMap = new Map<string, any[]>();
