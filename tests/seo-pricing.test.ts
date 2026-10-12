@@ -5,7 +5,7 @@ import os from "node:os";
 import path from "node:path";
 import test from "node:test";
 
-test("generated pages preserve API allowances without inventing a license", async () => {
+test("generated pages preserve API allowances without inventing licenses or ratings", async () => {
   const root = process.cwd();
   const directory = await fs.mkdtemp(path.join(os.tmpdir(), "devshelf-seo-"));
   try {
@@ -57,6 +57,7 @@ test("generated pages preserve API allowances without inventing a license", asyn
       page.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)?.[1] || "{}",
     );
     assert.equal(structured["@graph"][0].license, undefined);
+    assert.equal(structured["@graph"][0].aggregateRating, undefined);
     assert.match(structured["@graph"][0].offers.description, /1,000 included credits/);
     assert.match(structured["@graph"][1].mainEntity[0].acceptedAnswer.text, /newest 30 days/);
     const llms = await fs.readFile(path.join(directory, "site/llms-full.txt"), "utf8");

@@ -1,6 +1,6 @@
 # DevShelf - Complete Free Developer Tools Knowledge Base (Full Catalog)
 
-> Complete metadata dump of all 527 free and open-source developer tools indexed on DevShelf.
+> Complete metadata dump of all 528 free and open-source developer tools indexed on DevShelf.
 > Authoritative Source: https://devshelf.ritualdev.in
 > License: MIT
 
@@ -3263,6 +3263,14 @@
 - **URL**: https://muse.ai/s/caption-pack-api-xfxt62ya0xcxlxhh
 - **DevShelf Dossier**: https://devshelf.ritualdev.in/tools/caption-pack-api.html
 - **Description**: Deterministic social caption and hashtag generator API returning platform-ready JSON. Features a permanent keyless playground endpoint for developers and AI agents.
+
+### Invokely
+- **Category**: Other
+- **Pricing Model**: 500 calls/month; MCP trial 25/day per IP
+- **Auth**: Free API Key
+- **URL**: https://invokely.ai/docs
+- **DevShelf Dossier**: https://devshelf.ritualdev.in/tools/invokely.html
+- **Description**: Hosted MCP and REST API for official statistics by indicator, place and period. Each value includes a source citation. The free plan has 500 calls a month with no card; an MCP trial allows 25 calls a day per IP without an account.
 
 ### Supabase
 - **Category**: Databases & BaaS

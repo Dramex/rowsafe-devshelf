@@ -1085,5 +1085,15 @@
     "rateLimit": "5 req/hour (Playground)",
     "https": true,
     "statusTags": ["No Card Required", "Rate-Limited"]
+  },
+  {
+    "name": "Invokely",
+    "url": "https://invokely.ai/docs",
+    "category": "Other",
+    "description": "Hosted MCP and REST API for official statistics by indicator, place and period. Each value includes a source citation. The free plan has 500 calls a month with no card; an MCP trial allows 25 calls a day per IP without an account.",
+    "auth": "Free API Key",
+    "cors": "Yes",
+    "rateLimit": "500 calls/month; MCP trial 25/day per IP",
+    "https": true
   }
 ]

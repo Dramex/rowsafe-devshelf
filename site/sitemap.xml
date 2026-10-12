@@ -1826,6 +1826,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://devshelf.ritualdev.in/tools/invokely.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://devshelf.ritualdev.in/tools/supabase.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>

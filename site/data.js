@@ -1,6 +1,6 @@
 window.DEVSHELF_DATA = {
-  "updatedAt": "2026-10-11T03:53:52.584Z",
-  "totalCount": 527,
+  "updatedAt": "2026-10-12T08:59:10.401Z",
+  "totalCount": 528,
   "reposCount": 327,
   "facets": {
     "repos": 327
@@ -9,7 +9,7 @@ window.DEVSHELF_DATA = {
     "aiTools": 89,
     "cliTools": 114,
     "testingQa": 62,
-    "apis": 99,
+    "apis": 100,
     "freeCloud": 71,
     "contributors": 21,
     "perks": 30,
@@ -5634,6 +5634,18 @@ window.DEVSHELF_DATA = {
         "No Card Required",
         "Rate-Limited"
       ],
+      "type": "api",
+      "section": "Free & Public APIs"
+    },
+    {
+      "name": "Invokely",
+      "url": "https://invokely.ai/docs",
+      "category": "Other",
+      "description": "Hosted MCP and REST API for official statistics by indicator, place and period. Each value includes a source citation. The free plan has 500 calls a month with no card; an MCP trial allows 25 calls a day per IP without an account.",
+      "auth": "Free API Key",
+      "cors": "Yes",
+      "rateLimit": "500 calls/month; MCP trial 25/day per IP",
+      "https": true,
       "type": "api",
       "section": "Free & Public APIs"
     },

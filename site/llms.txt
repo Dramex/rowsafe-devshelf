@@ -1,6 +1,6 @@
 # DevShelf: Free Developer Tools & Public APIs Directory
 
-> Curated catalog of 527 verified free developer tools, public APIs, AI coding agents, and open-source alternatives with zero paywalls.
+> Curated catalog of 528 verified free developer tools, public APIs, AI coding agents, and open-source alternatives with zero paywalls.
 
 DevShelf is an open-source, community-driven developer resource ecosystem curated by RitualDev-Lab and developers worldwide. Every resource is manually verified to ensure a permanent free tier, open-source license, or generous allowance with no mandatory credit card or 14-day trial traps.
 

@@ -110,13 +110,6 @@ async function generateSeo() {
           },
           ...(item.license ? { license: item.license } : {}),
           ...(item.language ? { programmingLanguage: item.language } : {}),
-          aggregateRating: {
-            "@type": "AggregateRating",
-            ratingValue: "4.9",
-            reviewCount: "128",
-            bestRating: "5",
-            worstRating: "1",
-          },
           publisher: {
             "@type": "Organization",
             name: "DevShelf by RitualDev Lab",
