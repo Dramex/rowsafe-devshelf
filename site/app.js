@@ -18,10 +18,9 @@ const wizardState = {
   step: 1,
 };
 let currentFilteredList = [];
-let renderedCardCount = 0;
-const INITIAL_CARD_LIMIT = 36;
-const CHUNK_SIZE = 36;
-let loadMoreObserver = null;
+let currentPage = 1;
+let pageSize = 24; // 24 tools per page by default (responsive across 1, 2, and 3 columns)
+let totalPages = 1;
 
 const BADGE_MARKDOWNS = {
   "verified-free":
@@ -348,7 +347,6 @@ function setupListeners() {
   closeWizardModal();
   closeSnippetDrawer();
   closeStackModal();
-  setupScrollObserver();
 
   // Mobile Navigation Drawer Toggle
   const mobileToggleBtn = document.getElementById("mobile-menu-toggle-btn");
@@ -443,7 +441,7 @@ function setupListeners() {
     clearTimeout(searchDebounceTimer);
     searchDebounceTimer = setTimeout(() => {
       searchQuery = rawVal;
-      requestAnimationFrame(() => render());
+      requestAnimationFrame(() => render(true));
     }, 50);
   });
 
@@ -454,7 +452,7 @@ function setupListeners() {
     }
     searchQuery = "";
     clearBtn.classList.add("hidden");
-    render();
+    render(true);
   });
 
   const matchSearchInput = document.getElementById("matchmaker-search-input");
@@ -791,7 +789,7 @@ function setupListeners() {
         if (activeMatrixTags.size > 0) clearMatrixBtn.classList.remove("hidden");
         else clearMatrixBtn.classList.add("hidden");
       }
-      render();
+      render(true);
       return;
     }
 
@@ -803,7 +801,7 @@ function setupListeners() {
         b.classList.remove("active");
       }
       document.getElementById("clear-matrix-btn")?.classList.add("hidden");
-      render();
+      render(true);
       return;
     }
 
@@ -845,7 +843,7 @@ function setupListeners() {
       }
       searchQuery = "";
       clearBtn?.classList.add("hidden");
-      render();
+      render(true);
       return;
     }
 
@@ -872,7 +870,7 @@ function setupListeners() {
       for (const tb of document.querySelectorAll(".filter-tag")) {
         tb.classList.remove("active");
       }
-      render();
+      render(true);
       return;
     }
 
@@ -885,7 +883,7 @@ function setupListeners() {
       }
       pill.classList.add("active");
       activeCategory = pill.dataset.category || "all";
-      render();
+      render(true);
       return;
     }
 
@@ -904,7 +902,7 @@ function setupListeners() {
         activeTag = tag || "";
         tagBtn.classList.add("active");
       }
-      render();
+      render(true);
       return;
     }
 
@@ -959,7 +957,15 @@ function setupListeners() {
   const sortSelect = document.getElementById("sort-select");
   sortSelect?.addEventListener("change", (e) => {
     currentSort = e.target.value;
-    render();
+    render(true);
+  });
+
+  // Page Size dropdown (24, 30, 48, or all)
+  const pageSizeSelect = document.getElementById("page-size-select");
+  pageSizeSelect?.addEventListener("change", (e) => {
+    const val = e.target.value;
+    pageSize = val === "all" ? 999999 : parseInt(val, 10) || 24;
+    render(true);
   });
 
   // Keyboard Shortcuts ('/' to focus search, 'r' for random tool, 'Escape' to close modals / drawer / clear search)
@@ -1929,11 +1935,15 @@ curl -i -X ${method} "${targetUrl}" -H "Accept: application/json"`;
   }
 }
 
-function render() {
+function render(resetToFirstPage = false) {
   const grid = document.getElementById("cards-grid");
   const emptyState = document.getElementById("empty-state");
   const countLabel = document.getElementById("results-count");
   if (!grid || !emptyState || !countLabel) return;
+
+  if (resetToFirstPage) {
+    currentPage = 1;
+  }
 
   const filtered = allResources.filter((item) => {
     // Category check
@@ -2026,129 +2036,119 @@ function render() {
   countLabel.textContent = `Showing ${filtered.length} of ${allResources.length} curated resources`;
 
   currentFilteredList = filtered;
-  renderedCardCount = Math.min(INITIAL_CARD_LIMIT, filtered.length);
+  totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
+  if (currentPage > totalPages) {
+    currentPage = totalPages;
+  }
+
+  const startIdx = (currentPage - 1) * pageSize;
+  const endIdx = Math.min(startIdx + pageSize, filtered.length);
+
+  if (filtered.length > 0 && pageSize < 999999) {
+    countLabel.textContent = `Showing ${startIdx + 1}–${endIdx} of ${filtered.length} curated resources`;
+  } else {
+    countLabel.textContent = `Showing ${filtered.length} of ${allResources.length} curated resources`;
+  }
 
   if (filtered.length === 0) {
     grid.innerHTML = "";
     emptyState.classList.remove("hidden");
-    updateSentinelState();
+    renderPaginationControls();
     return;
   }
 
   emptyState.classList.add("hidden");
 
-  // Render initial chunk
-  const initialBatch = filtered.slice(0, renderedCardCount);
-  grid.innerHTML = initialBatch.map((item) => createCardHtml(item)).join("");
+  // Render current page items
+  const pageBatch = filtered.slice(startIdx, endIdx);
+  grid.innerHTML = pageBatch.map((item) => createCardHtml(item)).join("");
 
-  // Stagger card entrance animations for initial batch
+  // Stagger card entrance animations for current page
   const cards = grid.children;
   for (let i = 0; i < cards.length; i++) {
     cards[i].style.setProperty("--delay", `${Math.min(i * 0.02, 0.3)}s`);
   }
 
-  updateSentinelState();
+  renderPaginationControls();
 }
 
-function appendNextCardChunk() {
-  if (renderedCardCount >= currentFilteredList.length) {
-    updateSentinelState();
-    return;
+function goToPage(page) {
+  if (page < 1 || page > totalPages || page === currentPage) return;
+  currentPage = page;
+  render(false);
+  const directoryEl = document.getElementById("directory");
+  if (directoryEl) {
+    directoryEl.scrollIntoView({ behavior: "smooth", block: "start" });
+  } else {
+    window.scrollTo({ top: 400, behavior: "smooth" });
   }
-
-  const grid = document.getElementById("cards-grid");
-  if (!grid) return;
-
-  const nextBatch = currentFilteredList.slice(renderedCardCount, renderedCardCount + CHUNK_SIZE);
-  renderedCardCount += nextBatch.length;
-
-  const tempContainer = document.createElement("div");
-  tempContainer.innerHTML = nextBatch.map((item) => createCardHtml(item)).join("");
-
-  const newCards = Array.from(tempContainer.children);
-  for (let i = 0; i < newCards.length; i++) {
-    newCards[i].style.setProperty("--delay", `${Math.min(i * 0.02, 0.25)}s`);
-    grid.appendChild(newCards[i]);
-  }
-
-  updateSentinelState();
 }
 
-function updateSentinelState() {
-  const sentinel = document.getElementById("scroll-sentinel");
-  const spinner = document.getElementById("infinite-scroll-spinner");
-  const allLoadedInd = document.getElementById("all-loaded-indicator");
-
-  if (!sentinel) return;
+function renderPaginationControls() {
+  const container = document.getElementById("pagination-container");
+  const infoEl = document.getElementById("pagination-info");
+  const buttonsEl = document.getElementById("pagination-buttons");
+  if (!container || !infoEl || !buttonsEl) return;
 
   const total = currentFilteredList.length;
-  const remaining = total - renderedCardCount;
-
-  if (total === 0) {
-    sentinel.classList.add("hidden");
-    if (spinner) spinner.classList.add("hidden");
-    if (allLoadedInd) allLoadedInd.classList.add("hidden");
+  if (total === 0 || pageSize >= 999999 || totalPages <= 1) {
+    container.classList.add("hidden");
     return;
   }
 
-  sentinel.classList.remove("hidden");
+  container.classList.remove("hidden");
+  infoEl.textContent = `Page ${currentPage} of ${totalPages} (${total} total tools)`;
 
-  if (remaining > 0) {
-    if (spinner) spinner.classList.remove("hidden");
-    if (allLoadedInd) allLoadedInd.classList.add("hidden");
-  } else {
-    if (spinner) spinner.classList.add("hidden");
-    if (allLoadedInd) allLoadedInd.classList.remove("hidden");
+  let html = "";
+
+  // Previous button
+  const prevDisabled = currentPage === 1;
+  html += `<button onclick="goToPage(${currentPage - 1})" ${prevDisabled ? "disabled" : ""} class="px-3 py-1.5 rounded-lg border text-xs font-mono font-bold transition flex items-center space-x-1 ${
+    prevDisabled
+      ? "opacity-40 cursor-not-allowed border-slate-800 text-slate-500 bg-slate-900/50"
+      : "border-slate-700 bg-slate-900 text-slate-200 hover:border-purple-500 hover:text-white"
+  }"><span>←</span><span class="hidden sm:inline"> Prev</span></button>`;
+
+  // Sliding window pagination numbers
+  const maxButtons = 5;
+  let startPage = Math.max(1, currentPage - 2);
+  let endPage = Math.min(totalPages, startPage + maxButtons - 1);
+  if (endPage - startPage < maxButtons - 1) {
+    startPage = Math.max(1, endPage - maxButtons + 1);
   }
-}
 
-function setupScrollObserver() {
-  const sentinel = document.getElementById("scroll-sentinel");
-  if (!sentinel) return;
-
-  if ("IntersectionObserver" in window) {
-    if (loadMoreObserver) {
-      loadMoreObserver.disconnect();
+  if (startPage > 1) {
+    html += `<button onclick="goToPage(1)" class="w-8 h-8 rounded-lg border border-slate-800 bg-slate-900 text-slate-300 text-xs font-mono font-bold hover:border-purple-500 transition">1</button>`;
+    if (startPage > 2) {
+      html += `<span class="px-1 text-slate-500 text-xs font-mono">…</span>`;
     }
-
-    loadMoreObserver = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        if (entry?.isIntersecting) {
-          if (renderedCardCount < currentFilteredList.length) {
-            appendNextCardChunk();
-          }
-        }
-      },
-      { rootMargin: "800px 0px" },
-    );
-
-    loadMoreObserver.observe(sentinel);
   }
 
-  // Passive window scroll fallback for ultra-smooth fast scrolling
-  if (!window._devshelfScrollBound) {
-    window._devshelfScrollBound = true;
-    let ticking = false;
-    window.addEventListener(
-      "scroll",
-      () => {
-        if (!ticking) {
-          requestAnimationFrame(() => {
-            if (
-              renderedCardCount < currentFilteredList.length &&
-              window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 900
-            ) {
-              appendNextCardChunk();
-            }
-            ticking = false;
-          });
-          ticking = true;
-        }
-      },
-      { passive: true },
-    );
+  for (let p = startPage; p <= endPage; p++) {
+    const isCurrent = p === currentPage;
+    html += `<button onclick="goToPage(${p})" class="w-8 h-8 rounded-lg border text-xs font-mono font-bold transition ${
+      isCurrent
+        ? "bg-purple-600 border-purple-500 text-white shadow-md shadow-purple-500/20"
+        : "border-slate-800 bg-slate-900 text-slate-300 hover:border-purple-500 hover:text-white"
+    }">${p}</button>`;
   }
+
+  if (endPage < totalPages) {
+    if (endPage < totalPages - 1) {
+      html += `<span class="px-1 text-slate-500 text-xs font-mono">…</span>`;
+    }
+    html += `<button onclick="goToPage(${totalPages})" class="w-8 h-8 rounded-lg border border-slate-800 bg-slate-900 text-slate-300 text-xs font-mono font-bold hover:border-purple-500 transition">${totalPages}</button>`;
+  }
+
+  // Next button
+  const nextDisabled = currentPage === totalPages;
+  html += `<button onclick="goToPage(${currentPage + 1})" ${nextDisabled ? "disabled" : ""} class="px-3 py-1.5 rounded-lg border text-xs font-mono font-bold transition flex items-center space-x-1 ${
+    nextDisabled
+      ? "opacity-40 cursor-not-allowed border-slate-800 text-slate-500 bg-slate-900/50"
+      : "border-slate-700 bg-slate-900 text-slate-200 hover:border-purple-500 hover:text-white"
+  }"><span class="hidden sm:inline">Next </span><span>→</span></button>`;
+
+  buttonsEl.innerHTML = html;
 }
 
 function createCardHtml(item) {
