@@ -2087,6 +2087,7 @@ function goToPage(page) {
 function renderPaginationControls() {
   const container = document.getElementById("pagination-container");
   const infoEl = document.getElementById("pagination-info");
+  const rangeEl = document.getElementById("pagination-range-text");
   const buttonsEl = document.getElementById("pagination-buttons");
   if (!container || !infoEl || !buttonsEl) return;
 
@@ -2096,18 +2097,29 @@ function renderPaginationControls() {
     return;
   }
 
+  const startIdx = (currentPage - 1) * pageSize + 1;
+  const endIdx = Math.min(currentPage * pageSize, total);
+
   container.classList.remove("hidden");
-  infoEl.textContent = `Page ${currentPage} of ${totalPages} (${total} total tools)`;
+  infoEl.textContent = `Page ${currentPage} of ${totalPages}`;
+  if (rangeEl) {
+    rangeEl.textContent = `Showing ${startIdx}–${endIdx} of ${total} tools`;
+  }
 
   let html = "";
 
+  // First page button (if far from page 1)
+  if (currentPage > 3) {
+    html += `<button onclick="goToPage(1)" title="First Page" class="px-2.5 py-1.5 rounded-xl border border-slate-800 bg-slate-900/90 text-slate-400 hover:text-white hover:border-purple-500 text-xs font-mono font-bold transition shadow-sm">« 1</button>`;
+  }
+
   // Previous button
   const prevDisabled = currentPage === 1;
-  html += `<button onclick="goToPage(${currentPage - 1})" ${prevDisabled ? "disabled" : ""} class="px-3 py-1.5 rounded-lg border text-xs font-mono font-bold transition flex items-center space-x-1 ${
+  html += `<button onclick="goToPage(${currentPage - 1})" ${prevDisabled ? "disabled" : ""} class="px-3.5 py-1.5 rounded-xl border text-xs font-mono font-bold transition flex items-center space-x-1.5 shadow-sm ${
     prevDisabled
-      ? "opacity-40 cursor-not-allowed border-slate-800 text-slate-500 bg-slate-900/50"
-      : "border-slate-700 bg-slate-900 text-slate-200 hover:border-purple-500 hover:text-white"
-  }"><span>←</span><span class="hidden sm:inline"> Prev</span></button>`;
+      ? "opacity-30 cursor-not-allowed border-slate-800/80 text-slate-500 bg-slate-950/40"
+      : "border-slate-700/80 bg-slate-900 text-slate-200 hover:border-purple-500 hover:text-white hover:bg-slate-850"
+  }"><span>←</span><span>Prev</span></button>`;
 
   // Sliding window pagination numbers
   const maxButtons = 5;
@@ -2118,35 +2130,40 @@ function renderPaginationControls() {
   }
 
   if (startPage > 1) {
-    html += `<button onclick="goToPage(1)" class="w-8 h-8 rounded-lg border border-slate-800 bg-slate-900 text-slate-300 text-xs font-mono font-bold hover:border-purple-500 transition">1</button>`;
+    html += `<button onclick="goToPage(1)" class="w-9 h-8 rounded-xl border border-slate-800 bg-slate-900 text-slate-300 text-xs font-mono font-bold hover:border-purple-500 hover:text-white transition shadow-sm">1</button>`;
     if (startPage > 2) {
-      html += `<span class="px-1 text-slate-500 text-xs font-mono">…</span>`;
+      html += `<span class="px-1 text-slate-500 text-xs font-mono select-none">…</span>`;
     }
   }
 
   for (let p = startPage; p <= endPage; p++) {
     const isCurrent = p === currentPage;
-    html += `<button onclick="goToPage(${p})" class="w-8 h-8 rounded-lg border text-xs font-mono font-bold transition ${
+    html += `<button onclick="goToPage(${p})" class="w-9 h-8 rounded-xl border text-xs font-mono font-bold transition shadow-sm ${
       isCurrent
-        ? "bg-purple-600 border-purple-500 text-white shadow-md shadow-purple-500/20"
-        : "border-slate-800 bg-slate-900 text-slate-300 hover:border-purple-500 hover:text-white"
+        ? "bg-gradient-to-r from-purple-600 to-indigo-600 border-purple-400 text-white shadow-lg shadow-purple-500/30 scale-105 font-extrabold"
+        : "border-slate-800 bg-slate-900/90 text-slate-300 hover:border-purple-500 hover:text-white hover:bg-slate-800"
     }">${p}</button>`;
   }
 
   if (endPage < totalPages) {
     if (endPage < totalPages - 1) {
-      html += `<span class="px-1 text-slate-500 text-xs font-mono">…</span>`;
+      html += `<span class="px-1 text-slate-500 text-xs font-mono select-none">…</span>`;
     }
-    html += `<button onclick="goToPage(${totalPages})" class="w-8 h-8 rounded-lg border border-slate-800 bg-slate-900 text-slate-300 text-xs font-mono font-bold hover:border-purple-500 transition">${totalPages}</button>`;
+    html += `<button onclick="goToPage(${totalPages})" class="w-9 h-8 rounded-xl border border-slate-800 bg-slate-900 text-slate-300 text-xs font-mono font-bold hover:border-purple-500 hover:text-white transition shadow-sm">${totalPages}</button>`;
   }
 
   // Next button
   const nextDisabled = currentPage === totalPages;
-  html += `<button onclick="goToPage(${currentPage + 1})" ${nextDisabled ? "disabled" : ""} class="px-3 py-1.5 rounded-lg border text-xs font-mono font-bold transition flex items-center space-x-1 ${
+  html += `<button onclick="goToPage(${currentPage + 1})" ${nextDisabled ? "disabled" : ""} class="px-3.5 py-1.5 rounded-xl border text-xs font-mono font-bold transition flex items-center space-x-1.5 shadow-sm ${
     nextDisabled
-      ? "opacity-40 cursor-not-allowed border-slate-800 text-slate-500 bg-slate-900/50"
-      : "border-slate-700 bg-slate-900 text-slate-200 hover:border-purple-500 hover:text-white"
-  }"><span class="hidden sm:inline">Next </span><span>→</span></button>`;
+      ? "opacity-30 cursor-not-allowed border-slate-800/80 text-slate-500 bg-slate-950/40"
+      : "border-slate-700/80 bg-slate-900 text-slate-200 hover:border-purple-500 hover:text-white hover:bg-slate-850"
+  }"><span>Next</span><span>→</span></button>`;
+
+  // Last page button (if far from last page)
+  if (currentPage < totalPages - 2) {
+    html += `<button onclick="goToPage(${totalPages})" title="Last Page (${totalPages})" class="px-2.5 py-1.5 rounded-xl border border-slate-800 bg-slate-900/90 text-slate-400 hover:text-white hover:border-purple-500 text-xs font-mono font-bold transition shadow-sm">${totalPages} »</button>`;
+  }
 
   buttonsEl.innerHTML = html;
 }
