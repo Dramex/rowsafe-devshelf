@@ -58,10 +58,11 @@ jobs:
             pkg.publishConfig = { registry: "https://npm.pkg.github.com" };
             require("fs").writeFileSync("package.json", JSON.stringify(pkg, null, 2));
           '
-          pnpm publish --no-git-checks --access public
+          echo "@ritualdev-lab:registry=https://npm.pkg.github.com" > .npmrc
+          echo "//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}" >> .npmrc
+          npm publish
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Publish to npm Registry
         if: env.NPM_TOKEN != ''
