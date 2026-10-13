@@ -7,7 +7,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/RitualDev-Lab/DevShelf.git"
+    "url": "git+https://github.com/RitualDev-Lab/DevShelf.git"
   },
   "homepage": "https://devshelf.ritualdev.in",
   "keywords": [
@@ -24,10 +24,14 @@
   },
   "packageManager": "pnpm@9.15.4",
   "bin": {
-    "devshelf": "./bin/cli.js",
-    "devshelf-mcp": "./bin/mcp.js"
+    "devshelf": "bin/cli.js",
+    "devshelf-mcp": "bin/mcp.js"
   },
-  "files": ["bin", "shelf", "site/data.json"],
+  "files": [
+    "bin",
+    "shelf",
+    "site/data.json"
+  ],
   "scripts": {
     "devshelf": "node bin/cli.js",
     "mcp": "node bin/mcp.js",
