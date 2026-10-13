@@ -318,7 +318,7 @@ export function startMcpServer() {
             protocolVersion: "2024-11-05",
             serverInfo: {
               name: "devshelf-mcp",
-              version: "1.1.0",
+              version: JSON.parse(fs.readFileSync(path.join(__dirname, "..", "package.json"), "utf8")).version,
             },
             capabilities: {
               tools: {},

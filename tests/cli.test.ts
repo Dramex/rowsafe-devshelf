@@ -23,7 +23,7 @@ describe("DevShelf CLI & TUI Suite", () => {
   test("prints version with --version flag", () => {
     const res = runCli("--version");
     assert.equal(res.status, 0);
-    assert.match(res.stdout, /devshelf v1\.1\.0/);
+    assert.match(res.stdout, /devshelf v\d+\.\d+\.\d+/);
   });
 
   test("prints help message with --help flag", () => {

@@ -508,7 +508,8 @@ async function main() {
   }
 
   if (args.includes("-v") || args.includes("--version")) {
-    console.log("devshelf v1.1.0");
+    const pkg = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "package.json"), "utf8"));
+    console.log(`devshelf v${pkg.version}`);
     return;
   }
 
