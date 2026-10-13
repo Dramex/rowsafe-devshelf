@@ -35,6 +35,9 @@ jobs:
       - name: Check URL Sanitization & Duplicates
         run: pnpm run validate:links
 
+      - name: Run Test Suite
+        run: pnpm test
+
       - name: Test Build README
         run: pnpm run build
 

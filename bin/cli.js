@@ -18,6 +18,7 @@ import fs from "node:fs";
 import path from "node:path";
 import readline from "node:readline";
 import { fileURLToPath } from "node:url";
+import { getResourceUrl, loadCatalog, searchCatalog } from "./lib/catalog.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -76,55 +77,9 @@ function openUrl(url) {
   child.unref();
 }
 
-// Load resources from local file or fetch remotely
+// Load resources from local file or fetch remotely using shared loader
 async function loadData() {
-  const localDataPath = path.join(__dirname, "..", "site", "data.json");
-  if (fs.existsSync(localDataPath)) {
-    try {
-      const raw = fs.readFileSync(localDataPath, "utf8");
-      return JSON.parse(raw);
-    } catch {
-      // Fall through to remote
-    }
-  }
-
-  // Remote fallback when run via npx globally
-  try {
-    const res = await fetch("https://devshelf.ritualdev.in/data.json", {
-      signal: AbortSignal.timeout(4000),
-    });
-    if (res.ok) {
-      return await res.json();
-    }
-  } catch {
-    // Remote failed
-  }
-
-  // Fallback: try assembling from shelf/*.json if present
-  const shelfDir = path.join(__dirname, "..", "shelf");
-  if (fs.existsSync(shelfDir)) {
-    const resources = [];
-    const files = fs.readdirSync(shelfDir);
-    for (const f of files) {
-      if (f.endsWith(".json")) {
-        const raw = fs.readFileSync(path.join(shelfDir, f), "utf8");
-        const items = JSON.parse(raw.replace(/^\uFEFF/, ""));
-        resources.push(...items);
-      }
-    }
-    return {
-      totalCount: resources.length,
-      resources,
-    };
-  }
-
-  throw new Error(
-    "Could not load DevShelf catalog data locally or from https://devshelf.ritualdev.in/data.json",
-  );
-}
-
-function getResourceUrl(item) {
-  return item.url || item.repo || item.deployUrl || "";
+  return loadCatalog();
 }
 
 async function loadMatchmakerData() {
@@ -177,9 +132,19 @@ function printMatchmakerProject(proj, index = null) {
   console.log();
 }
 
+function getCliVersion() {
+  try {
+    const pkg = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "package.json"), "utf8"));
+    return pkg.version || "1.1.1";
+  } catch {
+    return "1.1.1";
+  }
+}
+
 function printHeader() {
+  const version = getCliVersion();
   console.log(`
-${c.purple}${c.bold}  📚 DevShelf CLI & TUI${c.reset} ${c.gray}v1.0.0${c.reset}
+${c.purple}${c.bold}  📚 DevShelf CLI & TUI${c.reset} ${c.gray}v${version}${c.reset}
 ${c.cyan}  The Crowdsourced Zero-Paywall Developer Directory${c.reset}
 ${c.gray}  ─────────────────────────────────────────────────────────────${c.reset}`);
 }
@@ -218,9 +183,9 @@ ${c.bold}EXAMPLES:${c.reset}
 function getDailyItem(resources) {
   if (!resources || resources.length === 0) return null;
   const today = new Date();
-  const year = today.getFullYear();
-  const month = String(today.getMonth() + 1).padStart(2, "0");
-  const day = String(today.getDate()).padStart(2, "0");
+  const year = today.getUTCFullYear();
+  const month = String(today.getUTCMonth() + 1).padStart(2, "0");
+  const day = String(today.getUTCDate()).padStart(2, "0");
   const dateStr = `${year}-${month}-${day}`;
   let hash = 0;
   for (let i = 0; i < dateStr.length; i++) {
@@ -231,28 +196,16 @@ function getDailyItem(resources) {
 }
 
 function searchItems(resources, query) {
-  const q = query.toLowerCase().trim();
-  return resources.filter((item) => {
-    const name = (item.name || "").toLowerCase();
-    const desc = (item.description || "").toLowerCase();
-    const cat = (item.category || "").toLowerCase();
-    const lang = (item.language || "").toLowerCase();
-    const alt = (item.alternativeTo || "").toLowerCase();
-    const tags = Array.isArray(item.statusTags) ? item.statusTags.join(" ").toLowerCase() : "";
-    return (
-      name.includes(q) ||
-      desc.includes(q) ||
-      cat.includes(q) ||
-      lang.includes(q) ||
-      alt.includes(q) ||
-      tags.includes(q)
-    );
-  });
+  return searchCatalog(resources, query);
 }
 
 function printItemCard(item, index) {
+  if (!item || typeof item !== "object") {
+    console.log(`\n  ${c.red}No catalog resource found.${c.reset}`);
+    return;
+  }
   const prefix = index !== undefined ? `${c.purple}[${index + 1}]${c.reset} ` : "";
-  const name = `${c.bold}${c.white}${item.name}${c.reset}`;
+  const name = `${c.bold}${c.white}${item.name || "Unknown Tool"}${c.reset}`;
   const cat = `${c.dim}(${item.category || item.section || "Tool"})${c.reset}`;
   const url = getResourceUrl(item);
 
@@ -402,6 +355,11 @@ async function runInteractiveTui(data) {
       }
     } else if (choice === "3") {
       // Random resource
+      if (!resources || resources.length === 0) {
+        console.log(`\n  ${c.red}No catalog items available.${c.reset}`);
+        await question(`  ${c.gray}Press Enter to continue...${c.reset}`);
+        continue;
+      }
       const randomItem = resources[Math.floor(Math.random() * resources.length)];
       console.log(`\n  ${c.bold}🎲 Random Pick:${c.reset}`);
       printItemCard(randomItem);
@@ -635,6 +593,10 @@ async function main() {
   }
 
   if (command === "random") {
+    if (!resources || resources.length === 0) {
+      console.error(`${c.red}Error:${c.reset} No catalog items available.`);
+      process.exit(1);
+    }
     const item = resources[Math.floor(Math.random() * resources.length)];
     if (isJson) {
       console.log(JSON.stringify(item, null, 2));
@@ -728,7 +690,14 @@ async function main() {
   }
 
   if (command === "open") {
-    const targetName = cleanArgs.slice(1).join(" ").toLowerCase();
+    const targetName = cleanArgs.slice(1).join(" ").trim().toLowerCase();
+    if (!targetName) {
+      console.error(
+        `${c.red}Error:${c.reset} Please specify a resource name to open. Example: devshelf open bruno`,
+      );
+      process.exit(1);
+    }
+
     const item =
       resources.find((r) => r.name.toLowerCase() === targetName) ||
       resources.find((r) => r.name.toLowerCase().includes(targetName));

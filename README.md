@@ -427,15 +427,6 @@ DevShelf is initiated by the team at [RitualDev Lab](https://github.com/RitualDe
       <sub>☀️ Solaris Dev Shop (#71)</sub>
     </td>
   </tr>
-  <tr>
-    <td align="center" width="160">
-      <a href="https://github.com/estevecastells">
-        <img src="https://github.com/estevecastells.png" width="70" style="border-radius: 50%;" alt="estevecastells"/><br />
-        <sub><b>estevecastells</b></sub>
-      </a><br />
-      <sub>⚡ Invokely (PR #74)</sub>
-    </td>
-  </tr>
 </table>
 
 <div align="center">

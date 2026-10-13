@@ -23,7 +23,8 @@ async function validate() {
     console.log(`✓ ${file}: ${data.length} items valid.`);
   }
 
-  console.log(`\n🎉 All ${total} items across ${files.length} shelf files verified successfully!`);
+  const jsonFileCount = files.filter((f) => f.endsWith(".json")).length;
+  console.log(`\n🎉 All ${total} items across ${jsonFileCount} shelf files verified successfully!`);
 }
 
 validate().catch((err) => {

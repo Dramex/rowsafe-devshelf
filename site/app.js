@@ -964,7 +964,7 @@ function setupListeners() {
   const pageSizeSelect = document.getElementById("page-size-select");
   pageSizeSelect?.addEventListener("change", (e) => {
     const val = e.target.value;
-    pageSize = val === "all" ? 999999 : parseInt(val, 10) || 24;
+    pageSize = val === "all" ? 999999 : Number.parseInt(val, 10) || 24;
     render(true);
   });
 
@@ -2124,7 +2124,7 @@ function renderPaginationControls() {
   // Sliding window pagination numbers
   const maxButtons = 5;
   let startPage = Math.max(1, currentPage - 2);
-  let endPage = Math.min(totalPages, startPage + maxButtons - 1);
+  const endPage = Math.min(totalPages, startPage + maxButtons - 1);
   if (endPage - startPage < maxButtons - 1) {
     startPage = Math.max(1, endPage - maxButtons + 1);
   }

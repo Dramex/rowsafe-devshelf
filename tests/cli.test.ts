@@ -6,16 +6,20 @@ import test, { describe } from "node:test";
 const ROOT = process.cwd();
 const CLI_PATH = path.join(ROOT, "bin", "cli.js");
 
-function runCli(args: string): { stdout: string; status: number } {
+function runCli(args: string): { stdout: string; stderr: string; status: number } {
   try {
     const stdout = execSync(`node "${CLI_PATH}" ${args}`, {
       encoding: "utf8",
       cwd: ROOT,
       stdio: ["pipe", "pipe", "pipe"],
     });
-    return { stdout, status: 0 };
+    return { stdout, stderr: "", status: 0 };
   } catch (err: any) {
-    return { stdout: err.stdout?.toString() || "", status: err.status ?? 1 };
+    return {
+      stdout: err.stdout?.toString() || "",
+      stderr: err.stderr?.toString() || "",
+      status: err.status ?? 1,
+    };
   }
 }
 
@@ -126,5 +130,46 @@ describe("DevShelf CLI & TUI Suite", () => {
     assert.ok(toolNames.includes("search_tools"));
     assert.ok(toolNames.includes("get_tool"));
     assert.ok(toolNames.includes("find_free_alternatives"));
+  });
+
+  test("CLI header in help displays current version from package.json", () => {
+    const res = runCli("--help");
+    assert.equal(res.status, 0);
+    assert.match(res.stdout, /DevShelf CLI & TUI.*v1\.1\.1/);
+  });
+
+  test("devshelf open with no arguments exits with error rather than launching first item", () => {
+    const res = runCli("open");
+    assert.notEqual(res.status, 0);
+    const combined = res.stdout + res.stderr;
+    assert.match(combined, /Please specify a resource name to open/);
+  });
+
+  test("MCP search_tools with empty query returns validation error", () => {
+    const searchReq = `${JSON.stringify({ jsonrpc: "2.0", id: 10, method: "tools/call", params: { name: "search_tools", arguments: { query: "" } } })}\n`;
+    const stdout = execSync("node bin/mcp.js", {
+      input: searchReq,
+      cwd: ROOT,
+      encoding: "utf8",
+    });
+    const lines = stdout.trim().split("\n").filter(Boolean);
+    const parsed = JSON.parse(lines[0]);
+    assert.ok(parsed.result?.content?.[0]?.text, "Expected content in MCP result");
+    const payload = JSON.parse(parsed.result.content[0].text);
+    assert.match(payload.error, /Query parameter cannot be empty/);
+  });
+
+  test("MCP get_tool with empty name returns validation error", () => {
+    const getReq = `${JSON.stringify({ jsonrpc: "2.0", id: 11, method: "tools/call", params: { name: "get_tool", arguments: { name: "" } } })}\n`;
+    const stdout = execSync("node bin/mcp.js", {
+      input: getReq,
+      cwd: ROOT,
+      encoding: "utf8",
+    });
+    const lines = stdout.trim().split("\n").filter(Boolean);
+    const parsed = JSON.parse(lines[0]);
+    assert.ok(parsed.result?.content?.[0]?.text, "Expected content in MCP result");
+    const payload = JSON.parse(parsed.result.content[0].text);
+    assert.match(payload.error, /Name parameter cannot be empty/);
   });
 });

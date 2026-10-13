@@ -13,51 +13,13 @@ import fs from "node:fs";
 import path from "node:path";
 import readline from "node:readline";
 import { fileURLToPath } from "node:url";
+import { loadCatalog } from "./lib/catalog.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-let catalogData = null;
-
 async function getCatalog() {
-  if (catalogData) return catalogData;
-
-  const localDataPath = path.join(__dirname, "..", "site", "data.json");
-  if (fs.existsSync(localDataPath)) {
-    try {
-      const raw = fs.readFileSync(localDataPath, "utf8");
-      catalogData = JSON.parse(raw);
-      return catalogData;
-    } catch {}
-  }
-
-  // Remote fallback for npx execution
-  try {
-    const res = await fetch("https://devshelf.ritualdev.in/data.json", {
-      signal: AbortSignal.timeout(4000),
-    });
-    if (res.ok) {
-      catalogData = await res.json();
-      return catalogData;
-    }
-  } catch {}
-
-  // Fallback: assemble from shelf/*.json
-  const shelfDir = path.join(__dirname, "..", "shelf");
-  if (fs.existsSync(shelfDir)) {
-    const resources = [];
-    const files = fs.readdirSync(shelfDir);
-    for (const f of files) {
-      if (f.endsWith(".json")) {
-        const raw = fs.readFileSync(path.join(shelfDir, f), "utf8");
-        resources.push(...JSON.parse(raw.replace(/^\uFEFF/, "")));
-      }
-    }
-    catalogData = { totalCount: resources.length, resources };
-    return catalogData;
-  }
-
-  return { totalCount: 0, resources: [] };
+  return loadCatalog();
 }
 
 // Tool definitions for MCP clients
@@ -147,6 +109,12 @@ async function handleToolCall(name, args) {
 
   if (name === "search_tools") {
     const q = (args.query || "").toLowerCase().trim();
+    if (!q) {
+      return {
+        error:
+          "Query parameter cannot be empty. Please specify a search term (e.g. 'postgres', 'llm', 'mock api').",
+      };
+    }
     const cat = (args.category || "").toLowerCase().trim();
     const limit = Math.min(Math.max(Number(args.limit) || 8, 1), 25);
 
@@ -195,6 +163,12 @@ async function handleToolCall(name, args) {
 
   if (name === "get_tool") {
     const targetName = (args.name || "").toLowerCase().trim();
+    if (!targetName) {
+      return {
+        error:
+          "Name parameter cannot be empty. Please specify a tool name (e.g. 'Bruno', 'Ollama').",
+      };
+    }
     const tool = resources.find(
       (r) => r.name.toLowerCase() === targetName || r.name.toLowerCase().includes(targetName),
     );
@@ -318,7 +292,9 @@ export function startMcpServer() {
             protocolVersion: "2024-11-05",
             serverInfo: {
               name: "devshelf-mcp",
-              version: JSON.parse(fs.readFileSync(path.join(__dirname, "..", "package.json"), "utf8")).version,
+              version: JSON.parse(
+                fs.readFileSync(path.join(__dirname, "..", "package.json"), "utf8"),
+              ).version,
             },
             capabilities: {
               tools: {},

@@ -6,7 +6,6 @@ DevShelf is an open-source, community-driven developer resource ecosystem curate
 
 ## Machine & AI Agent Integration
 - **Model Context Protocol (MCP) Server**: Run `npx devshelf-mcp` in Claude Desktop, Cursor, Windsurf, or LangChain agents.
-- **AgentShield AI Security Gateway**: Protect autonomous coding agents from credential leakage: https://agentshield.ritualdev.in/
 - **REST API**: https://devshelf.ritualdev.in/api/v1/tools.json
 - **Full Catalog Raw Knowledge Base**: https://devshelf.ritualdev.in/llms-full.txt
 - **Master HTML Directory**: https://devshelf.ritualdev.in/directory.html
