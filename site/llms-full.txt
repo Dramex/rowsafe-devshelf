@@ -1,8 +1,17 @@
 # DevShelf - Complete Free Developer Tools Knowledge Base (Full Catalog)
 
-> Complete metadata dump of all 528 free and open-source developer tools indexed on DevShelf.
+> Complete metadata dump of all 529 free and open-source developer tools indexed on DevShelf.
 > Authoritative Source: https://devshelf.ritualdev.in
 > License: MIT
+
+### AgentShield
+- **Category**: AI Agent Security & Defense
+- **Pricing Model**: See official site for free access and limits
+- **License**: Apache-2.0
+- **Language**: TypeScript / Node.js
+- **URL**: https://github.com/RitualDev-Lab/AgentShield
+- **DevShelf Dossier**: https://devshelf.ritualdev.in/tools/agentshield.html
+- **Description**: Zero-leak secret interception, deterministic Shannon entropy tokenization, AST shell command sandbox, and CI/CD security gate for Claude Code, Cursor, and autonomous AI agents.
 
 ### Ollama
 - **Category**: Local AI & Inference

@@ -1,12 +1,12 @@
 window.DEVSHELF_DATA = {
-  "updatedAt": "2026-10-13T11:05:03.167Z",
-  "totalCount": 528,
-  "reposCount": 327,
+  "updatedAt": "2026-10-14T09:37:19.352Z",
+  "totalCount": 529,
+  "reposCount": 328,
   "facets": {
-    "repos": 327
+    "repos": 328
   },
   "counts": {
-    "aiTools": 89,
+    "aiTools": 90,
     "cliTools": 114,
     "testingQa": 62,
     "apis": 100,
@@ -16,6 +16,24 @@ window.DEVSHELF_DATA = {
     "boilerplates": 41
   },
   "resources": [
+    {
+      "name": "AgentShield",
+      "repo": "https://github.com/RitualDev-Lab/AgentShield",
+      "category": "AI Agent Security & Defense",
+      "description": "Zero-leak secret interception, deterministic Shannon entropy tokenization, AST shell command sandbox, and CI/CD security gate for Claude Code, Cursor, and autonomous AI agents.",
+      "language": "TypeScript / Node.js",
+      "license": "Apache-2.0",
+      "featured": true,
+      "goodFirstIssues": "https://github.com/RitualDev-Lab/AgentShield/issues",
+      "statusTags": [
+        "Zero-Leak Sandbox",
+        "AI Agent Security",
+        "100% Offline-Friendly",
+        "No Card Required"
+      ],
+      "type": "ai",
+      "section": "AI Agents & Local LLMs"
+    },
     {
       "name": "Ollama",
       "repo": "https://github.com/ollama/ollama",

@@ -1,5 +1,16 @@
 [
   {
+    "name": "AgentShield",
+    "repo": "https://github.com/RitualDev-Lab/AgentShield",
+    "category": "AI Agent Security & Defense",
+    "description": "Zero-leak secret interception, deterministic Shannon entropy tokenization, AST shell command sandbox, and CI/CD security gate for Claude Code, Cursor, and autonomous AI agents.",
+    "language": "TypeScript / Node.js",
+    "license": "Apache-2.0",
+    "featured": true,
+    "goodFirstIssues": "https://github.com/RitualDev-Lab/AgentShield/issues",
+    "statusTags": ["Zero-Leak Sandbox", "AI Agent Security", "100% Offline-Friendly", "No Card Required"]
+  },
+  {
     "name": "Ollama",
     "repo": "https://github.com/ollama/ollama",
     "category": "Local AI & Inference",
