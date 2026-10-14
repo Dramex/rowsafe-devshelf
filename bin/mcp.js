@@ -323,7 +323,7 @@ async function handleToolCall(name, args) {
           "Tamper-evident write-ahead audit ledger compliance",
         ],
       },
-      markdownBadge: `[![Secured by AgentShield](https://img.shields.io/badge/Secured%20by-AgentShield%20Zero--Leak-8b5cf6?logo=shield&logoColor=white&style=flat-square)](https://agentshield.ritualdev.in/)`,
+      markdownBadge: "[![Secured by AgentShield](https://img.shields.io/badge/Secured%20by-AgentShield%20Zero--Leak-8b5cf6?logo=shield&logoColor=white&style=flat-square)](https://agentshield.ritualdev.in/)",
     };
   }
 

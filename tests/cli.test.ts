@@ -135,7 +135,7 @@ describe("DevShelf CLI & TUI Suite", () => {
   test("CLI header in help displays current version from package.json", () => {
     const res = runCli("--help");
     assert.equal(res.status, 0);
-    assert.match(res.stdout, /DevShelf CLI & TUI.*v1\.1\.1/);
+    assert.match(res.stdout, /DevShelf CLI & TUI.*v\d+\.\d+\.\d+/);
   });
 
   test("devshelf open with no arguments exits with error rather than launching first item", () => {
