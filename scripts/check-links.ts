@@ -181,7 +181,7 @@ async function pingUrl(urlStr: string): Promise<{
   } catch (err: unknown) {
     const latencyMs = Date.now() - start;
     const msg = err instanceof Error ? err.message : String(err);
-    const code = (err as { code?: string })?.code || "";
+    const code = String((err as { code?: unknown })?.code || "");
 
     // Detect SSL / TLS Expiration
     if (
