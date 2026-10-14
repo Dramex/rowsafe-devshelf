@@ -116,9 +116,12 @@ async function buildSiteData() {
   const apiCategoriesDir = path.join(apiV1Dir, "categories");
   await fs.mkdir(apiCategoriesDir, { recursive: true });
 
+  const pkg = JSON.parse(await fs.readFile(path.join(root, "package.json"), "utf8"));
+  const apiVersion = pkg.version || "1.1.2";
+
   // 3a. /api/v1/tools.json
   const apiToolsPayload = {
-    version: "1.0.0",
+    version: apiVersion,
     docs: "https://devshelf.ritualdev.in/docs/api.html",
     license: "https://github.com/RitualDev-Lab/DevShelf/blob/main/LICENSE",
     updatedAt: payload.updatedAt,
@@ -133,7 +136,7 @@ async function buildSiteData() {
 
   // 3b. /api/v1/stats.json
   const apiStatsPayload = {
-    version: "1.0.0",
+    version: apiVersion,
     updatedAt: payload.updatedAt,
     totalCount: allResources.length,
     reposCount,
@@ -206,7 +209,7 @@ async function buildSiteData() {
   ];
 
   const apiCategoriesOverview = {
-    version: "1.0.0",
+    version: apiVersion,
     updatedAt: payload.updatedAt,
     totalCategories: categoriesList.length,
     categories: categoriesList.map(({ slug, name, count, endpoint }) => ({
@@ -225,7 +228,7 @@ async function buildSiteData() {
   // 3d. Per-category endpoints: /api/v1/categories/[slug].json
   for (const cat of categoriesList) {
     const catPayload = {
-      version: "1.0.0",
+      version: apiVersion,
       updatedAt: payload.updatedAt,
       slug: cat.slug,
       name: cat.name,

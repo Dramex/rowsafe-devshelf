@@ -331,7 +331,7 @@ async function build() {
 
 [![npm version](https://img.shields.io/npm/v/devshelf.svg?style=flat-square&color=cb3837)](https://www.npmjs.com/package/devshelf)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)](LICENSE)
-[![CI Health Status](https://img.shields.io/badge/CI%20Health-Audited%20%26%20Live-brightgreen.svg?style=flat-square)](https://github.com/RitualDev-Lab/DevShelf/actions)
+[![CI Health Status](https://github.com/RitualDev-Lab/DevShelf/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/RitualDev-Lab/DevShelf/actions/workflows/ci.yml)
 [![MCP Ready](https://img.shields.io/badge/MCP-Claude%20%7C%20Cursor%20%7C%20Zed-purple.svg?style=flat-square)](docs/mcp.md)
 [![PRs Welcome](https://img.shields.io/badge/PRs-Welcome_%26_Amplified-brightgreen.svg?style=flat-square)](#-how-to-submit-your-project-or-api)
 [![Hacktoberfest](https://img.shields.io/badge/🎃_Hacktoberfest-2026_Ready-ff7800?style=flat-square)](HACKTOBERFEST.md)
