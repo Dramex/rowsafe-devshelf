@@ -1,6 +1,6 @@
 # DevShelf - Complete Free Developer Tools Knowledge Base (Full Catalog)
 
-> Complete metadata dump of all 529 free and open-source developer tools indexed on DevShelf.
+> Complete metadata dump of all 530 free and open-source developer tools indexed on DevShelf.
 > Authoritative Source: https://devshelf.ritualdev.in
 > License: MIT
 
@@ -835,7 +835,7 @@
 - **Language**: JavaScript / Node.js, Claude Code plugins
 - **URL**: https://github.com/Eigenwise/eigenwise-toolshed
 - **DevShelf Dossier**: https://devshelf.ritualdev.in/tools/eigenwise-toolshed.html
-- **Description**: Free, MIT-licensed plugins for Claude Code covering maintained codebase maps, project rules, coding-work orchestration, capability discovery, model routing, and local observability. Developers can install individual plugins rather than the entire collection; Claude or model-provider usage may have its own costs.
+- **Description**: Free, MIT-licensed plugins for Claude Code covering codebase maps, project rules, coding-work orchestration, capability discovery, model routing, and local observability. Developers can install individual modular plugins.
 
 ### Tale
 - **Category**: AI Agents & Local LLMs
@@ -1900,6 +1900,15 @@
 - **URL**: https://github.com/Shaisolaris/solaris-dev-shop
 - **DevShelf Dossier**: https://devshelf.ritualdev.in/tools/solaris-dev-shop.html
 - **Description**: Free MIT skill library and toolkit. A deterministic intake router assigns one specialist skill for agentic workflows.
+
+### DateParser Kotlin
+- **Category**: Dev Utilities & Libraries
+- **Pricing Model**: See official site for free access and limits
+- **License**: MIT
+- **Language**: Kotlin Multiplatform, kotlinx-datetime
+- **URL**: https://github.com/Alox1d/dateparser-kotlin
+- **DevShelf Dossier**: https://devshelf.ritualdev.in/tools/dateparser-kotlin.html
+- **Description**: MIT Kotlin Multiplatform library for offline natural-language date and time parsing in Russian and English. Published Android (API 26+), JVM and iOS variants resolve supported phrases against an explicit reference time and timezone for use in task/reminder forms.
 
 ### AutoHeal-QA
 - **Category**: Browser & E2E Testing

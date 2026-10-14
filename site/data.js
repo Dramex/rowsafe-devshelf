@@ -1,13 +1,13 @@
 window.DEVSHELF_DATA = {
-  "updatedAt": "2026-10-14T13:31:36.828Z",
-  "totalCount": 529,
-  "reposCount": 328,
+  "updatedAt": "2026-10-14T17:36:58.480Z",
+  "totalCount": 530,
+  "reposCount": 329,
   "facets": {
-    "repos": 328
+    "repos": 329
   },
   "counts": {
     "aiTools": 90,
-    "cliTools": 114,
+    "cliTools": 115,
     "testingQa": 62,
     "apis": 100,
     "freeCloud": 71,
@@ -1483,7 +1483,7 @@ window.DEVSHELF_DATA = {
       "name": "Eigenwise Toolshed",
       "repo": "https://github.com/Eigenwise/eigenwise-toolshed",
       "category": "AI Agents & Local LLMs",
-      "description": "Free, MIT-licensed plugins for Claude Code covering maintained codebase maps, project rules, coding-work orchestration, capability discovery, model routing, and local observability. Developers can install individual plugins rather than the entire collection; Claude or model-provider usage may have its own costs.",
+      "description": "Free, MIT-licensed plugins for Claude Code covering codebase maps, project rules, coding-work orchestration, capability discovery, model routing, and local observability. Developers can install individual modular plugins.",
       "language": "JavaScript / Node.js, Claude Code plugins",
       "license": "MIT",
       "featured": false,
@@ -3300,6 +3300,17 @@ window.DEVSHELF_DATA = {
       "category": "Dev Utilities & Libraries",
       "description": "Free MIT skill library and toolkit. A deterministic intake router assigns one specialist skill for agentic workflows.",
       "language": "Python",
+      "license": "MIT",
+      "featured": false,
+      "type": "cli",
+      "section": "CLI & Productivity Tools"
+    },
+    {
+      "name": "DateParser Kotlin",
+      "repo": "https://github.com/Alox1d/dateparser-kotlin",
+      "category": "Dev Utilities & Libraries",
+      "description": "MIT Kotlin Multiplatform library for offline natural-language date and time parsing in Russian and English. Published Android (API 26+), JVM and iOS variants resolve supported phrases against an explicit reference time and timezone for use in task/reminder forms.",
+      "language": "Kotlin Multiplatform, kotlinx-datetime",
       "license": "MIT",
       "featured": false,
       "type": "cli",

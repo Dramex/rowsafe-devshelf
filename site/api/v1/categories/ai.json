@@ -1,6 +1,6 @@
 {
   "version": "1.0.0",
-  "updatedAt": "2026-10-14T13:31:36.828Z",
+  "updatedAt": "2026-10-14T17:36:58.480Z",
   "slug": "ai",
   "name": "AI Agents & Local LLMs",
   "count": 90,
@@ -1435,7 +1435,7 @@
       "name": "Eigenwise Toolshed",
       "repo": "https://github.com/Eigenwise/eigenwise-toolshed",
       "category": "AI Agents & Local LLMs",
-      "description": "Free, MIT-licensed plugins for Claude Code covering maintained codebase maps, project rules, coding-work orchestration, capability discovery, model routing, and local observability. Developers can install individual plugins rather than the entire collection; Claude or model-provider usage may have its own costs.",
+      "description": "Free, MIT-licensed plugins for Claude Code covering codebase maps, project rules, coding-work orchestration, capability discovery, model routing, and local observability. Developers can install individual modular plugins.",
       "language": "JavaScript / Node.js, Claude Code plugins",
       "license": "MIT",
       "featured": false,

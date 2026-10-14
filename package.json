@@ -1,5 +1,5 @@
 {
-  "name": "devshelf",
+  "name": "@ritualdev-lab/devshelf",
   "version": "1.1.2",
   "private": false,
   "type": "module",
@@ -27,11 +27,7 @@
     "devshelf": "bin/cli.js",
     "devshelf-mcp": "bin/mcp.js"
   },
-  "files": [
-    "bin",
-    "shelf",
-    "site/data.json"
-  ],
+  "files": ["bin", "shelf", "site/data.json"],
   "scripts": {
     "devshelf": "node bin/cli.js",
     "mcp": "node bin/mcp.js",

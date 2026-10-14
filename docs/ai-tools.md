@@ -21,7 +21,7 @@
 
 | Tool | Language | License | Description | Links |
 | :--- | :---: | :---: | :--- | :---: |
-| [**Eigenwise Toolshed**](https://github.com/Eigenwise/eigenwise-toolshed) | `JavaScript / Node.js, Claude Code plugins` | `MIT` | Free, MIT-licensed plugins for Claude Code covering maintained codebase maps, project rules, coding-work orchestration, capability discovery, model routing, and local observability. Developers can install individual plugins rather than the entire collection; Claude or model-provider usage may have its own costs. | [GitHub](https://github.com/Eigenwise/eigenwise-toolshed) |
+| [**Eigenwise Toolshed**](https://github.com/Eigenwise/eigenwise-toolshed) | `JavaScript / Node.js, Claude Code plugins` | `MIT` | Free, MIT-licensed plugins for Claude Code covering codebase maps, project rules, coding-work orchestration, capability discovery, model routing, and local observability. Developers can install individual modular plugins. | [GitHub](https://github.com/Eigenwise/eigenwise-toolshed) |
 | [**Tale**](https://github.com/tale-project/tale) | `TypeScript / Bun` | `MIT` | Open-source project workspace for teams and AI agents, with task delegation, persistent sandbox workspaces, and deliverable review. Self-hosting uses separately configured model-provider credentials. | [GitHub](https://github.com/tale-project/tale) |
 
 ### <a id="ai-agents-mcp-servers"></a>AI Agents & MCP Servers (1)

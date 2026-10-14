@@ -4,7 +4,7 @@
 
 [← Back to Main Directory](../README.md) • [🌐 Live Search App](https://devshelf.ritualdev.in) • [➕ Submit New Resource](../README.md#-how-to-submit-your-project-or-api)
 
-[![Total CLI Tools](https://img.shields.io/badge/CLI_Tools-114_Curated-blueviolet?style=for-the-badge)](https://devshelf.ritualdev.in)
+[![Total CLI Tools](https://img.shields.io/badge/CLI_Tools-115_Curated-blueviolet?style=for-the-badge)](https://devshelf.ritualdev.in)
 
 **Jump to Subcategory:**
 [Benchmarking & Performance](#benchmarking-performance) • [CLI & Developer Productivity](#cli-developer-productivity) • [Database & SQL](#database-sql) • [Dev Utilities & Libraries](#dev-utilities-libraries) • [Developer Tools](#developer-tools) • [DevOps & Containers](#devops-containers) • [Disk & Storage](#disk-storage) • [Git & Version Control](#git-version-control) • [GitHub Workflow & TUI](#github-workflow-tui) • [HTTP & Network](#http-network) • [OS & Hardware Utilities](#os-hardware-utilities) • [System & Process Monitoring](#system-process-monitoring) • [Terminal & Search](#terminal-search) • [Terminal & Shell](#terminal-shell) • [Terminal Navigation](#terminal-navigation)
@@ -40,12 +40,13 @@
 | [**iredis**](https://github.com/laixintao/iredis) | `Python` | `BSD-3-Clause` | A terminal client for Redis with auto-completion and syntax highlighting, command suggestions, and hints. | [GitHub](https://github.com/laixintao/iredis) |
 | [**litecli**](https://github.com/dbcli/litecli) | `Python` | `BSD-3-Clause` | CLI for SQLite databases with auto-completion and syntax highlighting. | [GitHub](https://github.com/dbcli/litecli) |
 
-### <a id="dev-utilities-libraries"></a>Dev Utilities & Libraries (2)
+### <a id="dev-utilities-libraries"></a>Dev Utilities & Libraries (3)
 
 | Tool | Language | License | Description | Links |
 | :--- | :---: | :---: | :--- | :---: |
 | [**Codex Quota Overlay**](https://github.com/cpys/codex-quota-overlay) | `JavaScript / Electron, with C# and Swift native helpers` | `MIT` | An independent, open-source Codex Desktop companion for Windows and macOS. It displays quota limits, reset times, and reset credits, with a local Quota Center for pace and history. I am a maintainer of this independent project; it is not affiliated with or endorsed by OpenAI. | [GitHub](https://github.com/cpys/codex-quota-overlay) |
 | [**Solaris Dev Shop**](https://github.com/Shaisolaris/solaris-dev-shop) | `Python` | `MIT` | Free MIT skill library and toolkit. A deterministic intake router assigns one specialist skill for agentic workflows. | [GitHub](https://github.com/Shaisolaris/solaris-dev-shop) |
+| [**DateParser Kotlin**](https://github.com/Alox1d/dateparser-kotlin) | `Kotlin Multiplatform, kotlinx-datetime` | `MIT` | MIT Kotlin Multiplatform library for offline natural-language date and time parsing in Russian and English. Published Android (API 26+), JVM and iOS variants resolve supported phrases against an explicit reference time and timezone for use in task/reminder forms. | [GitHub](https://github.com/Alox1d/dateparser-kotlin) |
 
 ### <a id="developer-tools"></a>Developer Tools (12)
 

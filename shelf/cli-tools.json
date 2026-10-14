@@ -1233,5 +1233,14 @@
     "language": "Python",
     "license": "MIT",
     "featured": false
+  },
+  {
+    "name": "DateParser Kotlin",
+    "repo": "https://github.com/Alox1d/dateparser-kotlin",
+    "category": "Dev Utilities & Libraries",
+    "description": "MIT Kotlin Multiplatform library for offline natural-language date and time parsing in Russian and English. Published Android (API 26+), JVM and iOS variants resolve supported phrases against an explicit reference time and timezone for use in task/reminder forms.",
+    "language": "Kotlin Multiplatform, kotlinx-datetime",
+    "license": "MIT",
+    "featured": false
   }
 ]

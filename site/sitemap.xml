@@ -1231,6 +1231,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://devshelf.ritualdev.in/tools/dateparser-kotlin.html</loc>
+    <lastmod>2026-10-14</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://devshelf.ritualdev.in/tools/autoheal-qa.html</loc>
     <lastmod>2026-10-14</lastmod>
     <changefreq>weekly</changefreq>
