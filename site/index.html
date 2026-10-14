@@ -168,25 +168,64 @@
         </a>
       </nav>
 
-        <a href="https://skillprism.ritualdev.in" target="_blank" rel="noopener noreferrer" class="hidden md:inline-flex items-center space-x-1 px-3 py-1.5 text-xs font-bold rounded-lg bg-indigo-950/70 hover:bg-indigo-900 border border-indigo-500/50 text-indigo-200 transition hover:scale-105 active:scale-95 shadow-sm shadow-indigo-950/50" title="SkillPrism: Progressive Skill Disclosure & Context Compaction Engine">
-          <span>💎 SkillPrism</span>
-        </a>
-        <a href="https://agentshield.ritualdev.in" target="_blank" rel="noopener noreferrer" class="hidden md:inline-flex items-center space-x-1 px-3 py-1.5 text-xs font-bold rounded-lg bg-purple-950/70 hover:bg-purple-900 border border-purple-500/50 text-purple-200 transition hover:scale-105 active:scale-95 shadow-sm shadow-purple-950/50" title="AgentShield: Zero-Leak AI Secret Defense & Sandbox">
-          <span>🛡️ AgentShield</span>
-        </a>
-        <a href="https://mcp.ritualdev.in" target="_blank" rel="noopener noreferrer" class="hidden md:inline-flex items-center space-x-1 px-3 py-1.5 text-xs font-bold rounded-lg bg-blue-950/70 hover:bg-blue-900 border border-blue-500/50 text-blue-200 transition hover:scale-105 active:scale-95 shadow-sm shadow-blue-950/50" title="MCP Builder Kit: Production Toolchain for Model Context Protocol">
-          <span>⚡ MCP Kit</span>
-        </a>
-        <a href="https://donation.rolenest.in" target="_blank" rel="noopener noreferrer" class="hidden md:inline-flex items-center space-x-1 px-3 py-1.5 text-xs font-bold rounded-lg bg-pink-950/60 hover:bg-pink-900/80 border border-pink-500/50 text-pink-200 transition hover:scale-105 active:scale-95 shadow-sm shadow-pink-900/40" title="Support DevShelf (donation.rolenest.in)">
-          <span>💖 Donate</span>
-        </a>
+      <!-- Right Actions Container -->
+      <div class="flex items-center space-x-2 shrink-0">
+        <!-- Ecosystem Dropdown Menu (Clean, organized & zero clutter) -->
+        <div class="relative group hidden md:block">
+          <button class="inline-flex items-center space-x-1.5 px-3 py-1.5 text-xs font-bold rounded-lg bg-slate-900/90 hover:bg-slate-800 border border-slate-700/80 text-purple-200 transition hover:border-purple-500/50 hover:text-white" aria-haspopup="true" aria-expanded="false">
+            <span>✨ Ecosystem</span>
+            <svg class="w-3.5 h-3.5 text-slate-400 group-hover:text-purple-300 transition-transform group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
+          
+          <div class="absolute right-0 mt-2 w-56 rounded-xl bg-slate-950/98 border border-slate-800 shadow-2xl backdrop-blur-xl p-1.5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-150 z-50">
+            <div class="text-[10px] font-mono font-semibold uppercase tracking-wider text-slate-400 px-2.5 py-1.5">
+              RitualDev Suite
+            </div>
+            <a href="https://skillprism.ritualdev.in" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2.5 px-2.5 py-2 rounded-lg text-xs font-semibold text-indigo-200 hover:bg-indigo-950/60 hover:text-white transition">
+              <span class="text-base">💎</span>
+              <div>
+                <div class="font-bold text-white">SkillPrism</div>
+                <div class="text-[10px] text-slate-400">Context Compaction Engine</div>
+              </div>
+            </a>
+            <a href="https://agentshield.ritualdev.in" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2.5 px-2.5 py-2 rounded-lg text-xs font-semibold text-purple-200 hover:bg-purple-950/60 hover:text-white transition">
+              <span class="text-base">🛡️</span>
+              <div>
+                <div class="font-bold text-white">AgentShield</div>
+                <div class="text-[10px] text-slate-400">AI Secret Defense &amp; Sandbox</div>
+              </div>
+            </a>
+            <a href="https://mcp.ritualdev.in" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2.5 px-2.5 py-2 rounded-lg text-xs font-semibold text-blue-200 hover:bg-blue-950/60 hover:text-white transition">
+              <span class="text-base">⚡</span>
+              <div>
+                <div class="font-bold text-white">MCP Builder Kit</div>
+                <div class="text-[10px] text-slate-400">MCP Development Suite</div>
+              </div>
+            </a>
+            <div class="my-1 border-t border-slate-800/80"></div>
+            <a href="https://donation.rolenest.in" target="_blank" rel="noopener noreferrer" class="flex items-center space-x-2.5 px-2.5 py-2 rounded-lg text-xs font-semibold text-pink-200 hover:bg-pink-950/60 hover:text-white transition">
+              <span class="text-base">💖</span>
+              <div>
+                <div class="font-bold text-white">Donate</div>
+                <div class="text-[10px] text-slate-400">Support the community</div>
+              </div>
+            </a>
+          </div>
+        </div>
+
+        <!-- Badges Modal Trigger -->
         <button id="open-badge-modal-btn" class="hidden lg:inline-flex items-center space-x-1 px-3 py-1.5 text-xs font-bold rounded-lg bg-purple-900/40 hover:bg-purple-900/70 border border-purple-500/50 text-purple-200 transition hover:scale-105 active:scale-95" title="Embed Featured Badges">
           <span>🎖️ Badges</span>
         </button>
+
+        <!-- GitHub Star Button -->
         <a href="https://github.com/RitualDev-Lab/DevShelf" target="_blank" rel="noreferrer" class="hidden sm:inline-flex items-center space-x-1 px-3 py-1.5 text-xs font-bold rounded-lg bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-200 transition hover:scale-105 active:scale-95">
           <span>⭐ Star</span>
         </a>
 
+        <!-- Submit Tool Button -->
         <button id="nav-wizard-btn" class="liquid-metal-btn liquid-metal-btn-sm group" title="Submit a Free Developer Tool">
           <div class="liquid-metal-frame">
             <canvas class="liquid-metal-canvas" data-tint="#38bdf8" data-back="#090d16" data-speed="0.5" data-distortion="0.18" data-repetition="4.0"></canvas>
@@ -243,15 +282,29 @@
           <span>🎖️ Embed Badges</span>
         </button>
       </div>
+      <!-- Mobile Ecosystem Links -->
+      <div class="pt-2 border-t border-slate-800/80">
+        <div class="text-[10px] font-mono font-semibold uppercase tracking-wider text-slate-400 mb-2 px-1">
+          RitualDev Ecosystem
+        </div>
+        <div class="grid grid-cols-3 gap-2">
+          <a href="https://skillprism.ritualdev.in" target="_blank" rel="noopener noreferrer" class="text-center py-2 px-1 text-xs font-bold rounded-xl bg-indigo-950/70 hover:bg-indigo-900 border border-indigo-500/50 text-indigo-200 transition">
+            💎 SkillPrism
+          </a>
+          <a href="https://agentshield.ritualdev.in" target="_blank" rel="noopener noreferrer" class="text-center py-2 px-1 text-xs font-bold rounded-xl bg-purple-950/70 hover:bg-purple-900 border border-purple-500/50 text-purple-200 transition">
+            🛡️ AgentShield
+          </a>
+          <a href="https://mcp.ritualdev.in" target="_blank" rel="noopener noreferrer" class="text-center py-2 px-1 text-xs font-bold rounded-xl bg-blue-950/70 hover:bg-blue-900 border border-blue-500/50 text-blue-200 transition">
+            ⚡ MCP Kit
+          </a>
+        </div>
+      </div>
       <div class="pt-2 border-t border-slate-800/80 flex items-center justify-between gap-2">
-        <a href="https://agentshield.ritualdev.in" target="_blank" rel="noopener noreferrer" class="flex-1 text-center py-2 px-3 text-xs font-bold rounded-xl bg-purple-950/70 hover:bg-purple-900 border border-purple-500/50 text-purple-200 transition">
-          🛡️ AgentShield
-        </a>
         <a href="https://donation.rolenest.in" target="_blank" rel="noopener noreferrer" class="flex-1 text-center py-2 px-3 text-xs font-bold rounded-xl bg-pink-950/60 hover:bg-pink-900/80 border border-pink-500/50 text-pink-200 transition">
           💖 Donate
         </a>
         <a href="https://github.com/RitualDev-Lab/DevShelf" target="_blank" rel="noreferrer" class="flex-1 text-center py-2 px-3 text-xs font-bold rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-slate-200 transition">
-          ⭐ Star
+          ⭐ Star on GitHub
         </a>
       </div>
     </div>
