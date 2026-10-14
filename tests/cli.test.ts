@@ -172,4 +172,36 @@ describe("DevShelf CLI & TUI Suite", () => {
     const payload = JSON.parse(parsed.result.content[0].text);
     assert.match(payload.error, /Name parameter cannot be empty/);
   });
+
+  test("MCP get_security_audit returns cryptographic audit status and HMAC signature", () => {
+    const auditReq = `${JSON.stringify({ jsonrpc: "2.0", id: 12, method: "tools/call", params: { name: "get_security_audit", arguments: { toolName: "AgentShield" } } })}\n`;
+    const stdout = execSync("node bin/mcp.js", {
+      input: auditReq,
+      cwd: ROOT,
+      encoding: "utf8",
+    });
+    const lines = stdout.trim().split("\n").filter(Boolean);
+    const parsed = JSON.parse(lines[0]);
+    assert.ok(parsed.result?.content?.[0]?.text);
+    const payload = JSON.parse(parsed.result.content[0].text);
+    assert.equal(payload.toolName, "AgentShield");
+    assert.equal(payload.securityAudit?.status, "ZERO_LEAK_VERIFIED");
+    assert.ok(payload.securityAudit?.signatureHash);
+    assert.ok(payload.securityAudit?.verifyUrl.includes("hash="));
+  });
+
+  test("MCP list_verified_sponsor_tools returns featured tools with sponsor tier metadata", () => {
+    const listReq = `${JSON.stringify({ jsonrpc: "2.0", id: 13, method: "tools/call", params: { name: "list_verified_sponsor_tools", arguments: { category: "ai" } } })}\n`;
+    const stdout = execSync("node bin/mcp.js", {
+      input: listReq,
+      cwd: ROOT,
+      encoding: "utf8",
+    });
+    const lines = stdout.trim().split("\n").filter(Boolean);
+    const parsed = JSON.parse(lines[0]);
+    assert.ok(parsed.result?.content?.[0]?.text);
+    const payload = JSON.parse(parsed.result.content[0].text);
+    assert.ok(payload.totalFeatured >= 1);
+    assert.ok(payload.tools.some((t: any) => t.name === "AgentShield"));
+  });
 });
