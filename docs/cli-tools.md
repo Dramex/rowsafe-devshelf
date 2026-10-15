@@ -4,7 +4,7 @@
 
 [← Back to Main Directory](../README.md) • [🌐 Live Search App](https://devshelf.ritualdev.in) • [➕ Submit New Resource](../README.md#-how-to-submit-your-project-or-api)
 
-[![Total CLI Tools](https://img.shields.io/badge/CLI_Tools-115_Curated-blueviolet?style=for-the-badge)](https://devshelf.ritualdev.in)
+[![Total CLI Tools](https://img.shields.io/badge/CLI_Tools-116_Curated-blueviolet?style=for-the-badge)](https://devshelf.ritualdev.in)
 
 **Jump to Subcategory:**
 [Benchmarking & Performance](#benchmarking-performance) • [CLI & Developer Productivity](#cli-developer-productivity) • [Database & SQL](#database-sql) • [Dev Utilities & Libraries](#dev-utilities-libraries) • [Developer Tools](#developer-tools) • [DevOps & Containers](#devops-containers) • [Disk & Storage](#disk-storage) • [Git & Version Control](#git-version-control) • [GitHub Workflow & TUI](#github-workflow-tui) • [HTTP & Network](#http-network) • [OS & Hardware Utilities](#os-hardware-utilities) • [System & Process Monitoring](#system-process-monitoring) • [Terminal & Search](#terminal-search) • [Terminal & Shell](#terminal-shell) • [Terminal Navigation](#terminal-navigation)
@@ -29,12 +29,13 @@
 | [**OrkasVideoStudio**](https://github.com/Orkas-AI/Orkas-VideoStudio) | `TypeScript` | `MIT` | Local-first TypeScript CLI and MCP toolkit for coding agents to compose, edit, and assemble videos from editable plan.json timelines. Core editing and transcription need no API keys; optional generation features use your own provider keys. | [GitHub](https://github.com/Orkas-AI/Orkas-VideoStudio) |
 | [**Shipvela publishing plugin and skills**](https://github.com/stefanautomateed/shipvela-codex) | `Markdown, JSON, CLI` | `MIT` | MIT-licensed publishing skills and MCP client configuration for coding agents to stage website files, review deployments, and track status. Enables direct website publishing from agent workflows without requiring code generation or a self-hosted server. | [GitHub](https://github.com/stefanautomateed/shipvela-codex) |
 
-### <a id="database-sql"></a>Database & SQL (6)
+### <a id="database-sql"></a>Database & SQL (7)
 
 | Tool | Language | License | Description | Links |
 | :--- | :---: | :---: | :--- | :---: |
 | [**lazysql**](https://github.com/jorgerojas26/lazysql) | `Go` | `MIT` | Cross-platform terminal UI database management tool for PostgreSQL, MySQL, and SQLite. | [GitHub](https://github.com/jorgerojas26/lazysql) |
 | [**usql**](https://github.com/xo/usql) | `Go` | `MIT` | Universal command-line interface for PostgreSQL, MySQL, SQLite, Oracle, ClickHouse, and 20+ database systems. | [GitHub](https://github.com/xo/usql) |
+| [**RowSafe**](https://github.com/rowsafe/rowsafe) | `Go` | `Apache-2.0` | Apache-2.0 agent and CLI for RowSafe database protection and management, with an MCP server for coding agents. Requires a RowSafe account and its separate hosted service. | [GitHub](https://github.com/rowsafe/rowsafe) |
 | [**pgcli**](https://github.com/dbcli/pgcli) | `Python` | `BSD-3-Clause` | Postgres CLI with auto-completion and syntax highlighting, table formatting, and smart completions. | [GitHub](https://github.com/dbcli/pgcli) |
 | [**mycli**](https://github.com/dbcli/mycli) | `Python` | `BSD-3-Clause` | A terminal client for MySQL, MariaDB, and Percona with auto-completion and syntax highlighting. | [GitHub](https://github.com/dbcli/mycli) |
 | [**iredis**](https://github.com/laixintao/iredis) | `Python` | `BSD-3-Clause` | A terminal client for Redis with auto-completion and syntax highlighting, command suggestions, and hints. | [GitHub](https://github.com/laixintao/iredis) |

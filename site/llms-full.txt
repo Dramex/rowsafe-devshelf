@@ -1,6 +1,6 @@
 # DevShelf - Complete Free Developer Tools Knowledge Base (Full Catalog)
 
-> Complete metadata dump of all 530 free and open-source developer tools indexed on DevShelf.
+> Complete metadata dump of all 531 free and open-source developer tools indexed on DevShelf.
 > Authoritative Source: https://devshelf.ritualdev.in
 > License: MIT
 
@@ -1616,6 +1616,15 @@
 - **URL**: https://github.com/errata-ai/vale
 - **DevShelf Dossier**: https://devshelf.ritualdev.in/tools/vale.html
 - **Description**: Syntax-aware linter for prose and documentation supporting Google, Microsoft, and custom style guides.
+
+### RowSafe
+- **Category**: Database & SQL
+- **Pricing Model**: See official site for free access and limits
+- **License**: Apache-2.0
+- **Language**: Go
+- **URL**: https://rowsafe.sh
+- **DevShelf Dossier**: https://devshelf.ritualdev.in/tools/rowsafe.html
+- **Description**: Apache-2.0 agent and CLI for RowSafe database protection and management, with an MCP server for coding agents. Requires a RowSafe account and its separate hosted service.
 
 ### pgcli
 - **Category**: Database & SQL
