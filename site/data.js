@@ -1,13 +1,13 @@
 window.DEVSHELF_DATA = {
-  "updatedAt": "2026-10-15T01:15:19.820Z",
-  "totalCount": 530,
-  "reposCount": 329,
+  "updatedAt": "2026-10-15T01:33:34.378Z",
+  "totalCount": 531,
+  "reposCount": 330,
   "facets": {
-    "repos": 329
+    "repos": 330
   },
   "counts": {
     "aiTools": 90,
-    "cliTools": 115,
+    "cliTools": 116,
     "testingQa": 62,
     "apis": 100,
     "freeCloud": 71,
@@ -2852,6 +2852,18 @@ window.DEVSHELF_DATA = {
       "type": "cli",
       "section": "CLI & Productivity Tools",
       "alternativeTo": "Grammarly Business"
+    },
+    {
+      "name": "RowSafe",
+      "repo": "https://github.com/rowsafe/rowsafe",
+      "url": "https://rowsafe.sh",
+      "category": "Database & SQL",
+      "description": "Apache-2.0 agent and CLI for RowSafe database protection and management, with an MCP server for coding agents. Requires a RowSafe account and its separate hosted service.",
+      "language": "Go",
+      "license": "Apache-2.0",
+      "featured": false,
+      "type": "cli",
+      "section": "CLI & Productivity Tools"
     },
     {
       "name": "pgcli",

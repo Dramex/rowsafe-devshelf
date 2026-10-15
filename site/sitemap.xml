@@ -1045,6 +1045,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://devshelf.ritualdev.in/tools/rowsafe.html</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://devshelf.ritualdev.in/tools/pgcli.html</loc>
     <lastmod>2026-10-15</lastmod>
     <changefreq>weekly</changefreq>
