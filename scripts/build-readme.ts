@@ -733,12 +733,21 @@ DevShelf is initiated by the team at [RitualDev Lab](https://github.com/RitualDe
       </a><br />
       <sub>☀️ Solaris Dev Shop (#71)</sub>
     </td>
+  </tr>
+  <tr>
     <td align="center" width="160">
       <a href="https://github.com/Alox1d">
         <img src="https://github.com/Alox1d.png" width="70" style="border-radius: 50%;" alt="Alox1d"/><br />
         <sub><b>Alox1d</b></sub>
       </a><br />
       <sub>📦 Community Tool (#76)</sub>
+    </td>
+    <td align="center" width="160">
+      <a href="https://github.com/Dramex">
+        <img src="https://github.com/Dramex.png" width="70" style="border-radius: 50%;" alt="Dramex"/><br />
+        <sub><b>Dramex</b></sub>
+      </a><br />
+      <sub>🛡️ RowSafe (PR #77)</sub>
     </td>
   </tr>
 </table>
