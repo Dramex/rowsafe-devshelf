@@ -4,7 +4,7 @@
 
 [← Back to Main Directory](../README.md) • [🌐 Live Search App](https://devshelf.ritualdev.in) • [➕ Submit New Resource](../README.md#-how-to-submit-your-project-or-api)
 
-[![Total APIs](https://img.shields.io/badge/APIs-100_Curated-blueviolet?style=for-the-badge)](https://devshelf.ritualdev.in)
+[![Total APIs](https://img.shields.io/badge/APIs-101_Curated-blueviolet?style=for-the-badge)](https://devshelf.ritualdev.in)
 
 **Jump to Subcategory:**
 [AI & Machine Learning](#ai-machine-learning) • [Animals & Fun](#animals-fun) • [Books & Literature](#books-literature) • [Development & Testing](#development-testing) • [Entertainment & Media](#entertainment-media) • [Finance & Crypto](#finance-crypto) • [Food & Health](#food-health) • [Games & Media](#games-media) • [Geocoding & IP](#geocoding-ip) • [Media & Images](#media-images) • [News & Media](#news-media) • [Other](#other) • [Science & Astronomy](#science-astronomy) • [Travel & Transit](#travel-transit) • [Weather & Climate](#weather-climate)
@@ -54,7 +54,7 @@
 | [**Open Library Covers API**](https://openlibrary.org/dev/docs/api/covers) | 🟢 No Key | `Unlimited` | Retrieve book cover images and author portraits using ISBN, OCLC, LCCN, or OLID identifiers. |
 | [**Free Dictionary**](https://dictionaryapi.dev) | 🟢 No Key | `Unlimited` | Free developer-friendly English vocabulary API providing word origins, examples, and synonyms. |
 
-### <a id="development-testing"></a>Development & Testing (24)
+### <a id="development-testing"></a>Development & Testing (25)
 
 | API & URL | Auth | Rate Limit | Description |
 | :--- | :---: | :---: | :--- |
@@ -82,6 +82,7 @@
 | [**Agify API**](https://api.agify.io) | 🟢 No Key | `1,000 req/day` | Predict age from first names based on statistical demographic modeling. |
 | [**Nationalize API**](https://api.nationalize.io) | 🟢 No Key | `1,000 req/day` | Predict nationality from names returning top country codes and confidence scores. |
 | [**Public APIs Index**](https://api.publicapis.org) | 🟢 No Key | `Unlimited` | Queryable directory of hundreds of free public APIs categorized by topic and authentication requirements. |
+| [**CurlShot**](https://curlshot.com/docs) | 🔑 Free Key | `100 screenshots/month (resets monthly), 10 requests/minute; failed renders and cache hits not counted` | Screenshot API: one GET request renders a URL, HTML, or Markdown to PNG, JPEG, WebP, PDF, or scrolling video (MP4/WebM/GIF), with full-page and element capture, device presets, dark mode, and ad/cookie-banner blocking. Free plan: 100 screenshots/month that resets monthly, no credit card. |
 
 ### <a id="entertainment-media"></a>Entertainment & Media (1)
 

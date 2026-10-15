@@ -1,6 +1,6 @@
 # DevShelf - Complete Free Developer Tools Knowledge Base (Full Catalog)
 
-> Complete metadata dump of all 531 free and open-source developer tools indexed on DevShelf.
+> Complete metadata dump of all 532 free and open-source developer tools indexed on DevShelf.
 > Authoritative Source: https://devshelf.ritualdev.in
 > License: MIT
 
@@ -3300,6 +3300,14 @@ Current limits: https://arcmira.com/docs/usage-and-billing
 - **URL**: https://invokely.ai/docs
 - **DevShelf Dossier**: https://devshelf.ritualdev.in/tools/invokely.html
 - **Description**: Hosted MCP and REST API for official statistics by indicator, place and period. Each value includes a source citation. The free plan has 500 calls a month with no card; an MCP trial allows 25 calls a day per IP without an account.
+
+### CurlShot
+- **Category**: Development & Testing
+- **Pricing Model**: 100 screenshots/month (resets monthly), 10 requests/minute; failed renders and cache hits not counted
+- **Auth**: Free API Key
+- **URL**: https://curlshot.com/docs
+- **DevShelf Dossier**: https://devshelf.ritualdev.in/tools/curlshot.html
+- **Description**: Screenshot API: one GET request renders a URL, HTML, or Markdown to PNG, JPEG, WebP, PDF, or scrolling video (MP4/WebM/GIF), with full-page and element capture, device presets, dark mode, and ad/cookie-banner blocking. Free plan: 100 screenshots/month that resets monthly, no credit card.
 
 ### Supabase
 - **Category**: Databases & BaaS

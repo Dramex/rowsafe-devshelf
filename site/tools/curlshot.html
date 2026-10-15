@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CurlShot - Free Developer Tool | DevShelf</title>
+  <meta name="description" content="Screenshot API: one GET request renders a URL, HTML, or Markdown to PNG, JPEG, WebP, PDF, or scrolling video (MP4/WebM/GIF), with full-page and element capture, device presets, dark mode, and ad/cookie-banner blocking. Free plan: 100 screenshots/month that resets monthly, no credit card.">
+  <meta name="keywords" content="CurlShot, free developer tool, Development &amp; Testing, open source tools">
+  <link rel="canonical" href="https://devshelf.ritualdev.in/tools/curlshot.html">
+  <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+  <link rel="alternate" type="text/plain" href="../llms.txt" title="DevShelf LLMs.txt Context for AI Agents">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="../favicon.ico">
+  <link rel="icon" type="image/svg+xml" href="../favicon.svg">
+  <link rel="alternate icon" href="../favicon.ico">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://devshelf.ritualdev.in/tools/curlshot.html">
+  <meta property="og:title" content="CurlShot - Free Developer Tool | DevShelf">
+  <meta property="og:description" content="Screenshot API: one GET request renders a URL, HTML, or Markdown to PNG, JPEG, WebP, PDF, or scrolling video (MP4/WebM/GIF), with full-page and element capture, device presets, dark mode, and ad/cookie-banner blocking. Free plan: 100 screenshots/month that resets monthly, no credit card.">
+  <meta property="og:site_name" content="DevShelf">
+  <meta property="og:image" content="https://devshelf.ritualdev.in/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@RitualDevLab">
+  <meta name="twitter:title" content="CurlShot - Free Developer Tool | DevShelf">
+  <meta name="twitter:description" content="Screenshot API: one GET request renders a URL, HTML, or Markdown to PNG, JPEG, WebP, PDF, or scrolling video (MP4/WebM/GIF), with full-page and element capture, device presets, dark mode, and ad/cookie-banner blocking. Free plan: 100 screenshots/month that resets monthly, no credit card.">
+  <meta name="twitter:image" content="https://devshelf.ritualdev.in/og-image.jpg">
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebAPI",
+      "name": "CurlShot",
+      "description": "Screenshot API: one GET request renders a URL, HTML, or Markdown to PNG, JPEG, WebP, PDF, or scrolling video (MP4/WebM/GIF), with full-page and element capture, device presets, dark mode, and ad/cookie-banner blocking. Free plan: 100 screenshots/month that resets monthly, no credit card.",
+      "applicationCategory": "Development & Testing",
+      "operatingSystem": "All",
+      "isAccessibleForFree": true,
+      "url": "https://curlshot.com/docs",
+      "mainEntityOfPage": "https://devshelf.ritualdev.in/tools/curlshot.html",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD",
+        "availability": "https://schema.org/InStock",
+        "description": "100 screenshots/month (resets monthly), 10 requests/minute; failed renders and cache hits not counted"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "DevShelf by RitualDev Lab",
+        "url": "https://devshelf.ritualdev.in"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What free access does CurlShot offer?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "100 screenshots/month (resets monthly), 10 requests/minute; failed renders and cache hits not counted"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What are the authentication and access requirements for CurlShot?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Authentication requirement: Free API Key."
+          }
+        }
+      ]
+    }
+  ]
+}
+  </script>
+
+  <link rel="stylesheet" href="../tailwind.min.css">
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen flex flex-col justify-between selection:bg-purple-500 selection:text-white">
+  <header class="border-b border-slate-800 bg-slate-900/60 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
+      <a href="../" class="flex items-center space-x-2 text-white font-extrabold text-lg hover:text-purple-400 transition">
+        <span>📚 DevShelf</span>
+      </a>
+      <div class="flex items-center space-x-3">
+        <a href="https://checkout.dodopayments.com/buy/pdt_0NpjONGugY5QkrFDUaPva" target="_blank" rel="noopener noreferrer" class="text-xs font-bold px-3 py-1.5 rounded-lg bg-pink-950/60 hover:bg-pink-900/80 border border-pink-500/50 text-pink-200 transition">
+          💖 Sponsor
+        </a>
+        <a href="../#directory" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-500 text-white transition">
+          ← Browse 532 Tools
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto px-4 py-12 flex-1 w-full">
+    <nav class="text-xs text-slate-400 mb-6 flex items-center space-x-2 font-mono">
+      <a href="../" class="hover:text-purple-400">DevShelf</a>
+      <span>/</span>
+      <a href="../#directory" class="hover:text-purple-400">Development &amp; Testing</a>
+      <span>/</span>
+      <span class="text-purple-300 font-bold">CurlShot</span>
+    </nav>
+
+    <div class="p-8 rounded-2xl bg-slate-900 border border-slate-800 shadow-2xl relative overflow-hidden">
+      <div class="absolute -right-16 -top-16 w-64 h-64 bg-purple-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="flex items-start justify-between flex-wrap gap-4 mb-6">
+        <div>
+          <div class="flex items-center space-x-2 flex-wrap gap-2 mb-3">
+            <span class="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-purple-950/80 border border-purple-500/40 text-purple-300">
+              Development &amp; Testing
+            </span>
+            
+          </div>
+          <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">CurlShot</h1>
+        </div>
+        <a href="https://curlshot.com/docs" target="_blank" rel="noopener noreferrer" class="inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-bold text-sm shadow-lg shadow-purple-500/20 transition transform hover:-translate-y-0.5">
+          <span>Visit Official Page</span>
+          <span>→</span>
+        </a>
+      </div>
+
+      <p class="text-slate-300 text-base sm:text-lg leading-relaxed mb-8">
+        Screenshot API: one GET request renders a URL, HTML, or Markdown to PNG, JPEG, WebP, PDF, or scrolling video (MP4/WebM/GIF), with full-page and element capture, device presets, dark mode, and ad/cookie-banner blocking. Free plan: 100 screenshots/month that resets monthly, no credit card.
+      </p>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 p-5 rounded-xl bg-slate-950/80 border border-slate-800 text-xs font-mono">
+        <div>
+          <span class="text-slate-500 block mb-1">Pricing Model</span>
+          <span class="text-emerald-400 font-semibold">Free access; limits may apply</span>
+        </div>
+        
+        
+        <div><span class="text-slate-500 block mb-1">Auth Requirement</span><span class="text-amber-300 font-semibold">Free API Key</span></div>
+        <div class="col-span-2"><span class="text-slate-500 block mb-1">Free Tier Allowance</span><span class="text-slate-200">100 screenshots/month (resets monthly), 10 requests/minute; failed renders and cache hits not counted</span></div>
+      </div>
+
+      
+      
+      <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="p-5 rounded-xl bg-slate-950/70 border border-slate-800">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center space-x-2">
+              <span class="text-xs font-bold text-purple-300">🏷️ DevShelf Directory Badge</span>
+            </div>
+            <button onclick="navigator.clipboard.writeText('[![Featured on DevShelf](https://img.shields.io/badge/DevShelf-Verified_Free-7928CA?style=flat-square&logo=googlechrome&logoColor=white)](https://devshelf.ritualdev.in/)'); alert('Copied DevShelf badge Markdown!');" class="px-2.5 py-1 text-xs font-bold rounded bg-purple-600 hover:bg-purple-500 text-white transition">
+              Copy
+            </button>
+          </div>
+          <div class="mb-2">
+            <img src="https://img.shields.io/badge/DevShelf-Verified_Free-7928CA?style=flat-square&logo=googlechrome&logoColor=white" alt="Featured on DevShelf" class="h-5">
+          </div>
+          <input type="text" readonly value="[![Featured on DevShelf](https://img.shields.io/badge/DevShelf-Verified_Free-7928CA?style=flat-square&logo=googlechrome&logoColor=white)](https://devshelf.ritualdev.in/)" class="w-full text-xs font-mono bg-slate-900 px-3 py-1.5 rounded text-emerald-300 border border-slate-800 select-all">
+        </div>
+
+        <div class="p-5 rounded-xl bg-slate-950/70 border border-purple-900/40">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center space-x-2">
+              <span class="text-xs font-bold text-cyan-300">🛡️ Secured by AgentShield Badge</span>
+            </div>
+            <button onclick="navigator.clipboard.writeText('[![Secured by AgentShield](https://img.shields.io/badge/Secured%20by-AgentShield%20Zero--Leak-8b5cf6?logo=shield&logoColor=white&style=flat-square)](https://agentshield.ritualdev.in/)'); alert('Copied AgentShield badge Markdown!');" class="px-2.5 py-1 text-xs font-bold rounded bg-cyan-600 hover:bg-cyan-500 text-white transition">
+              Copy
+            </button>
+          </div>
+          <div class="mb-2">
+            <img src="https://img.shields.io/badge/Secured%20by-AgentShield%20Zero--Leak-8b5cf6?logo=shield&logoColor=white&style=flat-square" alt="Secured by AgentShield" class="h-5">
+          </div>
+          <input type="text" readonly value="[![Secured by AgentShield](https://img.shields.io/badge/Secured%20by-AgentShield%20Zero--Leak-8b5cf6?logo=shield&logoColor=white&style=flat-square)](https://agentshield.ritualdev.in/)" class="w-full text-xs font-mono bg-slate-900 px-3 py-1.5 rounded text-cyan-300 border border-slate-800 select-all">
+        </div>
+      </div>
+      
+      <div class="mt-8 pt-6 border-t border-slate-800">
+        <h3 class="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider mb-4">🔗 Related Free Tools in Development &amp; Testing</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          
+            <a href="jsonplaceholder.html" class="p-3.5 rounded-xl bg-slate-950/70 hover:bg-slate-800 border border-slate-800 hover:border-purple-500/40 transition flex items-center justify-between group">
+              <div class="min-w-0 pr-2">
+                <span class="text-xs font-bold text-white group-hover:text-purple-300 transition truncate block">JSONPlaceholder</span>
+                <span class="text-[11px] text-slate-400 truncate block mt-0.5">Free fake REST API for prototyping, mock posts, comments, todos, and users with zero configuration.</span>
+              </div>
+              <span class="text-xs text-purple-400 group-hover:translate-x-0.5 transition font-mono shrink-0">→</span>
+            </a>
+            <a href="reqres.html" class="p-3.5 rounded-xl bg-slate-950/70 hover:bg-slate-800 border border-slate-800 hover:border-purple-500/40 transition flex items-center justify-between group">
+              <div class="min-w-0 pr-2">
+                <span class="text-xs font-bold text-white group-hover:text-purple-300 transition truncate block">ReqRes</span>
+                <span class="text-[11px] text-slate-400 truncate block mt-0.5">A hosted REST-API ready to respond to your AJAX requests with simulated realistic user and auth data.</span>
+              </div>
+              <span class="text-xs text-purple-400 group-hover:translate-x-0.5 transition font-mono shrink-0">→</span>
+            </a>
+            <a href="dummyjson.html" class="p-3.5 rounded-xl bg-slate-950/70 hover:bg-slate-800 border border-slate-800 hover:border-purple-500/40 transition flex items-center justify-between group">
+              <div class="min-w-0 pr-2">
+                <span class="text-xs font-bold text-white group-hover:text-purple-300 transition truncate block">DummyJSON</span>
+                <span class="text-[11px] text-slate-400 truncate block mt-0.5">Free dummy REST API with products, carts, users, posts, comments, auth, and image placeholder endpoints.</span>
+              </div>
+              <span class="text-xs text-purple-400 group-hover:translate-x-0.5 transition font-mono shrink-0">→</span>
+            </a>
+            <a href="universities-list-api.html" class="p-3.5 rounded-xl bg-slate-950/70 hover:bg-slate-800 border border-slate-800 hover:border-purple-500/40 transition flex items-center justify-between group">
+              <div class="min-w-0 pr-2">
+                <span class="text-xs font-bold text-white group-hover:text-purple-300 transition truncate block">Universities List API</span>
+                <span class="text-[11px] text-slate-400 truncate block mt-0.5">Public directory and queryable dataset of over 9,000 accredited universities and domains worldwide.</span>
+              </div>
+              <span class="text-xs text-purple-400 group-hover:translate-x-0.5 transition font-mono shrink-0">→</span>
+            </a>
+        </div>
+      </div>
+      
+      <div class="mt-8 pt-6 border-t border-slate-800">
+        <h3 class="text-xs font-mono font-bold text-slate-400 uppercase tracking-wider mb-4">💬 Frequently Asked Questions (AI & Developer Summary)</h3>
+        <div class="space-y-3">
+          
+            <details class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 group" open>
+              <summary class="font-bold text-xs sm:text-sm text-slate-200 cursor-pointer flex items-center justify-between">
+                <span>What free access does CurlShot offer?</span>
+                <span class="text-purple-400 text-xs font-mono group-open:rotate-180 transition">▼</span>
+              </summary>
+              <p class="mt-2 text-xs text-slate-400 leading-relaxed font-sans">
+                100 screenshots/month (resets monthly), 10 requests/minute; failed renders and cache hits not counted
+              </p>
+            </details>
+            <details class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 group" >
+              <summary class="font-bold text-xs sm:text-sm text-slate-200 cursor-pointer flex items-center justify-between">
+                <span>What are the authentication and access requirements for CurlShot?</span>
+                <span class="text-purple-400 text-xs font-mono group-open:rotate-180 transition">▼</span>
+              </summary>
+              <p class="mt-2 text-xs text-slate-400 leading-relaxed font-sans">
+                Authentication requirement: Free API Key.
+              </p>
+            </details>
+        </div>
+      </div>
+
+      <div class="mt-8 pt-6 border-t border-slate-800 flex items-center justify-between flex-wrap gap-4">
+        <a href="../" class="text-xs text-purple-400 hover:text-purple-300 font-semibold transition">
+          ← Back to DevShelf Directory
+        </a>
+        <a href="../directory.html" class="text-xs text-slate-400 hover:text-slate-200 transition font-mono">
+          All Tools Index (520+) →
+        </a>
+        <span class="text-xs text-slate-500 font-mono">
+          Verified Zero-Paywall Resource
+        </span>
+      </div>
+    </div>
+  </main>
+
+  <footer class="border-t border-slate-800 bg-slate-900/40 py-6 text-center text-xs text-slate-400 space-y-2">
+    <div class="flex items-center justify-center flex-wrap gap-3 font-mono text-[11px] text-slate-400 mb-2">
+      <a href="../" class="hover:text-purple-300 transition">DevShelf Home</a>
+      <span>•</span>
+      <a href="../directory.html" class="hover:text-purple-300 transition">All Tools Index</a>
+      <span>•</span>
+      <a href="../collections/free-weather-apis.html" class="hover:text-purple-300 transition">Collections</a>
+      <span>•</span>
+      <a href="https://github.com/RitualDev-Lab/DevShelf" target="_blank" rel="noreferrer" class="hover:text-purple-300 transition">GitHub</a>
+    </div>
+    <p>Curated with ❤️ by <a href="https://github.com/RitualDev-Lab" class="text-purple-400 hover:underline">RitualDev-Lab</a> and the global open-source community.</p>
+    <p><a href="https://checkout.dodopayments.com/buy/pdt_0NpjONGugY5QkrFDUaPva" target="_blank" rel="noopener noreferrer" class="text-pink-400 hover:text-pink-300 font-semibold transition">💖 Support DevShelf via Dodo Payments</a></p>
+  </footer>
+</body>
+</html>
