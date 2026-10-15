@@ -749,12 +749,25 @@ async function main() {
 
       const question = (q) => new Promise((res) => rl.question(q, res));
 
-      if (!name) name = (await question(`  ${c.cyan}?${c.reset} Tool Name (e.g. Supabase, Bruno): `)).trim();
-      if (!url) url = (await question(`  ${c.cyan}?${c.reset} Official Website or GitHub URL: `)).trim();
-      if (!description) description = (await question(`  ${c.cyan}?${c.reset} Short Description: `)).trim();
-      if (!freeTier) freeTier = (await question(`  ${c.cyan}?${c.reset} Free Tier Allowance (e.g. 500MB free DB, 100% free open-source): `)).trim() || "100% Free Open Source";
-      
-      const catAnswer = (await question(`  ${c.cyan}?${c.reset} Category (ai-tools, cli-tools, apis, free-cloud, testing-qa, boilerplates) [default: ${category}]: `)).trim();
+      if (!name)
+        name = (await question(`  ${c.cyan}?${c.reset} Tool Name (e.g. Supabase, Bruno): `)).trim();
+      if (!url)
+        url = (await question(`  ${c.cyan}?${c.reset} Official Website or GitHub URL: `)).trim();
+      if (!description)
+        description = (await question(`  ${c.cyan}?${c.reset} Short Description: `)).trim();
+      if (!freeTier)
+        freeTier =
+          (
+            await question(
+              `  ${c.cyan}?${c.reset} Free Tier Allowance (e.g. 500MB free DB, 100% free open-source): `,
+            )
+          ).trim() || "100% Free Open Source";
+
+      const catAnswer = (
+        await question(
+          `  ${c.cyan}?${c.reset} Category (ai-tools, cli-tools, apis, free-cloud, testing-qa, boilerplates) [default: ${category}]: `,
+        )
+      ).trim();
       if (catAnswer) category = catAnswer;
 
       rl.close();
@@ -784,18 +797,28 @@ async function main() {
         const items = JSON.parse(raw.replace(/^\uFEFF/, ""));
         // Check for duplicates
         if (items.some((i) => i.name.toLowerCase() === name.toLowerCase())) {
-          console.log(`\n  ⚠️ ${c.amber}Warning:${c.reset} Tool "${name}" already exists in shelf/${shelfFile}.`);
+          console.log(
+            `\n  ⚠️ ${c.amber}Warning:${c.reset} Tool "${name}" already exists in shelf/${shelfFile}.`,
+          );
           return;
         }
         items.push(submissionEntry);
         items.sort((a, b) => a.name.localeCompare(b.name));
         fs.writeFileSync(targetPath, `${JSON.stringify(items, null, 2)}\n`, "utf8");
-        console.log(`\n  ✅ Added ${c.bold}${name}${c.reset} to ${c.cyan}shelf/${shelfFile}${c.reset}!`);
+        console.log(
+          `\n  ✅ Added ${c.bold}${name}${c.reset} to ${c.cyan}shelf/${shelfFile}${c.reset}!`,
+        );
         console.log("\n  👉 Run git commit and create your pull request:");
-        console.log(`     ${c.gray}git checkout -b add-${name.toLowerCase().replace(/[^a-z0-9]/g, "-")}${c.reset}`);
+        console.log(
+          `     ${c.gray}git checkout -b add-${name.toLowerCase().replace(/[^a-z0-9]/g, "-")}${c.reset}`,
+        );
         console.log(`     ${c.gray}git add shelf/${shelfFile}${c.reset}`);
-        console.log(`     ${c.gray}git commit -m "feat(shelf): add ${name} to ${shelfFile}"${c.reset}`);
-        console.log(`     ${c.gray}gh pr create --title "Add ${name}" --body "Submitting ${name} to DevShelf via terminal CLI"${c.reset}\n`);
+        console.log(
+          `     ${c.gray}git commit -m "feat(shelf): add ${name} to ${shelfFile}"${c.reset}`,
+        );
+        console.log(
+          `     ${c.gray}gh pr create --title "Add ${name}" --body "Submitting ${name} to DevShelf via terminal CLI"${c.reset}\n`,
+        );
         return;
       } catch (err) {
         console.error(`  ${c.red}Failed to write locally:${c.reset}`, err.message);

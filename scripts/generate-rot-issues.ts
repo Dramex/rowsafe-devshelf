@@ -108,7 +108,9 @@ async function generateRotIssues() {
   // Create Consolidated Weekly Digest Issue
   const digestTitle = `[Weekly Rotten Link Digest]: Community Cleanup Needed (${failing.length} dead URLs)`;
   if (existingIssueTitles.includes("[Weekly Rotten Link Digest]")) {
-    console.log("  ℹ️ Weekly digest issue already exists for this cycle. Skipping duplicate creation.");
+    console.log(
+      "  ℹ️ Weekly digest issue already exists for this cycle. Skipping duplicate creation.",
+    );
     return;
   }
 

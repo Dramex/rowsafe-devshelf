@@ -3154,7 +3154,10 @@ function initComparator() {
   // Populate options
   const sorted = [...allResources].sort((a, b) => a.name.localeCompare(b.name));
   const optionsHtml = sorted
-    .map((item) => `<option value="${escapeHtml(item.name)}">${escapeHtml(item.name)} (${escapeHtml(item.category || item.section || "Tool")})</option>`)
+    .map(
+      (item) =>
+        `<option value="${escapeHtml(item.name)}">${escapeHtml(item.name)} (${escapeHtml(item.category || item.section || "Tool")})</option>`,
+    )
     .join("");
 
   selectA.innerHTML = optionsHtml;
@@ -3210,12 +3213,16 @@ function initComparator() {
             </div>
           </div>
 
-          ${item.dockerCompose ? `
+          ${
+            item.dockerCompose
+              ? `
           <div class="p-2.5 rounded-lg bg-slate-950/80 border border-slate-800 text-xs font-mono">
             <span class="text-[10px] text-cyan-400 block mb-1">🐳 1-Click Docker Image:</span>
             <code class="text-[11px] text-slate-300 break-all select-all">${escapeHtml(item.dockerCompose)}</code>
           </div>
-          ` : ""}
+          `
+              : ""
+          }
 
           <div class="pt-2">
             <a href="${escapeHtml(item.url || item.repo)}" target="_blank" rel="noopener noreferrer" class="w-full py-2 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs flex items-center justify-center space-x-1.5 transition border border-slate-700 hover:border-slate-600">
