@@ -749,6 +749,13 @@ DevShelf is initiated by the team at [RitualDev Lab](https://github.com/RitualDe
       </a><br />
       <sub>🛡️ RowSafe (PR #77)</sub>
     </td>
+    <td align="center" width="160">
+      <a href="https://github.com/SergiuPogor">
+        <img src="https://github.com/SergiuPogor.png" width="70" style="border-radius: 50%;" alt="SergiuPogor"/><br />
+        <sub><b>SergiuPogor</b></sub>
+      </a><br />
+      <sub>📸 CurlShot (PR #79)</sub>
+    </td>
   </tr>
 </table>
 
