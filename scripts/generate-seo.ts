@@ -279,8 +279,8 @@ async function generateSeo() {
         <span>📚 DevShelf</span>
       </a>
       <div class="flex items-center space-x-3">
-        <a href="https://donation.rolenest.in" target="_blank" rel="noopener noreferrer" class="text-xs font-bold px-3 py-1.5 rounded-lg bg-pink-950/60 hover:bg-pink-900/80 border border-pink-500/50 text-pink-200 transition">
-          💖 Donate
+        <a href="https://checkout.dodopayments.com/buy/pdt_0NpjONGugY5QkrFDUaPva" target="_blank" rel="noopener noreferrer" class="text-xs font-bold px-3 py-1.5 rounded-lg bg-pink-950/60 hover:bg-pink-900/80 border border-pink-500/50 text-pink-200 transition">
+          💖 Sponsor
         </a>
         <a href="../#directory" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-500 text-white transition">
           ← Browse ${resources.length} Tools
@@ -370,7 +370,7 @@ async function generateSeo() {
       <a href="https://github.com/RitualDev-Lab/DevShelf" target="_blank" rel="noreferrer" class="hover:text-purple-300 transition">GitHub</a>
     </div>
     <p>Curated with ❤️ by <a href="https://github.com/RitualDev-Lab" class="text-purple-400 hover:underline">RitualDev-Lab</a> and the global open-source community.</p>
-    <p><a href="https://donation.rolenest.in" target="_blank" rel="noopener noreferrer" class="text-pink-400 hover:text-pink-300 font-semibold transition">💖 Support DevShelf (donation.rolenest.in)</a></p>
+    <p><a href="https://checkout.dodopayments.com/buy/pdt_0NpjONGugY5QkrFDUaPva" target="_blank" rel="noopener noreferrer" class="text-pink-400 hover:text-pink-300 font-semibold transition">💖 Support DevShelf via Dodo Payments</a></p>
   </footer>
 </body>
 </html>
@@ -618,8 +618,8 @@ async function generateSeo() {
         <span>📚 DevShelf</span>
       </a>
       <div class="flex items-center space-x-3">
-        <a href="https://donation.rolenest.in" target="_blank" rel="noopener noreferrer" class="text-xs font-bold px-3 py-1.5 rounded-lg bg-pink-950/60 hover:bg-pink-900/80 border border-pink-500/50 text-pink-200 transition">
-          💖 Donate
+        <a href="https://checkout.dodopayments.com/buy/pdt_0NpjONGugY5QkrFDUaPva" target="_blank" rel="noopener noreferrer" class="text-xs font-bold px-3 py-1.5 rounded-lg bg-pink-950/60 hover:bg-pink-900/80 border border-pink-500/50 text-pink-200 transition">
+          💖 Sponsor
         </a>
         <a href="../#directory" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-500 text-white transition">
           Browse Directory →
@@ -688,7 +688,7 @@ async function generateSeo() {
       <a href="https://github.com/RitualDev-Lab/DevShelf" target="_blank" rel="noreferrer" class="hover:text-purple-300 transition">GitHub</a>
     </div>
     <p>Curated with ❤️ by <a href="https://github.com/RitualDev-Lab" class="text-purple-400 hover:underline">RitualDev-Lab</a> and the global open-source community.</p>
-    <p><a href="https://donation.rolenest.in" target="_blank" rel="noopener noreferrer" class="text-pink-400 hover:text-pink-300 font-semibold transition">💖 Support DevShelf (donation.rolenest.in)</a></p>
+    <p><a href="https://checkout.dodopayments.com/buy/pdt_0NpjONGugY5QkrFDUaPva" target="_blank" rel="noopener noreferrer" class="text-pink-400 hover:text-pink-300 font-semibold transition">💖 Support DevShelf via Dodo Payments</a></p>
   </footer>
 </body>
 </html>`;
@@ -876,8 +876,8 @@ async function generateSeo() {
         <span>📚 DevShelf</span>
       </a>
       <div class="flex items-center space-x-3">
-        <a href="https://donation.rolenest.in" target="_blank" rel="noopener noreferrer" class="text-xs font-bold px-3 py-1.5 rounded-lg bg-pink-950/60 hover:bg-pink-900/80 border border-pink-500/50 text-pink-200 transition">
-          💖 Donate
+        <a href="https://checkout.dodopayments.com/buy/pdt_0NpjONGugY5QkrFDUaPva" target="_blank" rel="noopener noreferrer" class="text-xs font-bold px-3 py-1.5 rounded-lg bg-pink-950/60 hover:bg-pink-900/80 border border-pink-500/50 text-pink-200 transition">
+          💖 Sponsor
         </a>
         <a href="../#directory" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-500 text-white transition">
           Browse Directory →
@@ -931,7 +931,7 @@ async function generateSeo() {
       <a href="https://github.com/RitualDev-Lab/DevShelf" target="_blank" rel="noreferrer" class="hover:text-purple-300 transition">GitHub</a>
     </div>
     <p>Curated with ❤️ by <a href="https://github.com/RitualDev-Lab" class="text-purple-400 hover:underline">RitualDev-Lab</a> and the global open-source community.</p>
-    <p><a href="https://donation.rolenest.in" target="_blank" rel="noopener noreferrer" class="text-pink-400 hover:text-pink-300 font-semibold transition">💖 Support DevShelf (donation.rolenest.in)</a></p>
+    <p><a href="https://checkout.dodopayments.com/buy/pdt_0NpjONGugY5QkrFDUaPva" target="_blank" rel="noopener noreferrer" class="text-pink-400 hover:text-pink-300 font-semibold transition">💖 Support DevShelf via Dodo Payments</a></p>
   </footer>
 </body>
 </html>`;
@@ -1048,8 +1048,8 @@ async function generateSeo() {
         <span>📚 DevShelf</span>
       </a>
       <div class="flex items-center space-x-3">
-        <a href="https://donation.rolenest.in" target="_blank" rel="noopener noreferrer" class="text-xs font-bold px-3 py-1.5 rounded-lg bg-pink-950/60 hover:bg-pink-900/80 border border-pink-500/50 text-pink-200 transition">
-          💖 Donate
+        <a href="https://checkout.dodopayments.com/buy/pdt_0NpjONGugY5QkrFDUaPva" target="_blank" rel="noopener noreferrer" class="text-xs font-bold px-3 py-1.5 rounded-lg bg-pink-950/60 hover:bg-pink-900/80 border border-pink-500/50 text-pink-200 transition">
+          💖 Sponsor
         </a>
         <a href="./#directory" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-500 text-white transition">
           ← Interactive App
@@ -1108,7 +1108,7 @@ async function generateSeo() {
       <a href="api/v1/tools.json" target="_blank" rel="noreferrer" class="hover:text-cyan-300 transition">REST API</a>
     </div>
     <p>Curated with ❤️ by <a href="https://github.com/RitualDev-Lab" class="text-purple-400 hover:underline">RitualDev-Lab</a> and the global open-source community.</p>
-    <p><a href="https://donation.rolenest.in" target="_blank" rel="noopener noreferrer" class="text-pink-400 hover:text-pink-300 font-semibold transition">💖 Support DevShelf (donation.rolenest.in)</a></p>
+    <p><a href="https://checkout.dodopayments.com/buy/pdt_0NpjONGugY5QkrFDUaPva" target="_blank" rel="noopener noreferrer" class="text-pink-400 hover:text-pink-300 font-semibold transition">💖 Support DevShelf via Dodo Payments</a></p>
   </footer>
 </body>
 </html>`;

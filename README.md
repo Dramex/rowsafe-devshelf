@@ -509,9 +509,9 @@ DevShelf is a 100% free and open-source community directory. If DevShelf saved y
 
 <div align="center">
 
-[![Support on RoleNest](https://img.shields.io/badge/Donate-RoleNest-FF69B4?style=for-the-badge&logo=heart&logoColor=white)](https://donation.rolenest.in)
+[![Sponsor on Dodo Payments](https://img.shields.io/badge/Sponsor-Dodo%20Payments-8b5cf6?style=for-the-badge&logo=shield&logoColor=white)](https://checkout.dodopayments.com/buy/pdt_0NpjONGugY5QkrFDUaPva)
 
-[**💖 Support via RoleNest (donation.rolenest.in)**](https://donation.rolenest.in)
+[**💖 Sponsor via Dodo Payments**](https://checkout.dodopayments.com/buy/pdt_0NpjONGugY5QkrFDUaPva)
 
 </div>
 
