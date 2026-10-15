@@ -66,12 +66,17 @@ jobs:
             echo "Zero resources eligible for sunset. No PR required."
           fi
 
-      - name: Commit Fresh Uptime Telemetry to Main
+      - name: Open Consolidated Weekly Rotten Link Digest Issue
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: pnpm run issues:rot
+
+      - name: Commit Fresh Uptime Telemetry and Maintained Shelf to Main
         run: |
           git config --global user.name "DevShelf Bot"
           git config --global user.email "bot@devshelf.local"
-          git add site/uptime.json
+          git add site/uptime.json shelf/
           if ! git diff --cached --quiet; then
-            git commit -m "chore(telemetry): update 7-day uptime metrics [skip ci]"
+            git commit -m "chore(telemetry): update 7-day uptime metrics & maintenance flags [skip ci]"
             git push origin main
           fi

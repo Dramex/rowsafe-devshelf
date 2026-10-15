@@ -160,6 +160,7 @@ ${c.bold}USAGE:${c.reset}
   ${c.green}npx devshelf list [category]${c.reset}     List items by category
   ${c.green}npx devshelf random${c.reset}              Discover a random curated resource
   ${c.green}npx devshelf stats${c.reset}               Show catalog counts and metrics
+  ${c.green}npx devshelf submit [options]${c.reset}     Submit a new free developer tool via PR from terminal
   ${c.green}npx devshelf mcp${c.reset}                 Launch DevShelf as a Model Context Protocol (MCP) server
   ${c.green}npx devshelf open <name>${c.reset}          Open resource URL directly in browser
 
@@ -710,6 +711,108 @@ async function main() {
     const url = getResourceUrl(item);
     console.log(`  🚀 Opening ${item.name} (${url})...`);
     openUrl(url);
+    return;
+  }
+
+  if (command === "submit") {
+    printHeader();
+    console.log(`  🚀 ${c.bold}DevShelf Terminal Submission Wizard${c.reset}\n`);
+
+    // Parse options from cleanArgs
+    let name = "";
+    let url = "";
+    let category = "ai-tools";
+    let description = "";
+    let freeTier = "";
+
+    const nameIdx = cleanArgs.indexOf("--name");
+    if (nameIdx !== -1 && cleanArgs[nameIdx + 1]) name = cleanArgs[nameIdx + 1];
+
+    const urlIdx = cleanArgs.indexOf("--url");
+    if (urlIdx !== -1 && cleanArgs[urlIdx + 1]) url = cleanArgs[urlIdx + 1];
+
+    const catIdx = cleanArgs.indexOf("--category");
+    if (catIdx !== -1 && cleanArgs[catIdx + 1]) category = cleanArgs[catIdx + 1];
+
+    const descIdx = cleanArgs.indexOf("--desc");
+    if (descIdx !== -1 && cleanArgs[descIdx + 1]) description = cleanArgs[descIdx + 1];
+
+    const freeIdx = cleanArgs.indexOf("--free-tier");
+    if (freeIdx !== -1 && cleanArgs[freeIdx + 1]) freeTier = cleanArgs[freeIdx + 1];
+
+    // Interactive prompt if required fields are missing
+    if (!name || !url || !description) {
+      const rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout,
+      });
+
+      const question = (q) => new Promise((res) => rl.question(q, res));
+
+      if (!name) name = (await question(`  ${c.cyan}?${c.reset} Tool Name (e.g. Supabase, Bruno): `)).trim();
+      if (!url) url = (await question(`  ${c.cyan}?${c.reset} Official Website or GitHub URL: `)).trim();
+      if (!description) description = (await question(`  ${c.cyan}?${c.reset} Short Description: `)).trim();
+      if (!freeTier) freeTier = (await question(`  ${c.cyan}?${c.reset} Free Tier Allowance (e.g. 500MB free DB, 100% free open-source): `)).trim() || "100% Free Open Source";
+      
+      const catAnswer = (await question(`  ${c.cyan}?${c.reset} Category (ai-tools, cli-tools, apis, free-cloud, testing-qa, boilerplates) [default: ${category}]: `)).trim();
+      if (catAnswer) category = catAnswer;
+
+      rl.close();
+    }
+
+    if (!name || !url) {
+      console.error(`\n  ${c.red}Error:${c.reset} Name and URL are required to submit.`);
+      process.exit(1);
+    }
+
+    // Determine target shelf file
+    const shelfFile = category.endsWith(".json") ? category : `${category}.json`;
+    const targetPath = path.resolve(process.cwd(), "shelf", shelfFile);
+    const isLocalRepo = fs.existsSync(targetPath);
+
+    const submissionEntry = {
+      name,
+      url,
+      description,
+      freeTierCost: freeTier || "Free",
+      submittedAt: new Date().toISOString(),
+    };
+
+    if (isLocalRepo) {
+      try {
+        const raw = fs.readFileSync(targetPath, "utf8");
+        const items = JSON.parse(raw.replace(/^\uFEFF/, ""));
+        // Check for duplicates
+        if (items.some((i) => i.name.toLowerCase() === name.toLowerCase())) {
+          console.log(`\n  ⚠️ ${c.amber}Warning:${c.reset} Tool "${name}" already exists in shelf/${shelfFile}.`);
+          return;
+        }
+        items.push(submissionEntry);
+        items.sort((a, b) => a.name.localeCompare(b.name));
+        fs.writeFileSync(targetPath, `${JSON.stringify(items, null, 2)}\n`, "utf8");
+        console.log(`\n  ✅ Added ${c.bold}${name}${c.reset} to ${c.cyan}shelf/${shelfFile}${c.reset}!`);
+        console.log("\n  👉 Run git commit and create your pull request:");
+        console.log(`     ${c.gray}git checkout -b add-${name.toLowerCase().replace(/[^a-z0-9]/g, "-")}${c.reset}`);
+        console.log(`     ${c.gray}git add shelf/${shelfFile}${c.reset}`);
+        console.log(`     ${c.gray}git commit -m "feat(shelf): add ${name} to ${shelfFile}"${c.reset}`);
+        console.log(`     ${c.gray}gh pr create --title "Add ${name}" --body "Submitting ${name} to DevShelf via terminal CLI"${c.reset}\n`);
+        return;
+      } catch (err) {
+        console.error(`  ${c.red}Failed to write locally:${c.reset}`, err.message);
+      }
+    }
+
+    // External submission: generate 1-click GitHub Pull Request / Issue Web URL
+    console.log(`\n  ✨ ${c.green}Submission Validated!${c.reset}`);
+    const prBody = encodeURIComponent(
+      `### 🚀 New Tool Submission via DevShelf CLI\n\n- **Name**: ${name}\n- **URL**: ${url}\n- **Category**: \`shelf/${shelfFile}\`\n- **Description**: ${description}\n- **Free Tier**: ${freeTier}\n\n*Submitted via \`npx devshelf submit\`*`,
+    );
+    const githubPrUrl = `https://github.com/RitualDev-Lab/DevShelf/issues/new?title=${encodeURIComponent(`[Submission]: ${name}`)}&body=${prBody}&labels=resource-submission`;
+
+    console.log("  👉 Submit directly to the DevShelf GitHub Repository:");
+    console.log(`     ${c.underline}${c.blue}${githubPrUrl}${c.reset}\n`);
+
+    openUrl(githubPrUrl);
     return;
   }
 

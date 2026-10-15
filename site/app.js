@@ -41,6 +41,16 @@ function boot() {
   loadDataAndRender();
   loadUptimeData();
   loadContributors();
+  initComparator();
+
+  // Register PWA Service Worker for standalone desktop & mobile install
+  if (typeof window !== "undefined" && "serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("/sw.js").catch((err) => {
+        console.info("DevShelf ServiceWorker registration skipped:", err);
+      });
+    });
+  }
 }
 
 /**
@@ -3128,6 +3138,135 @@ function escapeHtml(str) {
         '"': "&quot;",
       })[tag] || tag,
   );
+}
+
+/* ── Interactive Stack & Tool Comparator (VS feature) ───────── */
+
+function initComparator() {
+  const compareModal = document.getElementById("compare-modal");
+  const navCompareBtn = document.getElementById("nav-compare-btn");
+  const closeCompareBtn = document.getElementById("close-compare-modal-btn");
+  const selectA = document.getElementById("compare-select-a");
+  const selectB = document.getElementById("compare-select-b");
+
+  if (!compareModal || !selectA || !selectB) return;
+
+  // Populate options
+  const sorted = [...allResources].sort((a, b) => a.name.localeCompare(b.name));
+  const optionsHtml = sorted
+    .map((item) => `<option value="${escapeHtml(item.name)}">${escapeHtml(item.name)} (${escapeHtml(item.category || item.section || "Tool")})</option>`)
+    .join("");
+
+  selectA.innerHTML = optionsHtml;
+  selectB.innerHTML = optionsHtml;
+
+  // Set default matchup (Supabase vs PocketBase)
+  const defaultA = sorted.find((i) => i.name.toLowerCase().includes("supabase")) || sorted[0];
+  const defaultB = sorted.find((i) => i.name.toLowerCase().includes("pocketbase")) || sorted[1];
+
+  if (defaultA) selectA.value = defaultA.name;
+  if (defaultB) selectB.value = defaultB.name;
+
+  function renderComparison() {
+    const itemA = allResources.find((i) => i.name === selectA.value) || defaultA;
+    const itemB = allResources.find((i) => i.name === selectB.value) || defaultB;
+    const container = document.getElementById("compare-results-container");
+    if (!container || !itemA || !itemB) return;
+
+    function renderColumn(item, colorClass, borderClass) {
+      return `
+        <div class="space-y-4 pt-4 md:pt-0">
+          <div class="flex items-center justify-between">
+            <h3 class="text-base font-extrabold text-white flex items-center space-x-2">
+              <span class="${colorClass}">${escapeHtml(item.name)}</span>
+            </h3>
+            <span class="px-2 py-0.5 text-[10px] font-mono rounded bg-slate-800 text-slate-300 border border-slate-700">
+              ${escapeHtml(item.category || item.section || "Dev Tool")}
+            </span>
+          </div>
+
+          <p class="text-xs text-slate-300 leading-relaxed min-h-[40px]">
+            ${escapeHtml(item.description)}
+          </p>
+
+          <div class="p-3.5 rounded-xl bg-slate-950 border ${borderClass} space-y-2">
+            <div class="text-[10px] font-mono uppercase tracking-wider text-slate-400 font-bold">
+              ⚡ Free Tier Allowance & Limits:
+            </div>
+            <div class="text-xs font-bold text-emerald-400">
+              ${escapeHtml(item.freeTierCost || "100% Free Open Source")}
+            </div>
+            ${item.perkValue ? `<div class="text-[11px] text-pink-300">🎁 Perk: ${escapeHtml(item.perkValue)}</div>` : ""}
+          </div>
+
+          <div class="grid grid-cols-2 gap-2 text-xs font-mono">
+            <div class="p-2.5 rounded-lg bg-slate-950/80 border border-slate-800">
+              <span class="text-[10px] text-slate-500 block">License / Open Source:</span>
+              <span class="text-slate-200 font-bold">${item.repo ? "✅ Open Source" : "Verified Free Tier"}</span>
+            </div>
+            <div class="p-2.5 rounded-lg bg-slate-950/80 border border-slate-800">
+              <span class="text-[10px] text-slate-500 block">Language / Platform:</span>
+              <span class="text-slate-200 font-bold">${escapeHtml(item.language || item.platform || "Multi-Platform")}</span>
+            </div>
+          </div>
+
+          ${item.dockerCompose ? `
+          <div class="p-2.5 rounded-lg bg-slate-950/80 border border-slate-800 text-xs font-mono">
+            <span class="text-[10px] text-cyan-400 block mb-1">🐳 1-Click Docker Image:</span>
+            <code class="text-[11px] text-slate-300 break-all select-all">${escapeHtml(item.dockerCompose)}</code>
+          </div>
+          ` : ""}
+
+          <div class="pt-2">
+            <a href="${escapeHtml(item.url || item.repo)}" target="_blank" rel="noopener noreferrer" class="w-full py-2 px-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs flex items-center justify-center space-x-1.5 transition border border-slate-700 hover:border-slate-600">
+              <span>Visit Official Site</span>
+              <span>↗</span>
+            </a>
+          </div>
+        </div>
+      `;
+    }
+
+    container.innerHTML = `
+      ${renderColumn(itemA, "text-purple-400", "border-purple-500/30")}
+      ${renderColumn(itemB, "text-cyan-400", "border-cyan-500/30 md:pl-6")}
+    `;
+  }
+
+  function openModal() {
+    renderComparison();
+    compareModal.classList.remove("opacity-0", "pointer-events-none");
+    const inner = compareModal.querySelector("div");
+    if (inner) inner.classList.remove("scale-95");
+  }
+
+  function closeModal() {
+    compareModal.classList.add("opacity-0", "pointer-events-none");
+    const inner = compareModal.querySelector("div");
+    if (inner) inner.classList.add("scale-95");
+  }
+
+  if (navCompareBtn) navCompareBtn.addEventListener("click", openModal);
+  if (closeCompareBtn) closeCompareBtn.addEventListener("click", closeModal);
+  compareModal.addEventListener("click", (e) => {
+    if (e.target === compareModal) closeModal();
+  });
+
+  selectA.addEventListener("change", renderComparison);
+  selectB.addEventListener("change", renderComparison);
+
+  // Preset matchup buttons
+  document.querySelectorAll(".compare-preset-btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      const a = btn.getAttribute("data-a");
+      const b = btn.getAttribute("data-b");
+      const matchA = allResources.find((i) => i.name.toLowerCase().includes(a.toLowerCase()));
+      const matchB = allResources.find((i) => i.name.toLowerCase().includes(b.toLowerCase()));
+      if (matchA) selectA.value = matchA.name;
+      if (matchB) selectB.value = matchB.name;
+      renderComparison();
+    });
+  });
 }
 
 // Immediate resilient execution regardless of document ready state

@@ -6,6 +6,12 @@
   <title>DevShelf — The Crowdsourced Zero-Paywall Developer Directory</title>
   <meta name="description" content="Discover 530+ verified developer tools, open-source GitHub repositories, free public APIs, 1-click cloud boilerplates, and developer perks with zero paywalls.">
   <link rel="canonical" href="https://devshelf.ritualdev.in/">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#7928CA">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="DevShelf">
+  <link rel="apple-touch-icon" href="favicon.svg">
 
   <!-- OpenGraph / Social Meta -->
   <meta property="og:type" content="website">
@@ -157,6 +163,9 @@
         <button id="nav-stack-btn" class="hover:text-cyan-300 transition flex items-center space-x-1.5 text-slate-200 font-bold" title="Open My Stack Builder">
           <span>🔀 My Stack</span>
           <span id="nav-stack-badge" class="hidden px-1.5 py-0.2 bg-cyan-400 text-slate-950 rounded-full text-[10px] font-extrabold">0</span>
+        </button>
+        <button id="nav-compare-btn" class="hover:text-amber-300 transition flex items-center space-x-1.5 text-slate-200 font-bold" title="Open Interactive Free-Tier Tool Comparator">
+          <span>⚖️ Compare</span>
         </button>
         <button id="nav-random-btn" class="hover:text-amber-300 transition flex items-center space-x-1 text-slate-200 font-bold" title="Pick a Random Developer Tool (r)">
           <span>🎲 Random</span>
@@ -1471,6 +1480,66 @@
       <path stroke-linecap="round" stroke-linejoin="round" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
     </svg>
   </button>
+
+  <!-- Interactive Free-Tier Tool Comparator Modal -->
+  <div id="compare-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md opacity-0 pointer-events-none transition-all duration-200">
+    <div class="bg-slate-900 border border-slate-700/80 rounded-2xl w-full max-w-4xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden scale-95 transition-all duration-200">
+      <!-- Modal Header -->
+      <div class="p-5 border-b border-slate-800 flex items-center justify-between bg-slate-950/50">
+        <div class="flex items-center space-x-2.5">
+          <span class="text-2xl">⚖️</span>
+          <div>
+            <h2 class="text-lg font-bold text-white flex items-center space-x-2">
+              <span>Interactive Stack & Tool Comparator</span>
+              <span class="px-2 py-0.5 text-[10px] font-mono rounded bg-amber-950/80 border border-amber-500/40 text-amber-300">Free-Tier Allowance VS</span>
+            </h2>
+            <p class="text-xs text-slate-400">Compare permanent free allowances, rate limits, open-source status, and architecture side-by-side.</p>
+          </div>
+        </div>
+        <button id="close-compare-modal-btn" class="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition" aria-label="Close Comparator">
+          ✕
+        </button>
+      </div>
+
+      <!-- Quick Preset Switchers -->
+      <div class="px-5 py-3 border-b border-slate-800 bg-slate-900/60 flex flex-wrap items-center gap-2 text-xs">
+        <span class="text-slate-400 font-mono text-[11px]">Popular Matchups:</span>
+        <button class="compare-preset-btn px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 hover:border-purple-500 transition" data-a="Supabase" data-b="PocketBase">
+          Supabase vs PocketBase
+        </button>
+        <button class="compare-preset-btn px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 hover:border-purple-500 transition" data-a="Bruno" data-b="Hoppscotch">
+          Bruno vs Hoppscotch
+        </button>
+        <button class="compare-preset-btn px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 hover:border-purple-500 transition" data-a="Ollama" data-b="vLLM">
+          Ollama vs vLLM
+        </button>
+        <button class="compare-preset-btn px-2.5 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 hover:border-purple-500 transition" data-a="Cloudflare Workers" data-b="Fly.io">
+          Cloudflare vs Fly.io
+        </button>
+      </div>
+
+      <!-- Selectors Bar -->
+      <div class="p-5 grid grid-cols-1 md:grid-cols-2 gap-4 border-b border-slate-800 bg-slate-950/30">
+        <div>
+          <label for="compare-select-a" class="block text-xs font-mono text-purple-300 font-bold mb-1.5">Tool A (Left):</label>
+          <select id="compare-select-a" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-purple-500">
+            <!-- Populated via JS -->
+          </select>
+        </div>
+        <div>
+          <label for="compare-select-b" class="block text-xs font-mono text-cyan-300 font-bold mb-1.5">Tool B (Right):</label>
+          <select id="compare-select-b" class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-cyan-500">
+            <!-- Populated via JS -->
+          </select>
+        </div>
+      </div>
+
+      <!-- Split Screen Comparison Grid -->
+      <div id="compare-results-container" class="p-6 overflow-y-auto grid grid-cols-1 md:grid-cols-2 gap-6 divide-y md:divide-y-0 md:divide-x divide-slate-800">
+        <!-- Rendered via JS -->
+      </div>
+    </div>
+  </div>
 
   <script src="data.js?v=5.2.0"></script>
   <script src="liquid-metal.js?v=5.2.0"></script>
