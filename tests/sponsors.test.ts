@@ -1,4 +1,6 @@
 import assert from "node:assert/strict";
+import fs from "node:fs/promises";
+import path from "node:path";
 import test from "node:test";
 
 // Mirror and test the core algorithms used in site/sponsors.html for checkout return verification
@@ -134,4 +136,67 @@ test("Digital Invoice & Receipt Setup - Zero Physical Shipping Verification", ()
   assert.equal(invoice.shippingCost, 0, "Physical shipping cost must be exactly 0");
   assert.equal(invoice.billedTo, "Acme Inc.");
   assert.equal(invoice.taxId, "US-EIN-12345678");
+});
+
+test("Sponsors Ledger Data Integrity - Schema and Values", async () => {
+  const sponsorsPath = path.resolve("data/sponsors.json");
+  const rawData = await fs.readFile(sponsorsPath, "utf8");
+  const data = JSON.parse(rawData);
+
+  assert.ok(data.version, "Should have a version string");
+  assert.ok(data.stats, "Should have stats object");
+  assert.equal(typeof data.stats.totalPatrons, "number", "totalPatrons should be number");
+  assert.equal(Array.isArray(data.patrons), true, "patrons should be an array");
+  assert.equal(
+    data.stats.totalPatrons,
+    data.patrons.length,
+    "totalPatrons should match patrons count",
+  );
+
+  for (const patron of data.patrons) {
+    assert.ok(patron.id, `Patron must have id: ${JSON.stringify(patron)}`);
+    assert.equal(typeof patron.rank, "number", `Patron rank must be number: ${patron.id}`);
+    assert.ok(patron.name, `Patron must have name: ${patron.id}`);
+    assert.ok(patron.github, `Patron must have github handle: ${patron.id}`);
+    assert.ok(
+      GITHUB_HANDLE_REGEX.test(patron.github),
+      `Patron handle must be valid: ${patron.github}`,
+    );
+    assert.ok(
+      ["enterprise", "gold", "silver", "bronze"].includes(patron.tier),
+      `Valid tier: ${patron.tier}`,
+    );
+    assert.ok(patron.amountUSD > 0, `Patron amountUSD must be > 0: ${patron.id}`);
+    assert.ok(patron.avatar.startsWith("https://"), `Avatar must use HTTPS: ${patron.avatar}`);
+    assert.ok(
+      patron.badgeUrl.startsWith("https://"),
+      `Badge URL must use HTTPS: ${patron.badgeUrl}`,
+    );
+  }
+});
+
+test("Sponsors Static Badges Artifacts Verification", async () => {
+  const badgesDir = path.resolve("site/api/v1/badges");
+  const requiredBadges = [
+    "enterprise.svg",
+    "enterprise-card.svg",
+    "gold.svg",
+    "gold-card.svg",
+    "silver.svg",
+    "silver-card.svg",
+    "bronze.svg",
+    "bronze-card.svg",
+    "supporter.svg",
+    "supporter-card.svg",
+    "default.svg",
+    "verified.svg",
+  ];
+
+  for (const badgeFile of requiredBadges) {
+    const filePath = path.join(badgesDir, badgeFile);
+    const content = await fs.readFile(filePath, "utf8");
+    assert.ok(content.startsWith("<svg"), `${badgeFile} must start with <svg`);
+    assert.ok(content.endsWith("</svg>"), `${badgeFile} must end with </svg>`);
+    assert.ok(!content.includes("<script"), `${badgeFile} must not contain script tags`);
+  }
 });
