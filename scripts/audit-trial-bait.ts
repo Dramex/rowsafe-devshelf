@@ -1,4 +1,4 @@
-import { execSync } from "node:child_process";
+import { execFileSync, execSync } from "node:child_process";
 import fs from "node:fs/promises";
 import path from "node:path";
 
@@ -356,8 +356,9 @@ async function main() {
   // Check existing GitHub issues to avoid duplication
   let existingIssues = "";
   try {
-    existingIssues = execSync(
-      "gh issue list --state open --label trial-bait --json title --jq .[].title",
+    existingIssues = execFileSync(
+      "gh",
+      ["issue", "list", "--state", "open", "--label", "trial-bait", "--json", "title", "--jq", ".[].title"],
       { encoding: "utf8", stdio: ["pipe", "pipe", "ignore"] },
     );
   } catch {
@@ -409,8 +410,18 @@ ${f.analysis.matches.map((m) => `[${m.rule}]: "${m.phrase}"\nExcerpt: ...${m.exc
 `;
 
     try {
-      execSync(
-        `gh issue create --title "${issueTitle}" --body "${body.replace(/"/g, '\\"')}" --label "trial-bait,audit,help wanted,good first issue"`,
+      execFileSync(
+        "gh",
+        [
+          "issue",
+          "create",
+          "--title",
+          issueTitle,
+          "--body",
+          body,
+          "--label",
+          "trial-bait,audit,help wanted,good first issue",
+        ],
         { stdio: "inherit" },
       );
       console.log(`  🎉 Created issue for ${f.name}`);

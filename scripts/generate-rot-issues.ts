@@ -1,4 +1,4 @@
-import { execSync } from "node:child_process";
+import { execFileSync, execSync } from "node:child_process";
 import fs from "node:fs/promises";
 import path from "node:path";
 
@@ -65,8 +65,9 @@ async function generateRotIssues() {
   // Query existing open broken-link issues via gh CLI
   let existingIssueTitles = "";
   try {
-    existingIssueTitles = execSync(
-      "gh issue list --state open --label broken-link --json title --jq .[].title",
+    existingIssueTitles = execFileSync(
+      "gh",
+      ["issue", "list", "--state", "open", "--label", "broken-link", "--json", "title", "--jq", ".[].title"],
       {
         encoding: "utf8",
         stdio: ["pipe", "pipe", "ignore"],
@@ -152,8 +153,18 @@ ${tableRows}
 *Automated by DevShelf Weekly Healthcheck & Sunset Auditor.*`;
 
   try {
-    execSync(
-      `gh issue create --title "${digestTitle}" --body "${digestBody.replace(/"/g, '\\"')}" --label "broken-link,good first issue,help wanted,needs maintenance"`,
+    execFileSync(
+      "gh",
+      [
+        "issue",
+        "create",
+        "--title",
+        digestTitle,
+        "--body",
+        digestBody,
+        "--label",
+        "broken-link,good first issue,help wanted,needs maintenance",
+      ],
       { stdio: "inherit" },
     );
     console.log(`  🎉 Created consolidated weekly digest issue: "${digestTitle}"`);
