@@ -1,6 +1,6 @@
 {
   "version": "1.1.2",
-  "updatedAt": "2026-10-16T13:31:53.027Z",
+  "updatedAt": "2026-10-16T13:50:09.021Z",
   "slug": "testing",
   "name": "Testing & QA Automation",
   "count": 62,
@@ -63,7 +63,8 @@
       "featured": false,
       "goodFirstIssues": "https://github.com/grafana/k6/issues",
       "type": "testing",
-      "section": "Testing & QA Reliability"
+      "section": "Testing & QA Reliability",
+      "alternativeTo": "LoadRunner / Gatling Enterprise"
     },
     {
       "name": "Bruno",
@@ -75,7 +76,8 @@
       "featured": false,
       "goodFirstIssues": "https://github.com/usebruno/bruno/issues",
       "type": "testing",
-      "section": "Testing & QA Reliability"
+      "section": "Testing & QA Reliability",
+      "alternativeTo": "Postman"
     },
     {
       "name": "Hoppscotch",
@@ -87,7 +89,9 @@
       "featured": false,
       "goodFirstIssues": "https://github.com/hoppscotch/hoppscotch/issues",
       "type": "testing",
-      "section": "Testing & QA Reliability"
+      "section": "Testing & QA Reliability",
+      "alternativeTo": "Postman",
+      "dockerCompose": "services:\n  hoppscotch:\n    image: hoppscotch/hoppscotch:latest\n    container_name: hoppscotch\n    restart: unless-stopped\n    ports:\n      - \"3000:3000\""
     },
     {
       "name": "Mockoon",
@@ -99,7 +103,9 @@
       "featured": false,
       "goodFirstIssues": "https://github.com/mockoon/mockoon/issues",
       "type": "testing",
-      "section": "Testing & QA Reliability"
+      "section": "Testing & QA Reliability",
+      "alternativeTo": "Postman Mock Server",
+      "dockerCompose": "services:\n  mockoon:\n    image: mockoon/cli:latest\n    container_name: mockoon\n    ports:\n      - \"3000:3000\""
     },
     {
       "name": "Artillery",
@@ -123,7 +129,8 @@
       "featured": false,
       "goodFirstIssues": "https://github.com/locustio/locust/issues",
       "type": "testing",
-      "section": "Testing & QA Reliability"
+      "section": "Testing & QA Reliability",
+      "alternativeTo": "LoadRunner / Artillery Pro"
     },
     {
       "name": "MSW (Mock Service Worker)",
@@ -135,7 +142,8 @@
       "featured": false,
       "goodFirstIssues": "https://github.com/mswjs/msw/issues",
       "type": "testing",
-      "section": "Testing & QA Reliability"
+      "section": "Testing & QA Reliability",
+      "alternativeTo": "Postman Mocks"
     },
     {
       "name": "Vegeta",
@@ -183,7 +191,9 @@
       "featured": false,
       "goodFirstIssues": "https://github.com/wiremock/wiremock/issues",
       "type": "testing",
-      "section": "Testing & QA Reliability"
+      "section": "Testing & QA Reliability",
+      "alternativeTo": "Postman Mock Server",
+      "dockerCompose": "services:\n  wiremock:\n    image: wiremock/wiremock:latest\n    container_name: wiremock\n    restart: unless-stopped\n    ports:\n      - \"8080:8080\""
     },
     {
       "name": "Prism",
@@ -195,7 +205,8 @@
       "featured": false,
       "goodFirstIssues": "https://github.com/stoplightio/prism/issues",
       "type": "testing",
-      "section": "Testing & QA Reliability"
+      "section": "Testing & QA Reliability",
+      "alternativeTo": "Stoplight / Postman Mocks"
     },
     {
       "name": "Lighthouse CI",
@@ -303,7 +314,8 @@
       "featured": false,
       "goodFirstIssues": "https://github.com/aquasecurity/trivy/issues",
       "type": "testing",
-      "section": "Testing & QA Reliability"
+      "section": "Testing & QA Reliability",
+      "alternativeTo": "Snyk Container"
     },
     {
       "name": "Semgrep",
@@ -315,7 +327,8 @@
       "featured": false,
       "goodFirstIssues": "https://github.com/semgrep/semgrep/issues",
       "type": "testing",
-      "section": "Testing & QA Reliability"
+      "section": "Testing & QA Reliability",
+      "alternativeTo": "Veracode / Checkmarx"
     },
     {
       "name": "SonarQube Community",
@@ -327,7 +340,8 @@
       "featured": false,
       "goodFirstIssues": "https://github.com/SonarSource/sonarqube/issues",
       "type": "testing",
-      "section": "Testing & QA Reliability"
+      "section": "Testing & QA Reliability",
+      "alternativeTo": "Snyk Code / Veracode"
     },
     {
       "name": "Newman",
@@ -339,7 +353,8 @@
       "featured": false,
       "goodFirstIssues": "https://github.com/postmanlabs/newman/issues",
       "type": "testing",
-      "section": "Testing & QA Reliability"
+      "section": "Testing & QA Reliability",
+      "alternativeTo": "Postman CLI"
     },
     {
       "name": "PactumJS",
@@ -351,7 +366,8 @@
       "featured": false,
       "goodFirstIssues": "https://github.com/pactumjs/pactum/issues",
       "type": "testing",
-      "section": "Testing & QA Reliability"
+      "section": "Testing & QA Reliability",
+      "alternativeTo": "Postman / Newman"
     },
     {
       "name": "Karate Framework",
@@ -363,7 +379,8 @@
       "featured": false,
       "goodFirstIssues": "https://github.com/karatelabs/karate/issues",
       "type": "testing",
-      "section": "Testing & QA Reliability"
+      "section": "Testing & QA Reliability",
+      "alternativeTo": "Postman / RestAssured"
     },
     {
       "name": "RestAssured",
@@ -375,7 +392,8 @@
       "featured": false,
       "goodFirstIssues": "https://github.com/rest-assured/rest-assured/issues",
       "type": "testing",
-      "section": "Testing & QA Reliability"
+      "section": "Testing & QA Reliability",
+      "alternativeTo": "Commercial API Testers"
     },
     {
       "name": "Dredd",
@@ -399,7 +417,8 @@
       "featured": false,
       "goodFirstIssues": "https://github.com/schemathesis/schemathesis/issues",
       "type": "testing",
-      "section": "Testing & QA Reliability"
+      "section": "Testing & QA Reliability",
+      "alternativeTo": "API Fuzzing Commercial Tools"
     },
     {
       "name": "Puppeteer",
@@ -519,7 +538,8 @@
       "featured": false,
       "goodFirstIssues": "https://github.com/wg/wrk/issues",
       "type": "testing",
-      "section": "Testing & QA Reliability"
+      "section": "Testing & QA Reliability",
+      "alternativeTo": "LoadRunner"
     },
     {
       "name": "Hey",
@@ -555,7 +575,8 @@
       "featured": false,
       "goodFirstIssues": "https://github.com/bridgecrewio/checkov/issues",
       "type": "testing",
-      "section": "Testing & QA Reliability"
+      "section": "Testing & QA Reliability",
+      "alternativeTo": "Bridgecrew / Prisma Cloud"
     },
     {
       "name": "Hadolint",
@@ -567,7 +588,8 @@
       "featured": false,
       "goodFirstIssues": "https://github.com/hadolint/hadolint/issues",
       "type": "testing",
-      "section": "Testing & QA Reliability"
+      "section": "Testing & QA Reliability",
+      "alternativeTo": "Docker Linter Pro"
     },
     {
       "name": "Bandit",
@@ -615,7 +637,8 @@
       "featured": true,
       "goodFirstIssues": "https://github.com/zaproxy/zaproxy/issues",
       "type": "testing",
-      "section": "Testing & QA Reliability"
+      "section": "Testing & QA Reliability",
+      "alternativeTo": "Burp Suite Professional"
     },
     {
       "name": "Nuclei",
@@ -627,7 +650,8 @@
       "featured": true,
       "goodFirstIssues": "https://github.com/projectdiscovery/nuclei/issues",
       "type": "testing",
-      "section": "Testing & QA Reliability"
+      "section": "Testing & QA Reliability",
+      "alternativeTo": "Acunetix / Nessus Scanner"
     },
     {
       "name": "Pa11y",
@@ -675,7 +699,8 @@
       "featured": false,
       "goodFirstIssues": "https://github.com/oblador/loki/issues",
       "type": "testing",
-      "section": "Testing & QA Reliability"
+      "section": "Testing & QA Reliability",
+      "alternativeTo": "Datadog Logs / Splunk"
     },
     {
       "name": "Lost-Pixel",

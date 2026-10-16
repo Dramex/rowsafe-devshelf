@@ -1,6 +1,6 @@
 {
   "version": "1.1.2",
-  "updatedAt": "2026-10-16T13:31:53.027Z",
+  "updatedAt": "2026-10-16T13:50:09.021Z",
   "slug": "ai",
   "name": "AI Agents & Local LLMs",
   "count": 90,
@@ -38,7 +38,9 @@
         "No Card Required"
       ],
       "type": "ai",
-      "section": "AI Agents & Local LLMs"
+      "section": "AI Agents & Local LLMs",
+      "alternativeTo": "GitHub Copilot / OpenAI API",
+      "dockerCompose": "services:\n  ollama:\n    image: ollama/ollama:latest\n    container_name: ollama\n    restart: unless-stopped\n    ports:\n      - \"11434:11434\"\n    volumes:\n      - ollama:/root/.ollama\n\nvolumes:\n  ollama:"
     },
     {
       "name": "Dify",
@@ -72,7 +74,8 @@
         "No Card Required"
       ],
       "type": "ai",
-      "section": "AI Agents & Local LLMs"
+      "section": "AI Agents & Local LLMs",
+      "alternativeTo": "Triton Inference Server"
     },
     {
       "name": "Open-WebUI",
@@ -123,7 +126,9 @@
         "No Card Required"
       ],
       "type": "ai",
-      "section": "AI Agents & Local LLMs"
+      "section": "AI Agents & Local LLMs",
+      "alternativeTo": "OpenAI API",
+      "dockerCompose": "services:\n  localai:\n    image: localai/localai:latest\n    container_name: localai\n    restart: unless-stopped\n    ports:\n      - \"8080:8080\""
     },
     {
       "name": "AnythingLLM",
@@ -140,7 +145,8 @@
         "No Card Required"
       ],
       "type": "ai",
-      "section": "AI Agents & Local LLMs"
+      "section": "AI Agents & Local LLMs",
+      "alternativeTo": "Chatbase / TypingMind"
     },
     {
       "name": "Flowise",
@@ -174,7 +180,8 @@
         "No Card Required"
       ],
       "type": "ai",
-      "section": "AI Agents & Local LLMs"
+      "section": "AI Agents & Local LLMs",
+      "alternativeTo": "Flowise / Dify"
     },
     {
       "name": "Jan",
@@ -208,7 +215,9 @@
         "No Card Required"
       ],
       "type": "ai",
-      "section": "AI Agents & Local LLMs"
+      "section": "AI Agents & Local LLMs",
+      "alternativeTo": "ChatGPT Plus / Claude Pro",
+      "dockerCompose": "services:\n  librechat:\n    image: ghcr.io/danny-avila/librechat:latest\n    container_name: librechat\n    restart: unless-stopped\n    ports:\n      - \"3080:3080\""
     },
     {
       "name": "Fabric",
@@ -259,7 +268,8 @@
         "No Card Required"
       ],
       "type": "ai",
-      "section": "AI Agents & Local LLMs"
+      "section": "AI Agents & Local LLMs",
+      "alternativeTo": "Devin / Copilot Workspace"
     },
     {
       "name": "Continue",
@@ -325,7 +335,8 @@
         "No Card Required"
       ],
       "type": "ai",
-      "section": "AI Agents & Local LLMs"
+      "section": "AI Agents & Local LLMs",
+      "alternativeTo": "ChatGPT Enterprise"
     },
     {
       "name": "GPT4All",
@@ -357,7 +368,8 @@
         "No Card Required"
       ],
       "type": "ai",
-      "section": "AI Agents & Local LLMs"
+      "section": "AI Agents & Local LLMs",
+      "alternativeTo": "GitHub Copilot"
     },
     {
       "name": "Khoj",
@@ -373,7 +385,8 @@
         "No Card Required"
       ],
       "type": "ai",
-      "section": "AI Agents & Local LLMs"
+      "section": "AI Agents & Local LLMs",
+      "alternativeTo": "Rewind AI / Notion AI"
     },
     {
       "name": "LlamaIndex",
@@ -405,7 +418,8 @@
         "No Card Required"
       ],
       "type": "ai",
-      "section": "AI Agents & Local LLMs"
+      "section": "AI Agents & Local LLMs",
+      "alternativeTo": "LlamaIndex Enterprise"
     },
     {
       "name": "Instructor",
@@ -469,7 +483,9 @@
         "No Card Required"
       ],
       "type": "ai",
-      "section": "AI Agents & Local LLMs"
+      "section": "AI Agents & Local LLMs",
+      "alternativeTo": "Pinecone",
+      "dockerCompose": "services:\n  qdrant:\n    image: qdrant/qdrant:latest\n    container_name: qdrant\n    restart: unless-stopped\n    ports:\n      - \"6333:6333\"\n      - \"6334:6334\"\n    volumes:\n      - ./qdrant_storage:/qdrant/storage"
     },
     {
       "name": "Milvus",
@@ -485,7 +501,8 @@
         "No Card Required"
       ],
       "type": "ai",
-      "section": "AI Agents & Local LLMs"
+      "section": "AI Agents & Local LLMs",
+      "alternativeTo": "Pinecone"
     },
     {
       "name": "Weaviate",
@@ -501,7 +518,8 @@
         "No Card Required"
       ],
       "type": "ai",
-      "section": "AI Agents & Local LLMs"
+      "section": "AI Agents & Local LLMs",
+      "alternativeTo": "Pinecone"
     },
     {
       "name": "Bark",
@@ -533,7 +551,8 @@
         "No Card Required"
       ],
       "type": "ai",
-      "section": "AI Agents & Local LLMs"
+      "section": "AI Agents & Local LLMs",
+      "alternativeTo": "OpenAI Whisper API"
     },
     {
       "name": "ComfyUI",
@@ -565,7 +584,9 @@
         "No Card Required"
       ],
       "type": "ai",
-      "section": "AI Agents & Local LLMs"
+      "section": "AI Agents & Local LLMs",
+      "alternativeTo": "Google Custom Search API",
+      "dockerCompose": "services:\n  searxng:\n    image: searxng/searxng:latest\n    container_name: searxng\n    restart: unless-stopped\n    ports:\n      - \"8080:8080\"\n    volumes:\n      - ./searxng:/etc/searxng"
     },
     {
       "name": "RAGFlow",
@@ -581,7 +602,8 @@
         "No Card Required"
       ],
       "type": "ai",
-      "section": "AI Agents & Local LLMs"
+      "section": "AI Agents & Local LLMs",
+      "alternativeTo": "Dify Enterprise"
     },
     {
       "name": "Mem0",
@@ -597,7 +619,8 @@
         "No Card Required"
       ],
       "type": "ai",
-      "section": "AI Agents & Local LLMs"
+      "section": "AI Agents & Local LLMs",
+      "alternativeTo": "Zep Memory"
     },
     {
       "name": "Open-Interpreter",
@@ -629,7 +652,8 @@
         "No Card Required"
       ],
       "type": "ai",
-      "section": "AI Agents & Local LLMs"
+      "section": "AI Agents & Local LLMs",
+      "alternativeTo": "Triton Inference Server"
     },
     {
       "name": "SGLang",
@@ -645,7 +669,8 @@
         "No Card Required"
       ],
       "type": "ai",
-      "section": "AI Agents & Local LLMs"
+      "section": "AI Agents & Local LLMs",
+      "alternativeTo": "vLLM / TensorRT-LLM"
     },
     {
       "name": "TensorRT-LLM",
@@ -661,7 +686,8 @@
         "No Card Required"
       ],
       "type": "ai",
-      "section": "AI Agents & Local LLMs"
+      "section": "AI Agents & Local LLMs",
+      "alternativeTo": "NVIDIA AI Enterprise"
     },
     {
       "name": "ExLlamaV2",
@@ -773,7 +799,8 @@
         "No Card Required"
       ],
       "type": "ai",
-      "section": "AI Agents & Local LLMs"
+      "section": "AI Agents & Local LLMs",
+      "alternativeTo": "Devin AI"
     },
     {
       "name": "ChatDev",
@@ -805,7 +832,8 @@
         "No Card Required"
       ],
       "type": "ai",
-      "section": "AI Agents & Local LLMs"
+      "section": "AI Agents & Local LLMs",
+      "alternativeTo": "AutoGPT Enterprise"
     },
     {
       "name": "Unsloth",
@@ -821,7 +849,8 @@
         "No Card Required"
       ],
       "type": "ai",
-      "section": "AI Agents & Local LLMs"
+      "section": "AI Agents & Local LLMs",
+      "alternativeTo": "Anyscale / RunPod"
     },
     {
       "name": "Axolotl",
@@ -949,7 +978,8 @@
         "No Card Required"
       ],
       "type": "ai",
-      "section": "AI Agents & Local LLMs"
+      "section": "AI Agents & Local LLMs",
+      "alternativeTo": "Arize Phoenix"
     },
     {
       "name": "DeepEval",
@@ -1029,7 +1059,8 @@
         "No Card Required"
       ],
       "type": "ai",
-      "section": "AI Agents & Local LLMs"
+      "section": "AI Agents & Local LLMs",
+      "alternativeTo": "LangSmith"
     },
     {
       "name": "Stable Diffusion WebUI",
@@ -1141,7 +1172,8 @@
         "No Card Required"
       ],
       "type": "ai",
-      "section": "AI Agents & Local LLMs"
+      "section": "AI Agents & Local LLMs",
+      "alternativeTo": "Google Cloud Vision OCR"
     },
     {
       "name": "Kokoro-TTS",
@@ -1173,7 +1205,8 @@
         "No Card Required"
       ],
       "type": "ai",
-      "section": "AI Agents & Local LLMs"
+      "section": "AI Agents & Local LLMs",
+      "alternativeTo": "ElevenLabs"
     },
     {
       "name": "ChatTTS",
@@ -1221,7 +1254,8 @@
         "No Card Required"
       ],
       "type": "ai",
-      "section": "AI Agents & Local LLMs"
+      "section": "AI Agents & Local LLMs",
+      "alternativeTo": "Pinecone / Weaviate Cloud"
     },
     {
       "name": "Faiss",
@@ -1253,7 +1287,8 @@
         "No Card Required"
       ],
       "type": "ai",
-      "section": "AI Agents & Local LLMs"
+      "section": "AI Agents & Local LLMs",
+      "alternativeTo": "Pinecone"
     },
     {
       "name": "Vespa",
@@ -1317,7 +1352,8 @@
         "No Card Required"
       ],
       "type": "ai",
-      "section": "AI Agents & Local LLMs"
+      "section": "AI Agents & Local LLMs",
+      "alternativeTo": "GitHub Copilot"
     },
     {
       "name": "LMQL",
@@ -1365,7 +1401,8 @@
         "No Card Required"
       ],
       "type": "ai",
-      "section": "AI Agents & Local LLMs"
+      "section": "AI Agents & Local LLMs",
+      "alternativeTo": "Devin AI"
     },
     {
       "name": "DSPy",

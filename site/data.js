@@ -1,5 +1,5 @@
 window.DEVSHELF_DATA = {
-  "updatedAt": "2026-10-16T13:31:53.027Z",
+  "updatedAt": "2026-10-16T13:50:09.021Z",
   "totalCount": 533,
   "reposCount": 330,
   "facets": {
@@ -11,9 +11,9 @@ window.DEVSHELF_DATA = {
     "testingQa": 62,
     "apis": 102,
     "freeCloud": 71,
-    "contributors": 21,
     "perks": 30,
-    "boilerplates": 41
+    "boilerplates": 41,
+    "contributors": 21
   },
   "resources": [
     {

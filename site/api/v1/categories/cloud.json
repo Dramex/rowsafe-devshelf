@@ -1,6 +1,6 @@
 {
   "version": "1.1.2",
-  "updatedAt": "2026-10-16T13:31:53.027Z",
+  "updatedAt": "2026-10-16T13:50:09.021Z",
   "slug": "cloud",
   "name": "Free Cloud & Databases",
   "count": 71,
@@ -16,7 +16,9 @@
         "CI Verified"
       ],
       "type": "cloud",
-      "section": "Free Cloud & Developer Tiers"
+      "section": "Free Cloud & Developer Tiers",
+      "alternativeTo": "Firebase / AWS RDS",
+      "dockerCompose": "services:\n  supabase-db:\n    image: supabase/postgres:15.1.1.78\n    container_name: supabase-db\n    restart: unless-stopped\n    ports:\n      - \"5432:5432\"\n    environment:\n      POSTGRES_PASSWORD: postgres"
     },
     {
       "name": "Neon",
@@ -29,7 +31,8 @@
         "CI Verified"
       ],
       "type": "cloud",
-      "section": "Free Cloud & Developer Tiers"
+      "section": "Free Cloud & Developer Tiers",
+      "alternativeTo": "AWS Aurora Serverless"
     },
     {
       "name": "Cloudflare Workers",
@@ -81,7 +84,9 @@
         "CI Verified"
       ],
       "type": "cloud",
-      "section": "Free Cloud & Developer Tiers"
+      "section": "Free Cloud & Developer Tiers",
+      "alternativeTo": "Firebase",
+      "dockerCompose": "services:\n  pocketbase:\n    image: ghcr.io/muchobien/pocketbase:latest\n    container_name: pocketbase\n    restart: unless-stopped\n    ports:\n      - \"8090:8090\"\n    volumes:\n      - ./pb_data:/pb/pb_data"
     },
     {
       "name": "Appwrite",
@@ -94,7 +99,8 @@
         "CI Verified"
       ],
       "type": "cloud",
-      "section": "Free Cloud & Developer Tiers"
+      "section": "Free Cloud & Developer Tiers",
+      "alternativeTo": "Firebase"
     },
     {
       "name": "Fly.io",
@@ -120,7 +126,8 @@
         "CI Verified"
       ],
       "type": "cloud",
-      "section": "Free Cloud & Developer Tiers"
+      "section": "Free Cloud & Developer Tiers",
+      "alternativeTo": "Heroku"
     },
     {
       "name": "Koyeb",
@@ -133,7 +140,8 @@
         "CI Verified"
       ],
       "type": "cloud",
-      "section": "Free Cloud & Developer Tiers"
+      "section": "Free Cloud & Developer Tiers",
+      "alternativeTo": "Heroku / Render Paid"
     },
     {
       "name": "Auth.js",
@@ -172,7 +180,8 @@
         "CI Verified"
       ],
       "type": "cloud",
-      "section": "Free Cloud & Developer Tiers"
+      "section": "Free Cloud & Developer Tiers",
+      "alternativeTo": "Auth0"
     },
     {
       "name": "SuperTokens",
@@ -185,7 +194,9 @@
         "CI Verified"
       ],
       "type": "cloud",
-      "section": "Free Cloud & Developer Tiers"
+      "section": "Free Cloud & Developer Tiers",
+      "alternativeTo": "Auth0 / Clerk",
+      "dockerCompose": "services:\n  supertokens:\n    image: registry.supertokens.io/supertokens/supertokens-postgresql:latest\n    container_name: supertokens\n    ports:\n      - \"3567:3567\""
     },
     {
       "name": "Logto",
@@ -198,7 +209,8 @@
         "CI Verified"
       ],
       "type": "cloud",
-      "section": "Free Cloud & Developer Tiers"
+      "section": "Free Cloud & Developer Tiers",
+      "alternativeTo": "Auth0 / Clerk"
     },
     {
       "name": "Coolify",
@@ -211,7 +223,9 @@
         "CI Verified"
       ],
       "type": "cloud",
-      "section": "Free Cloud & Developer Tiers"
+      "section": "Free Cloud & Developer Tiers",
+      "alternativeTo": "Vercel / Heroku",
+      "dockerCompose": "# 60-Second Coolify Quick-Install\n# Run in bash:\n# curl -fsSL https://cdn.coollabs.io/coolify/install.sh | bash"
     },
     {
       "name": "Dokku",
@@ -224,7 +238,9 @@
         "CI Verified"
       ],
       "type": "cloud",
-      "section": "Free Cloud & Developer Tiers"
+      "section": "Free Cloud & Developer Tiers",
+      "alternativeTo": "Heroku / Vercel",
+      "dockerCompose": "# 60-Second Dokku Quick-Install\n# Run in bash:\n# wget -NP . https://dokku.com/bootstrap.sh && sudo DOKKU_TAG=v0.34.8 bash bootstrap.sh"
     },
     {
       "name": "CapRover",
@@ -263,7 +279,8 @@
         "CI Verified"
       ],
       "type": "cloud",
-      "section": "Free Cloud & Developer Tiers"
+      "section": "Free Cloud & Developer Tiers",
+      "alternativeTo": "PlanetScale"
     },
     {
       "name": "Upstash",
@@ -276,7 +293,8 @@
         "CI Verified"
       ],
       "type": "cloud",
-      "section": "Free Cloud & Developer Tiers"
+      "section": "Free Cloud & Developer Tiers",
+      "alternativeTo": "Redis Enterprise / AWS DynamoDB"
     },
     {
       "name": "PostHog",
@@ -289,7 +307,9 @@
         "CI Verified"
       ],
       "type": "cloud",
-      "section": "Free Cloud & Developer Tiers"
+      "section": "Free Cloud & Developer Tiers",
+      "alternativeTo": "Mixpanel / Segment / Amplitude",
+      "dockerCompose": "services:\n  posthog:\n    image: posthog/posthog:latest\n    container_name: posthog\n    restart: unless-stopped\n    ports:\n      - \"8000:8000\""
     },
     {
       "name": "Umami",
@@ -302,7 +322,9 @@
         "CI Verified"
       ],
       "type": "cloud",
-      "section": "Free Cloud & Developer Tiers"
+      "section": "Free Cloud & Developer Tiers",
+      "alternativeTo": "Google Analytics",
+      "dockerCompose": "services:\n  umami:\n    image: ghcr.io/umami-software/umami:postgresql-latest\n    container_name: umami\n    restart: unless-stopped\n    ports:\n      - \"3000:3000\"\n    environment:\n      - DATABASE_URL=postgresql://umami:umami@db:5432/umami\n      - DATABASE_TYPE=postgresql\n      - APP_SECRET=devshelf-secret-replace-me"
     },
     {
       "name": "Directus",
@@ -328,7 +350,8 @@
         "CI Verified"
       ],
       "type": "cloud",
-      "section": "Free Cloud & Developer Tiers"
+      "section": "Free Cloud & Developer Tiers",
+      "alternativeTo": "Contentful / Strapi Cloud"
     },
     {
       "name": "MinIO",
@@ -341,7 +364,9 @@
         "CI Verified"
       ],
       "type": "cloud",
-      "section": "Free Cloud & Developer Tiers"
+      "section": "Free Cloud & Developer Tiers",
+      "alternativeTo": "AWS S3",
+      "dockerCompose": "services:\n  minio:\n    image: minio/minio:latest\n    container_name: minio\n    restart: unless-stopped\n    command: server /data --console-address \":9001\"\n    ports:\n      - \"9000:9000\"\n      - \"9001:9001\"\n    environment:\n      - MINIO_ROOT_USER=admin\n      - MINIO_ROOT_PASSWORD=password123\n    volumes:\n      - ./minio_data:/data"
     },
     {
       "name": "GlitchTip",
@@ -354,7 +379,9 @@
         "CI Verified"
       ],
       "type": "cloud",
-      "section": "Free Cloud & Developer Tiers"
+      "section": "Free Cloud & Developer Tiers",
+      "alternativeTo": "Datadog / Sentry SaaS",
+      "dockerCompose": "services:\n  glitchtip:\n    image: glitchtip/glitchtip:latest\n    container_name: glitchtip\n    restart: unless-stopped\n    ports:\n      - \"8000:8000\""
     },
     {
       "name": "Meilisearch",
@@ -367,7 +394,9 @@
         "CI Verified"
       ],
       "type": "cloud",
-      "section": "Free Cloud & Developer Tiers"
+      "section": "Free Cloud & Developer Tiers",
+      "alternativeTo": "Algolia",
+      "dockerCompose": "services:\n  meilisearch:\n    image: getmeili/meilisearch:latest\n    container_name: meilisearch\n    restart: unless-stopped\n    ports:\n      - \"7700:7700\"\n    environment:\n      - MEILI_MASTER_KEY=masterKey123\n    volumes:\n      - ./meili_data:/meili_data"
     },
     {
       "name": "Typesense",
@@ -380,7 +409,9 @@
         "CI Verified"
       ],
       "type": "cloud",
-      "section": "Free Cloud & Developer Tiers"
+      "section": "Free Cloud & Developer Tiers",
+      "alternativeTo": "Algolia",
+      "dockerCompose": "services:\n  typesense:\n    image: typesense/typesense:26.0\n    container_name: typesense\n    restart: unless-stopped\n    ports:\n      - \"8108:8108\"\n    volumes:\n      - ./typesense_data:/data\n    command: '--data-dir /data --api-key=xyz --enable-cors'"
     },
     {
       "name": "Qdrant Cloud",
@@ -393,7 +424,9 @@
         "CI Verified"
       ],
       "type": "cloud",
-      "section": "Free Cloud & Developer Tiers"
+      "section": "Free Cloud & Developer Tiers",
+      "alternativeTo": "Pinecone",
+      "dockerCompose": "services:\n  qdrant:\n    image: qdrant/qdrant:latest\n    container_name: qdrant\n    restart: unless-stopped\n    ports:\n      - \"6333:6333\"\n      - \"6334:6334\"\n    volumes:\n      - ./qdrant_storage:/qdrant/storage"
     },
     {
       "name": "Railway",
@@ -406,7 +439,8 @@
         "CI Verified"
       ],
       "type": "cloud",
-      "section": "Free Cloud & Developer Tiers"
+      "section": "Free Cloud & Developer Tiers",
+      "alternativeTo": "Heroku"
     },
     {
       "name": "Oracle Cloud Always Free",
@@ -536,7 +570,8 @@
         "CI Verified"
       ],
       "type": "cloud",
-      "section": "Free Cloud & Developer Tiers"
+      "section": "Free Cloud & Developer Tiers",
+      "alternativeTo": "AWS DocumentDB"
     },
     {
       "name": "Redis Cloud",
@@ -549,7 +584,8 @@
         "CI Verified"
       ],
       "type": "cloud",
-      "section": "Free Cloud & Developer Tiers"
+      "section": "Free Cloud & Developer Tiers",
+      "alternativeTo": "AWS ElastiCache"
     },
     {
       "name": "CockroachDB Serverless",
@@ -575,7 +611,8 @@
         "CI Verified"
       ],
       "type": "cloud",
-      "section": "Free Cloud & Developer Tiers"
+      "section": "Free Cloud & Developer Tiers",
+      "alternativeTo": "Google Cloud Spanner"
     },
     {
       "name": "Backblaze B2",
@@ -614,7 +651,9 @@
         "CI Verified"
       ],
       "type": "cloud",
-      "section": "Free Cloud & Developer Tiers"
+      "section": "Free Cloud & Developer Tiers",
+      "alternativeTo": "Auth0 / Okta",
+      "dockerCompose": "services:\n  keycloak:\n    image: quay.io/keycloak/keycloak:latest\n    container_name: keycloak\n    restart: unless-stopped\n    ports:\n      - \"8080:8080\"\n    environment:\n      - KEYCLOAK_ADMIN=admin\n      - KEYCLOAK_ADMIN_PASSWORD=admin\n    command: start-dev"
     },
     {
       "name": "Authentik",
@@ -653,7 +692,9 @@
         "CI Verified"
       ],
       "type": "cloud",
-      "section": "Free Cloud & Developer Tiers"
+      "section": "Free Cloud & Developer Tiers",
+      "alternativeTo": "Auth0 / Okta",
+      "dockerCompose": "services:\n  zitadel:\n    image: ghcr.io/zitadel/zitadel:latest\n    container_name: zitadel\n    ports:\n      - \"8080:8080\"\n    command: 'start-from-init --masterkey \"MasterkeyNeedsToHave32Characters\" --tlsMode disabled'"
     },
     {
       "name": "FusionAuth",
@@ -692,7 +733,8 @@
         "CI Verified"
       ],
       "type": "cloud",
-      "section": "Free Cloud & Developer Tiers"
+      "section": "Free Cloud & Developer Tiers",
+      "alternativeTo": "Auth0 / AWS Cognito"
     },
     {
       "name": "Portainer Community",
@@ -705,7 +747,9 @@
         "CI Verified"
       ],
       "type": "cloud",
-      "section": "Free Cloud & Developer Tiers"
+      "section": "Free Cloud & Developer Tiers",
+      "alternativeTo": "Docker Desktop GUI",
+      "dockerCompose": "services:\n  portainer:\n    image: portainer/portainer-ce:latest\n    container_name: portainer\n    restart: always\n    ports:\n      - \"9000:9000\"\n      - \"9443:9443\"\n    volumes:\n      - /var/run/docker.sock:/var/run/docker.sock\n      - portainer_data:/data\n\nvolumes:\n  portainer_data:"
     },
     {
       "name": "Nginx Proxy Manager",
@@ -718,7 +762,9 @@
         "CI Verified"
       ],
       "type": "cloud",
-      "section": "Free Cloud & Developer Tiers"
+      "section": "Free Cloud & Developer Tiers",
+      "alternativeTo": "Cloudflare Pro / Traefik Enterprise",
+      "dockerCompose": "services:\n  app:\n    image: jc21/nginx-proxy-manager:latest\n    container_name: npm\n    restart: unless-stopped\n    ports:\n      - '80:80'\n      - '81:81'\n      - '443:443'\n    volumes:\n      - ./data:/data\n      - ./letsencrypt:/etc/letsencrypt"
     },
     {
       "name": "Traefik Community",
@@ -731,7 +777,8 @@
         "CI Verified"
       ],
       "type": "cloud",
-      "section": "Free Cloud & Developer Tiers"
+      "section": "Free Cloud & Developer Tiers",
+      "alternativeTo": "NGINX Plus / AWS ALB"
     },
     {
       "name": "Caddy Web Server",
@@ -757,7 +804,8 @@
         "CI Verified"
       ],
       "type": "cloud",
-      "section": "Free Cloud & Developer Tiers"
+      "section": "Free Cloud & Developer Tiers",
+      "alternativeTo": "Docker Desktop / Umbrel"
     },
     {
       "name": "Umbrel",
@@ -874,7 +922,9 @@
         "CI Verified"
       ],
       "type": "cloud",
-      "section": "Free Cloud & Developer Tiers"
+      "section": "Free Cloud & Developer Tiers",
+      "alternativeTo": "Google Analytics",
+      "dockerCompose": "services:\n  plausible:\n    image: ghcr.io/plausible/community-edition:latest\n    container_name: plausible\n    restart: unless-stopped\n    ports:\n      - \"8000:8000\""
     },
     {
       "name": "Grafana OSS",
@@ -900,7 +950,9 @@
         "CI Verified"
       ],
       "type": "cloud",
-      "section": "Free Cloud & Developer Tiers"
+      "section": "Free Cloud & Developer Tiers",
+      "alternativeTo": "Datadog Metrics",
+      "dockerCompose": "services:\n  prometheus:\n    image: prom/prometheus:latest\n    container_name: prometheus\n    restart: unless-stopped\n    ports:\n      - \"9090:9090\""
     },
     {
       "name": "Uptime Kuma",
@@ -913,7 +965,9 @@
         "CI Verified"
       ],
       "type": "cloud",
-      "section": "Free Cloud & Developer Tiers"
+      "section": "Free Cloud & Developer Tiers",
+      "alternativeTo": "Datadog / Better Uptime",
+      "dockerCompose": "services:\n  uptime-kuma:\n    image: louislam/uptime-kuma:1\n    container_name: uptime-kuma\n    restart: always\n    ports:\n      - \"3001:3001\"\n    volumes:\n      - ./uptime-kuma-data:/app/data"
     },
     {
       "name": "Dragonfly",

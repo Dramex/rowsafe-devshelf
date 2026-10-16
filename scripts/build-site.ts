@@ -1,101 +1,24 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-import { getAlternativeTo, getDockerCompose } from "./catalog-enrichment.js";
+import { assembleCatalogFromShelf } from "../bin/lib/catalog-assembler.js";
 
 async function buildSiteData() {
   const root = process.cwd();
   const shelfDir = path.join(root, "shelf");
   const siteDir = path.join(root, "site");
 
-  const readJson = async (filename: string) => {
-    const raw = await fs.readFile(path.join(shelfDir, filename), "utf8");
-    return JSON.parse(raw.replace(/^\uFEFF/, ""));
-  };
+  const payload = assembleCatalogFromShelf(shelfDir);
+  const allResources = payload.resources;
+  const reposCount = payload.reposCount;
 
-  const apis = (await readJson("apis.json")).map((item: any) => ({
-    ...item,
-    type: "api",
-    section: "Free & Public APIs",
-  }));
-  const aiTools = (await readJson("ai-tools.json")).map((item: any) => ({
-    ...item,
-    type: "ai",
-    section: "AI Agents & Local LLMs",
-  }));
-  const cliTools = (await readJson("cli-tools.json")).map((item: any) => ({
-    ...item,
-    type: "cli",
-    section: "CLI & Productivity Tools",
-  }));
-  const testingQa = (await readJson("testing-qa.json")).map((item: any) => ({
-    ...item,
-    type: "testing",
-    section: "Testing & QA Reliability",
-  }));
-  const freeCloud = (await readJson("free-cloud.json")).map((item: any) => ({
-    ...item,
-    type: "cloud",
-    section: "Free Cloud & Developer Tiers",
-  }));
-  const contributors = (await readJson("contributors-wanted.json")).map((item: any) => ({
-    ...item,
-    type: "contributors",
-    section: "Contributors Wanted",
-  }));
-  const perks = (await readJson("perks.json")).map((item: any) => ({
-    ...item,
-    type: "perks",
-    section: "Developer Discounts & Startup Perks",
-  }));
-  const boilerplates = (await readJson("boilerplates.json")).map((item: any) => ({
-    ...item,
-    type: "boilerplate",
-    section: "One-Click Deployment Boilerplates",
-  }));
-
-  // Primary curated list: Open source & developer tools first, then APIs, cloud, perks, boilerplates, contributors
-  const rawResources = [
-    ...aiTools,
-    ...cliTools,
-    ...testingQa,
-    ...apis,
-    ...freeCloud,
-    ...perks,
-    ...boilerplates,
-    ...contributors,
-  ];
-
-  const allResources = rawResources.map((item) => {
-    const alternativeTo = getAlternativeTo(item.name);
-    const dockerCompose = getDockerCompose(item.name);
-    return {
-      ...item,
-      ...(alternativeTo ? { alternativeTo } : {}),
-      ...(dockerCompose ? { dockerCompose } : {}),
-    };
-  });
-
-  const reposCount = allResources.filter((r) => Boolean(r.repo)).length;
-
-  const payload = {
-    updatedAt: new Date().toISOString(),
-    totalCount: allResources.length,
-    reposCount,
-    facets: {
-      repos: reposCount,
-    },
-    counts: {
-      aiTools: aiTools.length,
-      cliTools: cliTools.length,
-      testingQa: testingQa.length,
-      apis: apis.length,
-      freeCloud: freeCloud.length,
-      contributors: contributors.length,
-      perks: perks.length,
-      boilerplates: boilerplates.length,
-    },
-    resources: allResources,
-  };
+  const aiTools = allResources.filter((r: any) => r.type === "ai");
+  const cliTools = allResources.filter((r: any) => r.type === "cli");
+  const testingQa = allResources.filter((r: any) => r.type === "testing");
+  const apis = allResources.filter((r: any) => r.type === "api");
+  const freeCloud = allResources.filter((r: any) => r.type === "cloud");
+  const perks = allResources.filter((r: any) => r.type === "perks");
+  const boilerplates = allResources.filter((r: any) => r.type === "boilerplate");
+  const contributors = allResources.filter((r: any) => r.type === "contributors");
 
   // 1. Write data.json for fetch requests
   await fs.writeFile(

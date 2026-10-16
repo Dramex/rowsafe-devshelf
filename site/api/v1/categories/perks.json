@@ -1,6 +1,6 @@
 {
   "version": "1.1.2",
-  "updatedAt": "2026-10-16T13:31:53.027Z",
+  "updatedAt": "2026-10-16T13:50:09.021Z",
   "slug": "perks",
   "name": "Developer Perks & Startup Credits",
   "count": 30,
@@ -23,7 +23,8 @@
       "perkValue": "Free Sentry Business Plan ($312+/yr value)",
       "eligibility": "Public open-source repository with OSI-approved license",
       "type": "perks",
-      "section": "Developer Discounts & Startup Perks"
+      "section": "Developer Discounts & Startup Perks",
+      "alternativeTo": "Datadog APM / Bugsnag"
     },
     {
       "name": "GitHub for Startups",
@@ -183,7 +184,8 @@
       "perkValue": "Free Netlify Pro Team tier",
       "eligibility": "Non-commercial open source projects displaying a Netlify badge",
       "type": "perks",
-      "section": "Developer Discounts & Startup Perks"
+      "section": "Developer Discounts & Startup Perks",
+      "alternativeTo": "AWS Amplify"
     },
     {
       "name": "Vercel for Open Source",
@@ -193,7 +195,8 @@
       "perkValue": "Free Vercel Pro Plan sponsorship",
       "eligibility": "Public open source projects with active community adoption and OSI license",
       "type": "perks",
-      "section": "Developer Discounts & Startup Perks"
+      "section": "Developer Discounts & Startup Perks",
+      "alternativeTo": "AWS Amplify"
     },
     {
       "name": "GitLab for Open Source",

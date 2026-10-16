@@ -3,6 +3,8 @@ import os from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { assembleCatalogFromShelf } from "./catalog-assembler.js";
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -223,22 +225,11 @@ export async function loadCatalog(options = {}) {
   // Tier 5: Source directory shelf/*.json
   const shelfDir = path.join(__dirname, "..", "..", "shelf");
   if (fs.existsSync(shelfDir)) {
-    const resources = [];
-    const files = fs.readdirSync(shelfDir);
-    for (const f of files) {
-      if (f.endsWith(".json")) {
-        const raw = fs.readFileSync(path.join(shelfDir, f), "utf8");
-        const items = JSON.parse(raw.replace(/^\uFEFF/, ""));
-        resources.push(...items);
-      }
-    }
-    cachedCatalog = {
-      totalCount: resources.length,
-      milestone: getMilestone(resources.length),
-      resources,
-      catalogSource: "source",
-      catalogTimestamp: new Date().toISOString(),
-    };
+    const payload = assembleCatalogFromShelf(shelfDir);
+    payload.catalogSource = "source";
+    payload.catalogTimestamp = payload.updatedAt;
+    payload.milestone = getMilestone(payload.totalCount);
+    cachedCatalog = payload;
     return cachedCatalog;
   }
 

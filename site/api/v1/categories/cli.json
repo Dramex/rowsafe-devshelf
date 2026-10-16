@@ -1,6 +1,6 @@
 {
   "version": "1.1.2",
-  "updatedAt": "2026-10-16T13:31:53.027Z",
+  "updatedAt": "2026-10-16T13:50:09.021Z",
   "slug": "cli",
   "name": "CLI & Developer Productivity",
   "count": 116,
@@ -67,7 +67,8 @@
         "No Card Required"
       ],
       "type": "cli",
-      "section": "CLI & Productivity Tools"
+      "section": "CLI & Productivity Tools",
+      "alternativeTo": "Grep"
     },
     {
       "name": "eza",
@@ -83,7 +84,8 @@
         "No Card Required"
       ],
       "type": "cli",
-      "section": "CLI & Productivity Tools"
+      "section": "CLI & Productivity Tools",
+      "alternativeTo": "Ls"
     },
     {
       "name": "fzf",
@@ -99,7 +101,8 @@
         "No Card Required"
       ],
       "type": "cli",
-      "section": "CLI & Productivity Tools"
+      "section": "CLI & Productivity Tools",
+      "alternativeTo": "Command-T / QuickOpen"
     },
     {
       "name": "agent-browser",
@@ -131,7 +134,8 @@
         "No Card Required"
       ],
       "type": "cli",
-      "section": "CLI & Productivity Tools"
+      "section": "CLI & Productivity Tools",
+      "alternativeTo": "Cat"
     },
     {
       "name": "delta",
@@ -259,7 +263,8 @@
         "No Card Required"
       ],
       "type": "cli",
-      "section": "CLI & Productivity Tools"
+      "section": "CLI & Productivity Tools",
+      "alternativeTo": "Oh My Zsh"
     },
     {
       "name": "zoxide",
@@ -275,7 +280,8 @@
         "No Card Required"
       ],
       "type": "cli",
-      "section": "CLI & Productivity Tools"
+      "section": "CLI & Productivity Tools",
+      "alternativeTo": "Autojump"
     },
     {
       "name": "gh-dash",
@@ -339,7 +345,8 @@
         "No Card Required"
       ],
       "type": "cli",
-      "section": "CLI & Productivity Tools"
+      "section": "CLI & Productivity Tools",
+      "alternativeTo": "Activity Monitor / Datadog Agent"
     },
     {
       "name": "k9s",
@@ -355,7 +362,8 @@
         "No Card Required"
       ],
       "type": "cli",
-      "section": "CLI & Productivity Tools"
+      "section": "CLI & Productivity Tools",
+      "alternativeTo": "Lens Kubernetes IDE"
     },
     {
       "name": "act",
@@ -387,7 +395,8 @@
         "No Card Required"
       ],
       "type": "cli",
-      "section": "CLI & Productivity Tools"
+      "section": "CLI & Productivity Tools",
+      "alternativeTo": "Df Command"
     },
     {
       "name": "tokei",
@@ -403,7 +412,8 @@
         "No Card Required"
       ],
       "type": "cli",
-      "section": "CLI & Productivity Tools"
+      "section": "CLI & Productivity Tools",
+      "alternativeTo": "CLOC Enterprise"
     },
     {
       "name": "xh",
@@ -419,7 +429,8 @@
         "No Card Required"
       ],
       "type": "cli",
-      "section": "CLI & Productivity Tools"
+      "section": "CLI & Productivity Tools",
+      "alternativeTo": "HTTPie / Postman CLI"
     },
     {
       "name": "doggo",
@@ -563,7 +574,8 @@
         "No Card Required"
       ],
       "type": "cli",
-      "section": "CLI & Productivity Tools"
+      "section": "CLI & Productivity Tools",
+      "alternativeTo": "Docker Desktop"
     },
     {
       "name": "usql",
@@ -659,7 +671,8 @@
         "No Card Required"
       ],
       "type": "cli",
-      "section": "CLI & Productivity Tools"
+      "section": "CLI & Productivity Tools",
+      "alternativeTo": "Shell History Pro"
     },
     {
       "name": "yazi",
@@ -675,7 +688,8 @@
         "No Card Required"
       ],
       "type": "cli",
-      "section": "CLI & Productivity Tools"
+      "section": "CLI & Productivity Tools",
+      "alternativeTo": "Mac Finder / TotalFinder"
     },
     {
       "name": "helix",
@@ -771,7 +785,8 @@
         "No Card Required"
       ],
       "type": "cli",
-      "section": "CLI & Productivity Tools"
+      "section": "CLI & Productivity Tools",
+      "alternativeTo": "TotalFinder / Directory Opus"
     },
     {
       "name": "htop",
@@ -835,7 +850,8 @@
         "No Card Required"
       ],
       "type": "cli",
-      "section": "CLI & Productivity Tools"
+      "section": "CLI & Productivity Tools",
+      "alternativeTo": "Disk Inventory X / DaisyDisk"
     },
     {
       "name": "gdu",
@@ -915,7 +931,8 @@
         "No Card Required"
       ],
       "type": "cli",
-      "section": "CLI & Productivity Tools"
+      "section": "CLI & Productivity Tools",
+      "alternativeTo": "Traceroute Pro"
     },
     {
       "name": "mitmproxy",
@@ -931,7 +948,8 @@
         "No Card Required"
       ],
       "type": "cli",
-      "section": "CLI & Productivity Tools"
+      "section": "CLI & Productivity Tools",
+      "alternativeTo": "Charles Proxy / Fiddler Everywhere"
     },
     {
       "name": "websocat",
@@ -1027,7 +1045,8 @@
         "No Card Required"
       ],
       "type": "cli",
-      "section": "CLI & Productivity Tools"
+      "section": "CLI & Productivity Tools",
+      "alternativeTo": "Neofetch Pro"
     },
     {
       "name": "gitleaks",
@@ -1059,7 +1078,8 @@
         "No Card Required"
       ],
       "type": "cli",
-      "section": "CLI & Productivity Tools"
+      "section": "CLI & Productivity Tools",
+      "alternativeTo": "GitGuardian"
     },
     {
       "name": "osv-scanner",
@@ -1075,7 +1095,8 @@
         "No Card Required"
       ],
       "type": "cli",
-      "section": "CLI & Productivity Tools"
+      "section": "CLI & Productivity Tools",
+      "alternativeTo": "Snyk Open Source"
     },
     {
       "name": "tmux",
@@ -1123,7 +1144,8 @@
         "No Card Required"
       ],
       "type": "cli",
-      "section": "CLI & Productivity Tools"
+      "section": "CLI & Productivity Tools",
+      "alternativeTo": "Shell Error Corrector"
     },
     {
       "name": "direnv",
@@ -1155,7 +1177,8 @@
         "No Card Required"
       ],
       "type": "cli",
-      "section": "CLI & Productivity Tools"
+      "section": "CLI & Productivity Tools",
+      "alternativeTo": "ASDF"
     },
     {
       "name": "asdf-vm",
@@ -1331,7 +1354,8 @@
         "No Card Required"
       ],
       "type": "cli",
-      "section": "CLI & Productivity Tools"
+      "section": "CLI & Productivity Tools",
+      "alternativeTo": "Grammarly Business"
     },
     {
       "name": "RowSafe",
@@ -1423,7 +1447,8 @@
         "No Card Required"
       ],
       "type": "cli",
-      "section": "CLI & Productivity Tools"
+      "section": "CLI & Productivity Tools",
+      "alternativeTo": "Kubernetes Log Viewers"
     },
     {
       "name": "kubectx",
@@ -1439,7 +1464,8 @@
         "No Card Required"
       ],
       "type": "cli",
-      "section": "CLI & Productivity Tools"
+      "section": "CLI & Productivity Tools",
+      "alternativeTo": "Kubernetes Context Switchers"
     },
     {
       "name": "helm",
@@ -1487,7 +1513,8 @@
         "No Card Required"
       ],
       "type": "cli",
-      "section": "CLI & Productivity Tools"
+      "section": "CLI & Productivity Tools",
+      "alternativeTo": "Docker Desktop Kubernetes"
     },
     {
       "name": "kind",
@@ -1503,7 +1530,8 @@
         "No Card Required"
       ],
       "type": "cli",
-      "section": "CLI & Productivity Tools"
+      "section": "CLI & Productivity Tools",
+      "alternativeTo": "EKS / GKE Local"
     },
     {
       "name": "dasel",
@@ -1631,7 +1659,8 @@
         "No Card Required"
       ],
       "type": "cli",
-      "section": "CLI & Productivity Tools"
+      "section": "CLI & Productivity Tools",
+      "alternativeTo": "NVM"
     },
     {
       "name": "q",

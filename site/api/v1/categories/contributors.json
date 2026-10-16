@@ -1,6 +1,6 @@
 {
   "version": "1.1.2",
-  "updatedAt": "2026-10-16T13:31:53.027Z",
+  "updatedAt": "2026-10-16T13:50:09.021Z",
   "slug": "contributors",
   "name": "Contributors Wanted / Up for Grabs",
   "count": 21,
@@ -14,7 +14,8 @@
       "goodFirstIssues": "https://github.com/zed-industries/zed/labels/good%20first%20issue",
       "language": "Rust",
       "type": "contributors",
-      "section": "Contributors Wanted"
+      "section": "Contributors Wanted",
+      "alternativeTo": "Cursor / Sublime Text"
     },
     {
       "name": "Biome",
@@ -36,7 +37,8 @@
       "goodFirstIssues": "https://github.com/nushell/nushell/labels/good%20first%20issue",
       "language": "Rust",
       "type": "contributors",
-      "section": "Contributors Wanted"
+      "section": "Contributors Wanted",
+      "alternativeTo": "PowerShell / Zsh"
     },
     {
       "name": "Infisical",
@@ -91,7 +93,8 @@
       "goodFirstIssues": "https://github.com/wez/wezterm/labels/good%20first%20issue",
       "language": "Rust / Lua",
       "type": "contributors",
-      "section": "Contributors Wanted"
+      "section": "Contributors Wanted",
+      "alternativeTo": "iTerm2 / Warp Pro"
     },
     {
       "name": "Casbin",
@@ -187,7 +190,9 @@
       "goodFirstIssues": "https://github.com/twentyhq/twenty/labels/good%20first%20issue",
       "language": "TypeScript",
       "type": "contributors",
-      "section": "Contributors Wanted"
+      "section": "Contributors Wanted",
+      "alternativeTo": "Salesforce / HubSpot CRM",
+      "dockerCompose": "services:\n  twenty:\n    image: twentycrm/twenty:latest\n    container_name: twenty\n    restart: unless-stopped\n    ports:\n      - \"3000:3000\""
     },
     {
       "name": "Ghost",

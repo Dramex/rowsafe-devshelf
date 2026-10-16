@@ -1,6 +1,6 @@
 {
   "version": "1.1.2",
-  "updatedAt": "2026-10-16T13:31:53.027Z",
+  "updatedAt": "2026-10-16T13:50:09.021Z",
   "slug": "boilerplates",
   "name": "1-Click Deploy Boilerplates",
   "count": 41,
@@ -39,7 +39,9 @@
         "No Card Required"
       ],
       "type": "boilerplate",
-      "section": "One-Click Deployment Boilerplates"
+      "section": "One-Click Deployment Boilerplates",
+      "alternativeTo": "Firebase",
+      "dockerCompose": "services:\n  pocketbase:\n    image: ghcr.io/muchobien/pocketbase:latest\n    container_name: pocketbase\n    restart: unless-stopped\n    ports:\n      - \"8090:8090\"\n    volumes:\n      - ./pb_data:/pb/pb_data"
     },
     {
       "name": "Full-Stack FastAPI Template",
@@ -57,7 +59,8 @@
         "No Card Required"
       ],
       "type": "boilerplate",
-      "section": "One-Click Deployment Boilerplates"
+      "section": "One-Click Deployment Boilerplates",
+      "alternativeTo": "SaaS Boilerplate Paid"
     },
     {
       "name": "Stirling-PDF Ultimate Toolbox",
@@ -75,7 +78,9 @@
         "No Card Required"
       ],
       "type": "boilerplate",
-      "section": "One-Click Deployment Boilerplates"
+      "section": "One-Click Deployment Boilerplates",
+      "alternativeTo": "Adobe Acrobat DC ($20/mo)",
+      "dockerCompose": "services:\n  stirling-pdf:\n    image: frooodle/s-pdf:latest\n    container_name: stirling-pdf\n    restart: unless-stopped\n    ports:\n      - \"8080:8080\"\n    volumes:\n      - ./trainingData:/usr/share/tessdata\n      - ./extraConfigs:/configs\n    environment:\n      - DOCKER_ENABLE_SECURITY=false"
     },
     {
       "name": "Go Clean Architecture API",
@@ -180,7 +185,8 @@
         "CI Verified"
       ],
       "type": "boilerplate",
-      "section": "One-Click Deployment Boilerplates"
+      "section": "One-Click Deployment Boilerplates",
+      "alternativeTo": "Tailwind UI ($299)"
     },
     {
       "name": "Next-Forge",
@@ -197,7 +203,8 @@
         "CI Verified"
       ],
       "type": "boilerplate",
-      "section": "One-Click Deployment Boilerplates"
+      "section": "One-Click Deployment Boilerplates",
+      "alternativeTo": "ShipFast ($199)"
     },
     {
       "name": "Bulletproof React",
@@ -231,7 +238,8 @@
         "CI Verified"
       ],
       "type": "boilerplate",
-      "section": "One-Click Deployment Boilerplates"
+      "section": "One-Click Deployment Boilerplates",
+      "alternativeTo": "SaaS Boilerplate Paid"
     },
     {
       "name": "Astro Paper",
@@ -265,7 +273,8 @@
         "CI Verified"
       ],
       "type": "boilerplate",
-      "section": "One-Click Deployment Boilerplates"
+      "section": "One-Click Deployment Boilerplates",
+      "alternativeTo": "Retool Enterprise"
     },
     {
       "name": "Medusa",
@@ -282,7 +291,8 @@
         "CI Verified"
       ],
       "type": "boilerplate",
-      "section": "One-Click Deployment Boilerplates"
+      "section": "One-Click Deployment Boilerplates",
+      "alternativeTo": "Shopify Plus ($2000/mo)"
     },
     {
       "name": "Next.js Enterprise Boilerplate",
@@ -316,7 +326,8 @@
         "CI Verified"
       ],
       "type": "boilerplate",
-      "section": "One-Click Deployment Boilerplates"
+      "section": "One-Click Deployment Boilerplates",
+      "alternativeTo": "ShipFast ($199)"
     },
     {
       "name": "Turborepo Starter",
@@ -350,7 +361,8 @@
         "CI Verified"
       ],
       "type": "boilerplate",
-      "section": "One-Click Deployment Boilerplates"
+      "section": "One-Click Deployment Boilerplates",
+      "alternativeTo": "Contentful / Sanity Pro"
     },
     {
       "name": "Nuxt 3 Starter",
@@ -384,7 +396,8 @@
         "CI Verified"
       ],
       "type": "boilerplate",
-      "section": "One-Click Deployment Boilerplates"
+      "section": "One-Click Deployment Boilerplates",
+      "alternativeTo": "Vite Commercial Templates"
     },
     {
       "name": "Vitesse WebExt",
@@ -435,7 +448,8 @@
         "CI Verified"
       ],
       "type": "boilerplate",
-      "section": "One-Click Deployment Boilerplates"
+      "section": "One-Click Deployment Boilerplates",
+      "alternativeTo": "Electron Pro"
     },
     {
       "name": "Electron React Boilerplate",
