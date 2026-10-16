@@ -85,6 +85,23 @@ export function writePersistentCache(catalogData) {
 }
 
 /**
+ * Invalidate in-memory and persistent local disk cache
+ * @returns {boolean}
+ */
+export function clearPersistentCache() {
+  cachedCatalog = null;
+  try {
+    const cacheFile = getCacheFilePath();
+    if (fs.existsSync(cacheFile)) {
+      fs.unlinkSync(cacheFile);
+    }
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/**
  * Fetch catalog from remote production CDN endpoint
  * @param {number} [timeoutMs=4000]
  * @param {typeof fetch} [fetchFn=fetch]

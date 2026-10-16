@@ -5,6 +5,7 @@ import path from "node:path";
 import test, { beforeEach, describe } from "node:test";
 import {
   DEFAULT_CACHE_TTL_MS,
+  clearPersistentCache,
   getCacheFilePath,
   loadCatalog,
   readPersistentCache,
@@ -179,5 +180,15 @@ describe("DevShelf CLI Persistent Cache & Provenance Suite (D2)", () => {
     );
     assert.strictEqual(refreshed.totalCount, 777);
     assert.strictEqual(refreshed.catalogSource, "live");
+  });
+
+  test("clearPersistentCache purges on-disk cache file and resets memory cache", async () => {
+    writePersistentCache(sampleCatalog);
+    assert.strictEqual(fs.existsSync(getCacheFilePath()), true);
+
+    const cleared = clearPersistentCache();
+    assert.strictEqual(cleared, true);
+    assert.strictEqual(fs.existsSync(getCacheFilePath()), false);
+    assert.strictEqual(readPersistentCache(), null);
   });
 });
