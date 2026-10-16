@@ -187,7 +187,7 @@ describe("DevShelf CLI & TUI Suite", () => {
     assert.match(payload.error, /Name parameter cannot be empty/);
   });
 
-  test("MCP get_security_audit returns cryptographic audit status and HMAC signature", () => {
+  test("MCP get_security_audit separates catalog identity and returns honest NOT_AUDITED when no audit record exists", () => {
     const auditReq = `${JSON.stringify({ jsonrpc: "2.0", id: 12, method: "tools/call", params: { name: "get_security_audit", arguments: { toolName: "AgentShield" } } })}\n`;
     const stdout = execSync("node bin/mcp.js", {
       input: auditReq,
@@ -200,11 +200,12 @@ describe("DevShelf CLI & TUI Suite", () => {
     const payload = JSON.parse(parsed.result.content[0].text);
     assert.equal(payload.toolName, "AgentShield");
     assert.ok(payload.identity?.catalogDigest);
-    assert.equal(payload.securityAudit?.status, "ZERO_LEAK_VERIFIED");
-    assert.ok(payload.securityAudit?.signatureHash);
-    assert.ok(payload.securityAudit?.verifyUrl.includes("hash="));
+    assert.equal(payload.identity?.verifiedCatalogEntry, true);
+    assert.equal(payload.securityAudit?.status, "NOT_AUDITED");
+    assert.equal(payload.securityAudit?.verified, false);
+    assert.ok(!payload.securityAudit?.signatureHash);
 
-    // Verify un-audited tool returns NOT_AUDITED
+    // Verify un-audited tool also returns NOT_AUDITED
     const unAuditedReq = `${JSON.stringify({ jsonrpc: "2.0", id: 122, method: "tools/call", params: { name: "get_security_audit", arguments: { toolName: "Ollama" } } })}\n`;
     const unAuditedStdout = execSync("node bin/mcp.js", {
       input: unAuditedReq,
