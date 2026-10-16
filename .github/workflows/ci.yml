@@ -1,4 +1,4 @@
-name: Validate Shelf Data
+name: CI
 
 on:
   push:
@@ -7,23 +7,35 @@ on:
     branches: [main]
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   validate:
-    name: Verify Data & Rebuild README
-    runs-on: ubuntu-latest
+    name: Validate (Node ${{ matrix.node }} on ${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        node: [20, 22, 24]
+
     steps:
+      - name: Configure Git line endings
+        run: git config --global core.autocrlf false
+
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
-          run_install: false
+          version: 9
 
-      - name: Setup Node.js 22
+      - name: Setup Node.js ${{ matrix.node }}
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: ${{ matrix.node }}
           cache: pnpm
 
       - name: Install dependencies
@@ -38,8 +50,11 @@ jobs:
       - name: Run Test Suite
         run: pnpm test
 
-      - name: Test Build README
+      - name: Test Build Pipeline
         run: pnpm run build
 
       - name: Check Code Formatting
         run: pnpm run format:check
+
+      - name: Verify Packaging Gate
+        run: npm pack --dry-run
