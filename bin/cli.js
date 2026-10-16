@@ -763,6 +763,9 @@ async function main() {
     });
 
     console.log(
+      `  ${c.dim}ℹ️  Editorial Independence: Sponsoring does not bypass DevShelf zero-paywall audits or organic ranking.${c.reset}\n`,
+    );
+    console.log(
       `  ${c.gray}Become a verified backer & receive instant badge embed code:${c.reset}`,
     );
     console.log(

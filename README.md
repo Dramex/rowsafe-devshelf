@@ -10,7 +10,7 @@
 
 ### ⚡ The Zero-Paywall Developer Directory & MCP Knowledge Hub
 
-**The only curated developer directory that never rots — verified by continuous CI health checks, accessible in your terminal (`npx devshelf`), powered by an open JSON REST API, and native MCP server for AI coding assistants.**
+**A community developer directory with automated link freshness validation & zero-paywall audits — verified by continuous CI telemetry, accessible in your terminal (`npx devshelf`), powered by an open JSON REST API, and native MCP server for AI coding assistants.**
 
 <br>
 
@@ -97,6 +97,30 @@ Most developer resource lists (*public-apis*, *free-for-dev*) suffer from link r
 | **AI Agent Native** | None (manual copying and pasting into chat) | 🤖 **Official MCP Server (`npx devshelf-mcp`)** for Claude, Cursor, & Zed |
 | **Data Programmability** | Static markdown formatting | 📡 **Free CORS JSON REST API (`/api/v1/tools.json`)** with no keys needed |
 | **Creator Backing** | Submissions sit unreviewed for months with zero recognition | 📢 **Social Amplification Guarantee** &mdash; merged tools get featured on X & LinkedIn |
+
+---
+
+## 🛡️ Independent Verification & Freshness Architecture
+
+DevShelf does not rely on subjective claims or stale markdown lists. Catalog integrity is grounded in three separate, automated verification tiers and an explicit sponsor transparency policy:
+
+1. 🌐 **Reachable Web Endpoint (`lastCheckedAt`)**
+   - Automated HTTP probe and DNS resolution tests tracking 200 OK and canonical 301/308 redirects.
+   - Resilient against Cloudflare / Vercel anti-bot challenge false-positives.
+   - Enforces an automated **14-day grace period** before any broken URL enters sunset delisting.
+
+2. 🔌 **Working API & Service Health (`lastVerifiedAt`)**
+   - Automated endpoint connectivity and payload validation for public APIs and developer services.
+   - Ensures mock APIs, inference endpoints, and tool APIs return parseable data matching their schemas.
+
+3. 💳 **Verified Zero-Paywall & Pricing Policy (`pricingVerifiedAt`)**
+   - Automated regex and human audit heuristic scans for trial-bait detection.
+   - Enforces permanent free access: mandatory upfront credit cards or expiring 14-day trial traps are rejected.
+
+4. 🎖️ **Sponsor & Partner Independence Disclosure**
+   - **Editorial Independence**: Sponsored partner tools, directory spotlight slots, and patron badges are strictly labeled with `[Sponsored]` or `[Patron Backed]` tags.
+   - **Sponsoring does not bypass audits**: Sponsored tools must meet the exact same reachability and zero-paywall criteria as organic entries.
+   - Organic search rankings, categorization, and recommendation algorithms remain 100% unbiased.
 
 ---
 
