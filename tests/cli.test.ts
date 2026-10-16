@@ -36,6 +36,7 @@ describe("DevShelf CLI & TUI Suite", () => {
     assert.match(res.stdout, /USAGE:/);
     assert.match(res.stdout, /npx devshelf search/);
     assert.match(res.stdout, /npx devshelf random/);
+    assert.match(res.stdout, /npx devshelf update/);
     assert.match(res.stdout, /npx devshelf mcp/);
   });
 
@@ -45,6 +46,19 @@ describe("DevShelf CLI & TUI Suite", () => {
     const parsed = JSON.parse(res.stdout);
     assert.ok(typeof parsed === "object" && parsed !== null);
     assert.ok(parsed.repos >= 300, "Should report at least 300 GitHub repos");
+    assert.ok(typeof parsed.catalogSource === "string", "Must declare catalogSource");
+    assert.ok(parsed.catalogTimestamp !== null, "Must declare catalogTimestamp");
+    assert.ok(typeof parsed.cachePath === "string", "Must report local cachePath");
+  });
+
+  test("refreshes live catalog with update --json", () => {
+    const res = runCli("update --json");
+    assert.equal(res.status, 0);
+    const parsed = JSON.parse(res.stdout);
+    assert.strictEqual(parsed.success, true);
+    assert.strictEqual(parsed.catalogSource, "live");
+    assert.ok(parsed.totalCount >= 500);
+    assert.ok(typeof parsed.cachePath === "string");
   });
 
   test("searches items by keyword and returns matching results in JSON", () => {

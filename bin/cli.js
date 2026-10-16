@@ -18,7 +18,13 @@ import fs from "node:fs";
 import path from "node:path";
 import readline from "node:readline";
 import { fileURLToPath } from "node:url";
-import { getResourceUrl, loadCatalog, searchCatalog } from "./lib/catalog.js";
+import {
+  getCacheFilePath,
+  getResourceUrl,
+  loadCatalog,
+  refreshCatalog,
+  searchCatalog,
+} from "./lib/catalog.js";
 import { loadSponsors } from "./lib/sponsors.js";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -161,6 +167,7 @@ ${c.bold}USAGE:${c.reset}
   ${c.green}npx devshelf list [category]${c.reset}     List items by category
   ${c.green}npx devshelf random${c.reset}              Discover a random curated resource
   ${c.green}npx devshelf stats${c.reset}               Show catalog counts and metrics
+  ${c.green}npx devshelf update${c.reset}              Refresh catalog cache from live directory
   ${c.green}npx devshelf sponsors${c.reset}            Display Wall of Patrons & verified backer ledger
   ${c.green}npx devshelf submit [options]${c.reset}     Submit a new free developer tool via PR from terminal
   ${c.green}npx devshelf mcp${c.reset}                 Launch DevShelf as a Model Context Protocol (MCP) server
@@ -483,6 +490,49 @@ async function main() {
   const cleanArgs = args.filter((a) => !a.startsWith("-"));
   const command = cleanArgs[0];
 
+  if (command === "update" || command === "refresh") {
+    if (!isJson) {
+      printHeader();
+      console.log(`  ${c.cyan}⚡ Refreshing catalog from live DevShelf directory...${c.reset}`);
+    }
+
+    try {
+      const updated = await refreshCatalog();
+      if (isJson) {
+        console.log(
+          JSON.stringify(
+            {
+              success: true,
+              totalCount: updated.totalCount,
+              milestone: updated.milestone,
+              catalogSource: updated.catalogSource,
+              catalogTimestamp: updated.catalogTimestamp,
+              cachePath: getCacheFilePath(),
+            },
+            null,
+            2,
+          ),
+        );
+        return;
+      }
+
+      console.log(`  ${c.green}✔ Successfully refreshed DevShelf catalog!${c.reset}`);
+      console.log(`    Total Resources:    ${c.purple}${c.bold}${updated.totalCount}${c.reset} (${updated.milestone})`);
+      console.log(`    Catalog Timestamp:  ${c.gray}${updated.catalogTimestamp}${c.reset}`);
+      console.log(`    Catalog Source:     ${c.green}${updated.catalogSource}${c.reset}`);
+      console.log(`    Local Cache File:   ${c.dim}${getCacheFilePath()}${c.reset}\n`);
+    } catch (err) {
+      if (isJson) {
+        console.log(JSON.stringify({ success: false, error: err.message }, null, 2));
+        process.exit(1);
+      }
+      console.log(`  ${c.red}✖ Failed to refresh catalog:${c.reset} ${err.message}`);
+      console.log(`  ${c.gray}The CLI will continue using existing cached or bundled data.${c.reset}\n`);
+      process.exit(1);
+    }
+    return;
+  }
+
   const data = await loadData();
   const resources = data.resources || [];
 
@@ -628,6 +678,11 @@ async function main() {
     const statsObj = {
       total: data.totalCount || resources.length,
       repos: reposCount,
+      milestone: data.milestone || "530+",
+      catalogSource: data.catalogSource || "bundled",
+      catalogTimestamp: data.catalogTimestamp || data.updatedAt || null,
+      cacheAgeHours: data.cacheAgeHours ?? null,
+      cachePath: getCacheFilePath(),
       ...(data.counts || {}),
     };
 
@@ -642,6 +697,14 @@ async function main() {
       `  Total Resources:      ${c.purple}${c.bold}${data.totalCount || resources.length}${c.reset}`,
     );
     console.log(`  GitHub Repositories:  ${c.cyan}${reposCount}${c.reset}`);
+    console.log(`  Catalog Source:       ${c.green}${data.catalogSource || "bundled"}${c.reset}`);
+    if (data.catalogTimestamp) {
+      console.log(`  Catalog Timestamp:    ${c.gray}${data.catalogTimestamp}${c.reset}`);
+    }
+    if (data.cacheAgeHours != null) {
+      console.log(`  Cache Age:            ${c.gray}${data.cacheAgeHours}h${c.reset}`);
+    }
+    console.log(`  Cache Location:       ${c.dim}${getCacheFilePath()}${c.reset}`);
     if (data.counts) {
       console.log(`  Public Free APIs:     ${c.green}${data.counts.apis || "90+"}${c.reset}`);
       console.log(`  AI & Local LLMs:      ${c.purple}${data.counts.aiTools || "80+"}${c.reset}`);
