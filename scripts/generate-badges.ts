@@ -146,24 +146,57 @@ export async function buildStaticBadges() {
   await fs.writeFile(path.join(BADGES_DIR, "default.svg"), defaultPill, "utf8");
   await fs.writeFile(path.join(BADGES_DIR, "verified.svg"), defaultCard, "utf8");
 
-  // Sample handle badges for default sponsors
-  const defaultPatrons = [
+  // Load canonical patrons ledger from data/sponsors.json
+  const sponsorsDataPath = path.join(ROOT_DIR, "data", "sponsors.json");
+  const apiSponsorsPath = path.join(ROOT_DIR, "site", "api", "v1", "sponsors.json");
+
+  let patronsList: Array<{
+    handle?: string;
+    name: string;
+    tier: BadgeOptions["tier"];
+    github?: string;
+  }> = [];
+
+  try {
+    const raw = await fs.readFile(sponsorsDataPath, "utf8");
+    const parsed = JSON.parse(raw);
+    await fs.writeFile(apiSponsorsPath, JSON.stringify(parsed, null, 2), "utf8");
+    if (Array.isArray(parsed.patrons)) {
+      patronsList = parsed.patrons.map((p: any) => ({
+        handle: p.github || (p.name ? p.name.toLowerCase().replace(/[^a-z0-9]/g, "") : "patron"),
+        name: p.name,
+        tier: p.tier,
+        github: p.github,
+      }));
+    }
+  } catch (err) {
+    console.warn("Could not read data/sponsors.json, using defaults:", err);
+  }
+
+  // Sample handle badges for default sponsors & patrons
+  const samplePatrons = [
     { handle: "cloudsec", name: "Sarah M. (@cloudsec)", tier: "gold" as const },
     { handle: "alexk", name: "Alex K. (SuperFile Maintainer)", tier: "gold" as const },
     { handle: "maboroshi", name: "Maboroshi / Terminal Tools", tier: "silver" as const },
     { handle: "davidchen", name: "David Chen", tier: "silver" as const },
     { handle: "eigenwise", name: "Eigenwise", tier: "silver" as const },
     { handle: "ghost", name: "Community Backer", tier: "bronze" as const },
+    ...patronsList,
   ];
 
-  for (const p of defaultPatrons) {
+  const processedHandles = new Set<string>();
+  for (const p of samplePatrons) {
+    if (!p.handle || processedHandles.has(p.handle)) continue;
+    processedHandles.add(p.handle);
     const pill = generatePillBadgeSvg(p);
     const card = generateCardBadgeSvg(p);
     await fs.writeFile(path.join(BADGES_DIR, `${p.handle}.svg`), pill, "utf8");
     await fs.writeFile(path.join(BADGES_DIR, `${p.handle}-card.svg`), card, "utf8");
   }
 
-  console.log(`🎖️ [DevShelf Badge Engine] Generated static SVG badges under site/api/v1/badges/`);
+  console.log(
+    `🎖️ [DevShelf Badge Engine] Generated static SVG badges and site/api/v1/sponsors.json`,
+  );
 }
 
 // Auto-run if executed directly

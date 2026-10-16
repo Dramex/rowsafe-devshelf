@@ -691,18 +691,39 @@
     let currentCurrency = 'USD'; // 'USD' or 'INR'
     let currentAmount = 5;
 
-    // Load Local Storage Patrons
+    let remotePatrons = [];
+
+    // Load Local Storage & Remote API Patrons
     function getStoredPatrons() {
+      const basePatrons = remotePatrons.length > 0 ? remotePatrons : DEFAULT_PATRONS;
       try {
         const stored = localStorage.getItem('devshelf_sponsors_v1');
         if (stored) {
           const parsed = JSON.parse(stored);
-          return [...parsed, ...DEFAULT_PATRONS];
+          const existingIds = new Set(basePatrons.map(p => p.id));
+          const uniqueLocal = parsed.filter(p => !existingIds.has(p.id));
+          return [...uniqueLocal, ...basePatrons];
         }
       } catch (e) {
         console.warn('Storage read error:', e);
       }
-      return [...DEFAULT_PATRONS];
+      return [...basePatrons];
+    }
+
+    async function initRemotePatrons() {
+      try {
+        const res = await fetch('api/v1/sponsors.json');
+        if (res.ok) {
+          const data = await res.json();
+          if (Array.isArray(data.patrons)) {
+            remotePatrons = data.patrons;
+            renderLeaderboard('all');
+            renderComments();
+          }
+        }
+      } catch (err) {
+        // Fallback gracefully to embedded patrons
+      }
     }
 
     // Save New Sponsor
@@ -1525,6 +1546,7 @@
     renderLeaderboard('all');
     renderComments();
     checkPaymentReturn();
+    initRemotePatrons();
   </script>
 </body>
 </html>

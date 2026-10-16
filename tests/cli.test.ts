@@ -204,4 +204,59 @@ describe("DevShelf CLI & TUI Suite", () => {
     assert.ok(payload.totalFeatured >= 1);
     assert.ok(payload.tools.some((t: any) => t.name === "AgentShield"));
   });
+
+  test("returns valid sponsors ledger with sponsors --json", () => {
+    const res = runCli("sponsors --json");
+    assert.equal(res.status, 0);
+    const parsed = JSON.parse(res.stdout);
+    assert.ok(Array.isArray(parsed.patrons), "Should contain patrons array");
+    assert.ok(parsed.patrons.length >= 6, "Should contain at least 6 verified patrons");
+    assert.ok(parsed.stats?.totalContributedUSD >= 500, "Should report ledger pool >= $500");
+  });
+
+  test("prints formatted patron table with sponsors command", () => {
+    const res = runCli("sponsors");
+    assert.equal(res.status, 0);
+    assert.match(res.stdout, /DevShelf Wall of Patrons/);
+    assert.match(res.stdout, /RitualDev Core Team/);
+    assert.match(res.stdout, /Gold Patron/);
+    assert.match(res.stdout, /https:\/\/devshelf\.ritualdev\.in\/sponsors\.html/);
+  });
+
+  test("MCP list_sponsors returns verified patrons ledger", () => {
+    const sponsorsReq = `${JSON.stringify({ jsonrpc: "2.0", id: 14, method: "tools/call", params: { name: "list_sponsors", arguments: { tier: "gold" } } })}\n`;
+    const stdout = execSync("node bin/mcp.js", {
+      input: sponsorsReq,
+      cwd: ROOT,
+      encoding: "utf8",
+    });
+    const lines = stdout.trim().split("\n").filter(Boolean);
+    const parsed = JSON.parse(lines[0]);
+    assert.ok(parsed.result?.content?.[0]?.text);
+    const payload = JSON.parse(parsed.result.content[0].text);
+    assert.ok(Array.isArray(payload.patrons), "Should return patrons array");
+    assert.ok(
+      payload.patrons.every((p: any) => p.tier === "gold"),
+      "All patrons should be gold tier",
+    );
+    assert.ok(payload.becomeSponsorUrl.includes("sponsors.html"));
+  });
+
+  test("MCP get_sponsor_badge returns markdown and image URLs", () => {
+    const badgeReq = `${JSON.stringify({ jsonrpc: "2.0", id: 15, method: "tools/call", params: { name: "get_sponsor_badge", arguments: { handle: "RitualDev-Lab", tier: "gold", style: "card" } } })}\n`;
+    const stdout = execSync("node bin/mcp.js", {
+      input: badgeReq,
+      cwd: ROOT,
+      encoding: "utf8",
+    });
+    const lines = stdout.trim().split("\n").filter(Boolean);
+    const parsed = JSON.parse(lines[0]);
+    assert.ok(parsed.result?.content?.[0]?.text);
+    const payload = JSON.parse(parsed.result.content[0].text);
+    assert.equal(payload.handle, "RitualDev-Lab");
+    assert.equal(payload.tier, "gold");
+    assert.equal(payload.style, "card");
+    assert.ok(payload.badgeUrl.includes("RitualDev-Lab-card.svg"));
+    assert.ok(payload.markdown.startsWith("[![DevShelf Sponsor]"));
+  });
 });

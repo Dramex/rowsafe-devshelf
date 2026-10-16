@@ -30,7 +30,7 @@
   "engines": {
     "node": ">=20.0.0"
   },
-  "files": ["bin", "shelf", "site/data.json"],
+  "files": ["bin", "shelf", "site/data.json", "data", "site/api/v1/sponsors.json"],
   "scripts": {
     "devshelf": "node bin/cli.js",
     "mcp": "node bin/mcp.js",

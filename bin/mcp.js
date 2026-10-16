@@ -14,6 +14,7 @@ import path from "node:path";
 import readline from "node:readline";
 import { fileURLToPath } from "node:url";
 import { loadCatalog } from "./lib/catalog.js";
+import { loadSponsors } from "./lib/sponsors.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -129,6 +130,48 @@ const TOOLS = [
           description: "Optional category filter (e.g., 'ai', 'cli', 'apis')",
         },
       },
+    },
+  },
+  {
+    name: "list_sponsors",
+    description:
+      "Inspect the DevShelf Wall of Patrons and public sponsorship ledger. Returns verified community backers, sponsorship tiers (Gold, Silver, Bronze), pledged amounts, and contribution comments.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        tier: {
+          type: "string",
+          description: "Optional tier filter ('gold', 'silver', 'bronze', or 'all')",
+        },
+        limit: {
+          type: "number",
+          description: "Maximum number of patrons to return (default: 10)",
+        },
+      },
+    },
+  },
+  {
+    name: "get_sponsor_badge",
+    description:
+      "Generate ready-to-paste Markdown, HTML, and SVG image URLs for a DevShelf Sponsor badge for embedding in GitHub READMEs, docs, or portfolio sites.",
+    inputSchema: {
+      type: "object",
+      properties: {
+        handle: {
+          type: "string",
+          description: "GitHub username or organization handle (e.g. 'RitualDev-Lab', 'torvalds')",
+        },
+        tier: {
+          type: "string",
+          description: "Sponsor tier: 'gold', 'silver', or 'bronze' (default: 'bronze')",
+        },
+        style: {
+          type: "string",
+          description:
+            "Badge style: 'pill' (compact 220x28) or 'card' (rich 380x92) (default: 'pill')",
+        },
+      },
+      required: ["handle"],
     },
   },
 ];
@@ -353,6 +396,48 @@ async function handleToolCall(name, args) {
           : "Verified Sponsor ★",
         badges: item.statusTags || ["Verified Free"],
       })),
+    };
+  }
+
+  if (name === "list_sponsors") {
+    const sponsorsData = await loadSponsors();
+    const tier = (args?.tier || "all").toLowerCase().trim();
+    const limit = Math.min(Math.max(Number(args?.limit) || 10, 1), 50);
+
+    let patrons = sponsorsData.patrons || [];
+    if (tier && tier !== "all") {
+      patrons = patrons.filter((p) => p.tier === tier);
+    }
+
+    return {
+      totalPatrons: patrons.length,
+      ledgerStats: sponsorsData.stats,
+      patrons: patrons.slice(0, limit),
+      becomeSponsorUrl: "https://devshelf.ritualdev.in/sponsors.html",
+    };
+  }
+
+  if (name === "get_sponsor_badge") {
+    const handle = String(args?.handle || "")
+      .trim()
+      .replace(/^@/, "");
+    if (!handle) {
+      return { error: "Handle parameter cannot be empty." };
+    }
+    const tier = ["gold", "silver", "bronze"].includes(args?.tier) ? args.tier : "bronze";
+    const style = args?.style === "card" ? "card" : "pill";
+
+    const badgeFile = style === "card" ? `${handle}-card.svg` : `${handle}.svg`;
+    const badgeUrl = `https://devshelf.ritualdev.in/api/v1/badges/${encodeURIComponent(badgeFile)}`;
+    const linkUrl = "https://devshelf.ritualdev.in/sponsors.html";
+
+    return {
+      handle,
+      tier,
+      style,
+      badgeUrl,
+      markdown: `[![DevShelf Sponsor](${badgeUrl})](${linkUrl})`,
+      html: `<a href="${linkUrl}"><img src="${badgeUrl}" alt="DevShelf Sponsor Badge" /></a>`,
     };
   }
 

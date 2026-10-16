@@ -19,6 +19,7 @@ import path from "node:path";
 import readline from "node:readline";
 import { fileURLToPath } from "node:url";
 import { getResourceUrl, loadCatalog, searchCatalog } from "./lib/catalog.js";
+import { loadSponsors } from "./lib/sponsors.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -160,6 +161,7 @@ ${c.bold}USAGE:${c.reset}
   ${c.green}npx devshelf list [category]${c.reset}     List items by category
   ${c.green}npx devshelf random${c.reset}              Discover a random curated resource
   ${c.green}npx devshelf stats${c.reset}               Show catalog counts and metrics
+  ${c.green}npx devshelf sponsors${c.reset}            Display Wall of Patrons & verified backer ledger
   ${c.green}npx devshelf submit [options]${c.reset}     Submit a new free developer tool via PR from terminal
   ${c.green}npx devshelf mcp${c.reset}                 Launch DevShelf as a Model Context Protocol (MCP) server
   ${c.green}npx devshelf open <name>${c.reset}          Open resource URL directly in browser
@@ -646,6 +648,63 @@ async function main() {
       console.log(
         `  1-Click Boilerplates: ${c.green}${data.counts.boilerplates || "40+"}${c.reset}`,
       );
+    }
+    return;
+  }
+
+  if (command === "sponsors" || command === "patrons" || command === "patron") {
+    const sponsorsData = await loadSponsors();
+    if (isJson) {
+      console.log(JSON.stringify(sponsorsData, null, 2));
+      return;
+    }
+
+    printHeader();
+    console.log(
+      `  💖 ${c.bold}DevShelf Wall of Patrons${c.reset} ${c.gray}— Verified Zero-Paywall Backers${c.reset}\n`,
+    );
+
+    const stats = sponsorsData.stats || {};
+    const totalPatrons = stats.totalPatrons || sponsorsData.patrons.length;
+    const poolUSD = stats.totalContributedUSD || 600;
+    const poolINR = stats.totalContributedINR || 50200;
+
+    console.log(
+      `  Total Patrons: ${c.bold}${c.purple}${totalPatrons}${c.reset}  │  Ledger Pool: ${c.bold}${c.green}$${poolUSD} USD${c.reset} (~₹${poolINR.toLocaleString()})\n`,
+    );
+
+    sponsorsData.patrons.forEach((p, idx) => {
+      const rank = p.rank || idx + 1;
+      let medal = `#${rank}`;
+      if (rank === 1) medal = "🥇 #1";
+      else if (rank === 2) medal = "🥈 #2";
+      else if (rank === 3) medal = "🥉 #3";
+
+      let tierTag = `${c.purple}⚡ Supporter${c.reset}`;
+      if (p.tier === "gold") tierTag = `${c.amber}👑 Gold Patron${c.reset}`;
+      else if (p.tier === "silver") tierTag = `${c.cyan}🛡️ Silver Backer${c.reset}`;
+
+      const handleStr = p.github ? ` (@${p.github})` : "";
+      const amtStr = `$${p.amountUSD} USD`;
+
+      console.log(
+        `  ${c.bold}${medal.padEnd(6)}${c.reset} ${c.bold}${p.name}${c.reset}${c.cyan}${handleStr}${c.reset}  ${tierTag}  ${c.green}${amtStr}${c.reset}`,
+      );
+      if (p.comment) {
+        console.log(`         ${c.dim}"${p.comment}"${c.reset}`);
+      }
+      console.log();
+    });
+
+    console.log(
+      `  ${c.gray}Become a verified backer & receive instant badge embed code:${c.reset}`,
+    );
+    console.log(
+      `  👉 ${c.underline}${c.blue}https://devshelf.ritualdev.in/sponsors.html${c.reset}\n`,
+    );
+
+    if (shouldOpen) {
+      openUrl("https://devshelf.ritualdev.in/sponsors.html");
     }
     return;
   }
