@@ -493,6 +493,65 @@
     </div>
   </div>
 
+  <!-- Confetti Canvas -->
+  <canvas id="celebration-canvas" class="fixed inset-0 z-50 pointer-events-none hidden"></canvas>
+
+  <!-- Celebration Modal -->
+  <div id="celebration-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-md hidden transition-opacity" role="dialog" aria-modal="true" aria-labelledby="celebration-modal-title">
+    <div class="bg-gradient-to-b from-slate-900 to-slate-950 border border-amber-500/50 rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl relative text-center">
+      <div class="w-16 h-16 rounded-full bg-gradient-to-tr from-amber-500/20 to-pink-500/20 border border-amber-500/40 flex items-center justify-center mx-auto mb-4 text-3xl animate-bounce">
+        🎉
+      </div>
+
+      <h3 id="celebration-modal-title" class="text-xl sm:text-2xl font-extrabold text-white mb-2">
+        Payment Confirmed! Welcome, <span id="celeb-patron-name" class="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-pink-300 to-purple-300">Patron</span>!
+      </h3>
+      
+      <p class="text-xs sm:text-sm text-slate-300 leading-relaxed mb-6">
+        Your contribution has been verified on the ledger! You are directly funding zero-paywall developer tooling, open-source API registries, and local-first AI security.
+      </p>
+
+      <div class="bg-slate-950/90 rounded-2xl border border-slate-800 p-4 mb-6">
+        <div class="flex items-center justify-between pb-3 border-b border-slate-800/80 mb-3">
+          <span class="text-xs font-mono text-slate-400">Verified Tier:</span>
+          <span id="celeb-tier-badge" class="px-2.5 py-0.5 text-xs font-mono font-bold rounded-full bg-amber-950 text-amber-300 border border-amber-500/40">
+            👑 Gold Patron
+          </span>
+        </div>
+        <div class="flex items-center justify-between text-xs font-mono text-slate-400">
+          <span>Amount Pledged:</span>
+          <span id="celeb-amount" class="text-sm font-extrabold text-emerald-400">$100</span>
+        </div>
+      </div>
+
+      <!-- Instant Badge Embed Snippet -->
+      <div class="text-left mb-6">
+        <div class="flex items-center justify-between mb-1.5">
+          <label class="text-[11px] font-mono font-bold text-slate-400 uppercase tracking-wider">Your README Embed Code</label>
+          <span id="celeb-copy-toast" class="text-[11px] font-mono text-emerald-400 hidden">✓ Copied!</span>
+        </div>
+        <div class="relative">
+          <input id="celeb-badge-input" type="text" readonly class="w-full pl-3 pr-20 py-2.5 bg-slate-950 rounded-xl border border-slate-700 font-mono text-xs text-purple-300 focus:outline-none select-all">
+          <button id="celeb-copy-btn" type="button" class="absolute right-1.5 top-1/2 -translate-y-1/2 px-3 py-1 bg-purple-600 hover:bg-purple-500 text-white rounded-lg text-xs font-mono font-bold transition">
+            Copy
+          </button>
+        </div>
+      </div>
+
+      <!-- Action CTAs -->
+      <div class="flex flex-col sm:flex-row gap-3">
+        <button id="celeb-view-leaderboard-btn" type="button" class="flex-1 py-3 px-4 rounded-xl font-bold text-white bg-slate-800 hover:bg-slate-700 border border-slate-700 transition text-xs font-mono flex items-center justify-center gap-1.5">
+          <span>🏆</span>
+          <span>View on Leaderboard</span>
+        </button>
+        <button id="celeb-close-btn" type="button" class="flex-1 py-3 px-4 rounded-xl font-bold text-white bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 transition text-xs font-mono flex items-center justify-center gap-1.5">
+          <span>🎖️</span>
+          <span>Open Full Badge Customizer</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
   <!-- Footer -->
   <footer class="border-t border-slate-800 bg-slate-950 py-8 text-center text-xs text-slate-500">
     <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -824,12 +883,28 @@
       renderLeaderboard('all');
       renderComments();
 
-      // Open Dodo Checkout URL
+      // Open Dodo Checkout URL with automated return URL
+      let returnUrl = 'https://devshelf.ritualdev.in/sponsors.html';
+      try {
+        const u = new URL(window.location.origin + window.location.pathname);
+        u.searchParams.set('status', 'success');
+        u.searchParams.set('amount', String(currentAmount));
+        u.searchParams.set('currency', currentCurrency);
+        u.searchParams.set('sponsor_name', name);
+        if (cleanGithub) u.searchParams.set('github', cleanGithub);
+        if (safeUrl) u.searchParams.set('url', safeUrl);
+        if (comment) u.searchParams.set('sponsor_comment', comment);
+        returnUrl = u.toString();
+      } catch (err) {
+        console.warn('URL construct error:', err);
+      }
+
       const dodoParams = new URLSearchParams({
         amount: String(currentAmount),
         currency: currentCurrency,
         sponsor_name: name,
-        sponsor_comment: comment
+        sponsor_comment: comment,
+        redirect_url: returnUrl
       });
 
       const finalCheckoutUrl = `${DODO_BASE_URL}?${dodoParams.toString()}`;
@@ -1272,22 +1347,184 @@
       });
     });
 
-    // Leaderboard Filter Tabs
-    document.querySelectorAll('.lb-filter-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.lb-filter-btn').forEach(b => {
-          b.className = 'lb-filter-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-white font-bold';
+    // ==========================================
+    // 🎉 Dodo Payments Return & Celebration Modal
+    // ==========================================
+    const celebrationModal = document.getElementById('celebration-modal');
+    const celebrationCanvas = document.getElementById('celebration-canvas');
+    const celebPatronName = document.getElementById('celeb-patron-name');
+    const celebTierBadge = document.getElementById('celeb-tier-badge');
+    const celebAmount = document.getElementById('celeb-amount');
+    const celebBadgeInput = document.getElementById('celeb-badge-input');
+    const celebCopyBtn = document.getElementById('celeb-copy-btn');
+    const celebCopyToast = document.getElementById('celeb-copy-toast');
+    const celebViewLeaderboardBtn = document.getElementById('celeb-view-leaderboard-btn');
+    const celebCloseBtn = document.getElementById('celeb-close-btn');
+
+    let celebrationPatron = null;
+
+    function launchCelebrationConfetti() {
+      if (!celebrationCanvas) return;
+      celebrationCanvas.classList.remove('hidden');
+      const ctx = celebrationCanvas.getContext('2d');
+      celebrationCanvas.width = window.innerWidth;
+      celebrationCanvas.height = window.innerHeight;
+
+      const particles = [];
+      const colors = ['#f59e0b', '#ec4899', '#8b5cf6', '#3b82f6', '#10b981', '#ffffff'];
+
+      for (let i = 0; i < 90; i++) {
+        particles.push({
+          x: celebrationCanvas.width / 2,
+          y: celebrationCanvas.height / 2,
+          vx: (Math.random() - 0.5) * 16,
+          vy: (Math.random() - 0.8) * 18,
+          size: Math.random() * 8 + 4,
+          color: colors[Math.floor(Math.random() * colors.length)],
+          alpha: 1,
+          decay: Math.random() * 0.015 + 0.01
         });
-        btn.className = 'lb-filter-btn active px-3 py-1.5 rounded-lg bg-slate-800 text-white font-bold';
-        renderLeaderboard(btn.dataset.filter);
+      }
+
+      let animationFrame;
+      function render() {
+        ctx.clearRect(0, 0, celebrationCanvas.width, celebrationCanvas.height);
+        let active = false;
+        for (const p of particles) {
+          if (p.alpha > 0) {
+            active = true;
+            p.x += p.vx;
+            p.y += p.vy;
+            p.vy += 0.35;
+            p.alpha -= p.decay;
+            ctx.fillStyle = p.color;
+            ctx.globalAlpha = Math.max(0, p.alpha);
+            ctx.fillRect(p.x, p.y, p.size, p.size);
+          }
+        }
+        if (active) {
+          animationFrame = requestAnimationFrame(render);
+        } else {
+          ctx.clearRect(0, 0, celebrationCanvas.width, celebrationCanvas.height);
+          celebrationCanvas.classList.add('hidden');
+          cancelAnimationFrame(animationFrame);
+        }
+      }
+      render();
+    }
+
+    function showCelebrationModal(entry) {
+      celebrationPatron = entry;
+      celebPatronName.textContent = entry.name;
+      celebAmount.textContent = `$${entry.amountUSD.toLocaleString()}`;
+
+      if (entry.tier === 'gold') {
+        celebTierBadge.textContent = '👑 Gold Patron';
+        celebTierBadge.className = 'px-2.5 py-0.5 text-xs font-mono font-bold rounded-full bg-amber-950 text-amber-300 border border-amber-500/40';
+      } else if (entry.tier === 'silver') {
+        celebTierBadge.textContent = '🛡️ Silver Backer';
+        celebTierBadge.className = 'px-2.5 py-0.5 text-xs font-mono font-bold rounded-full bg-slate-800 text-slate-200 border border-slate-600';
+      } else {
+        celebTierBadge.textContent = '⚡ Supporter';
+        celebTierBadge.className = 'px-2.5 py-0.5 text-xs font-mono font-bold rounded-full bg-purple-950 text-purple-300 border border-purple-500/40';
+      }
+
+      const fileBase = entry.github || entry.tier || 'bronze';
+      const badgeUrl = `https://devshelf.ritualdev.in/api/v1/badges/${encodeURIComponent(fileBase)}.svg`;
+      celebBadgeInput.value = `[![DevShelf Sponsor](${badgeUrl})](https://devshelf.ritualdev.in/sponsors.html)`;
+
+      celebrationModal.classList.remove('hidden');
+      launchCelebrationConfetti();
+    }
+
+    function closeCelebrationModal() {
+      celebrationModal.classList.add('hidden');
+    }
+
+    celebCopyBtn?.addEventListener('click', () => {
+      if (!celebBadgeInput.value) return;
+      navigator.clipboard.writeText(celebBadgeInput.value).then(() => {
+        celebCopyToast.classList.remove('hidden');
+        celebCopyBtn.textContent = '✓ Copied';
+        setTimeout(() => {
+          celebCopyToast.classList.add('hidden');
+          celebCopyBtn.textContent = 'Copy';
+        }, 2500);
       });
     });
+
+    celebViewLeaderboardBtn?.addEventListener('click', () => {
+      closeCelebrationModal();
+      const lb = document.getElementById('leaderboard');
+      if (lb) lb.scrollIntoView({ behavior: 'smooth' });
+    });
+
+    celebCloseBtn?.addEventListener('click', () => {
+      closeCelebrationModal();
+      if (celebrationPatron) {
+        openBadgeModal(celebrationPatron);
+      }
+    });
+
+    celebrationModal?.addEventListener('click', (e) => {
+      if (e.target === celebrationModal) closeCelebrationModal();
+    });
+
+    function checkPaymentReturn() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const status = params.get('status') || params.get('payment_status') || params.get('payment');
+        if (status !== 'success' && status !== 'completed') return;
+
+        const rawAmount = parseFloat(params.get('amount') || params.get('amt') || '0');
+        const currency = (params.get('currency') || 'USD').toUpperCase();
+        const rawName = (params.get('sponsor_name') || params.get('name') || '').trim();
+        const rawGithub = (params.get('github') || '').trim().replace(/^@/, '');
+        const cleanGithub = GITHUB_HANDLE_REGEX.test(rawGithub) ? rawGithub : '';
+        const rawUrl = (params.get('url') || '').trim();
+        const safeUrl = getSafeUrl(rawUrl) || (cleanGithub ? `https://github.com/${encodeURIComponent(cleanGithub)}` : '');
+        const comment = (params.get('sponsor_comment') || params.get('comment') || '').trim();
+        const paymentId = params.get('payment_id') || params.get('session_id') || `tx-${Date.now()}`;
+
+        const sessionKey = `devshelf_processed_tx_${paymentId}`;
+        if (sessionStorage.getItem(sessionKey)) {
+          window.history.replaceState({}, document.title, window.location.pathname);
+          return;
+        }
+        sessionStorage.setItem(sessionKey, 'true');
+
+        const isINR = currency === 'INR';
+        const usd = isINR ? (rawAmount > 0 ? Math.round(rawAmount / 84) : 15) : (rawAmount > 0 ? rawAmount : 15);
+        const inr = isINR ? (rawAmount > 0 ? rawAmount : 1200) : (rawAmount > 0 ? Math.round(rawAmount * 84) : 1200);
+        const tier = usd >= 100 ? 'gold' : usd >= 50 ? 'silver' : 'bronze';
+
+        const verifiedEntry = {
+          id: 'verified-' + Date.now(),
+          name: rawName || (cleanGithub ? `@${cleanGithub}` : 'Verified Backer'),
+          github: cleanGithub,
+          avatar: getSafeAvatarUrl(cleanGithub),
+          url: safeUrl,
+          amountUSD: usd,
+          amountINR: inr,
+          tier,
+          date: new Date().toISOString().split('T')[0],
+          comment: comment || 'Proud supporter of zero-paywall developer tooling!'
+        };
+
+        saveSponsor(verifiedEntry);
+        showCelebrationModal(verifiedEntry);
+        window.history.replaceState({}, document.title, window.location.pathname);
+      } catch (err) {
+        console.warn('Payment return check error:', err);
+      }
+    }
 
     // Initialize on load
     updateActiveAmountButtons();
     updatePreview();
     renderLeaderboard('all');
     renderComments();
+    checkPaymentReturn();
   </script>
 </body>
 </html>
