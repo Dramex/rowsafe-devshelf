@@ -148,4 +148,36 @@ describe("DevShelf CLI Persistent Cache & Provenance Suite (D2)", () => {
     const stored = readPersistentCache();
     assert.strictEqual(stored.totalCount, 999);
   });
+
+  test("loadCatalog({ forceRemote: true }) bypasses warm in-memory cache and triggers live fetch", async () => {
+    // 1. Establish warm in-memory cache
+    await loadCatalog({ forceReload: true, offline: true });
+
+    // 2. Call with forceRemote: true and a mock fetch
+    let remoteCalled = false;
+    const mockFetch = async () => {
+      remoteCalled = true;
+      return new Response(
+        JSON.stringify({
+          ...sampleCatalog,
+          totalCount: 777,
+          updatedAt: "2026-10-16T16:00:00.000Z",
+        }),
+        { status: 200, headers: { "Content-Type": "application/json" } },
+      );
+    };
+
+    const refreshed = await loadCatalog({
+      forceRemote: true,
+      fetchFn: mockFetch as unknown as typeof fetch,
+    });
+
+    assert.strictEqual(
+      remoteCalled,
+      true,
+      "Must invoke remote fetch even if in-memory cache is warm",
+    );
+    assert.strictEqual(refreshed.totalCount, 777);
+    assert.strictEqual(refreshed.catalogSource, "live");
+  });
 });

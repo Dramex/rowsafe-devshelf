@@ -199,9 +199,23 @@ describe("DevShelf CLI & TUI Suite", () => {
     assert.ok(parsed.result?.content?.[0]?.text);
     const payload = JSON.parse(parsed.result.content[0].text);
     assert.equal(payload.toolName, "AgentShield");
+    assert.ok(payload.identity?.catalogDigest);
     assert.equal(payload.securityAudit?.status, "ZERO_LEAK_VERIFIED");
     assert.ok(payload.securityAudit?.signatureHash);
     assert.ok(payload.securityAudit?.verifyUrl.includes("hash="));
+
+    // Verify un-audited tool returns NOT_AUDITED
+    const unAuditedReq = `${JSON.stringify({ jsonrpc: "2.0", id: 122, method: "tools/call", params: { name: "get_security_audit", arguments: { toolName: "Ollama" } } })}\n`;
+    const unAuditedStdout = execSync("node bin/mcp.js", {
+      input: unAuditedReq,
+      cwd: ROOT,
+      encoding: "utf8",
+    });
+    const unAuditedLines = unAuditedStdout.trim().split("\n").filter(Boolean);
+    const unAuditedPayload = JSON.parse(JSON.parse(unAuditedLines[0]).result.content[0].text);
+    assert.equal(unAuditedPayload.securityAudit?.status, "NOT_AUDITED");
+    assert.equal(unAuditedPayload.securityAudit?.verified, false);
+    assert.ok(unAuditedPayload.identity?.catalogDigest);
   });
 
   test("MCP list_verified_sponsor_tools returns featured tools with sponsor tier metadata", () => {
