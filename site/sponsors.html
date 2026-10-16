@@ -56,6 +56,28 @@
       0%, 100% { transform: scale(1); }
       50% { transform: scale(1.15); }
     }
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+      }
+      header, footer, #sponsor-form, #leaderboard, #comments, #faq, #badge-modal, #celebration-modal, #celebration-canvas, .fixed:not(#invoice-modal) {
+        display: none !important;
+      }
+      #invoice-modal {
+        display: block !important;
+        position: static !important;
+        background: transparent !important;
+        padding: 0 !important;
+      }
+      #invoice-modal > div {
+        max-width: 100% !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        background: transparent !important;
+      }
+    }
   </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen font-sans selection:bg-purple-600 selection:text-white relative">
@@ -161,22 +183,26 @@
             <label class="block text-xs font-mono font-bold uppercase tracking-wider text-slate-300 mb-2">
               Select or Enter Amount
             </label>
-            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 mb-3">
-              <button type="button" class="amount-btn active p-3 rounded-xl border text-center transition bg-purple-950/60 border-purple-500/70 text-purple-200" data-usd="5" data-inr="50">
-                <div class="text-lg font-bold amount-label">$5</div>
+            <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5 mb-3">
+              <button type="button" class="amount-btn active p-2.5 rounded-xl border text-center transition bg-purple-950/60 border-purple-500/70 text-purple-200" data-usd="5" data-inr="50">
+                <div class="text-base font-bold amount-label">$5</div>
                 <div class="text-[10px] text-slate-400 amount-sub">₹50 Coffee</div>
               </button>
-              <button type="button" class="amount-btn p-3 rounded-xl border text-center transition bg-slate-950/80 border-slate-800 text-slate-300 hover:border-slate-700" data-usd="15" data-inr="150">
-                <div class="text-lg font-bold amount-label">$15</div>
+              <button type="button" class="amount-btn p-2.5 rounded-xl border text-center transition bg-slate-950/80 border-slate-800 text-slate-300 hover:border-slate-700" data-usd="15" data-inr="150">
+                <div class="text-base font-bold amount-label">$15</div>
                 <div class="text-[10px] text-slate-400 amount-sub">₹150 Backer</div>
               </button>
-              <button type="button" class="amount-btn p-3 rounded-xl border text-center transition bg-slate-950/80 border-slate-800 text-slate-300 hover:border-slate-700" data-usd="50" data-inr="500">
-                <div class="text-lg font-bold amount-label">$50</div>
+              <button type="button" class="amount-btn p-2.5 rounded-xl border text-center transition bg-slate-950/80 border-slate-800 text-slate-300 hover:border-slate-700" data-usd="50" data-inr="500">
+                <div class="text-base font-bold amount-label">$50</div>
                 <div class="text-[10px] text-slate-400 amount-sub">₹500 Hero</div>
               </button>
-              <button type="button" class="amount-btn p-3 rounded-xl border text-center transition bg-slate-950/80 border-slate-800 text-slate-300 hover:border-slate-700" data-usd="100" data-inr="1000">
-                <div class="text-lg font-bold amount-label">$100</div>
+              <button type="button" class="amount-btn p-2.5 rounded-xl border text-center transition bg-slate-950/80 border-slate-800 text-slate-300 hover:border-slate-700" data-usd="100" data-inr="1000">
+                <div class="text-base font-bold amount-label">$100</div>
                 <div class="text-[10px] text-slate-400 amount-sub">₹1,000 Patron</div>
+              </button>
+              <button type="button" class="amount-btn p-2.5 rounded-xl border text-center transition bg-slate-950/80 border-amber-500/40 text-amber-300 hover:border-amber-400" data-usd="250" data-inr="21000">
+                <div class="text-base font-bold amount-label">$250</div>
+                <div class="text-[10px] text-amber-300/80 amount-sub">👑 Enterprise</div>
               </button>
             </div>
 
@@ -236,6 +262,43 @@
               <button type="button" class="quick-pill text-[11px] bg-slate-800 hover:bg-slate-700 text-slate-300 px-2 py-0.5 rounded-md transition">
                 "DevShelf saved my team hours! ❤️"
               </button>
+            </div>
+          </div>
+
+          <!-- Corporate / Enterprise Billing & Tax Invoice Accordion -->
+          <div class="mb-6 rounded-2xl border border-slate-800 bg-slate-950/70 p-4 transition">
+            <button type="button" id="toggle-corporate-billing" class="w-full flex items-center justify-between text-left text-xs font-mono font-bold text-slate-300 hover:text-white transition">
+              <span class="flex items-center gap-2">
+                <span class="text-base">🏢</span>
+                <span>Corporate Tax Invoice &amp; Digital-Only Receipt (Optional)</span>
+              </span>
+              <span id="corporate-billing-arrow" class="text-slate-500 text-sm font-bold transition-transform">▼</span>
+            </button>
+            <div id="corporate-billing-fields" class="mt-3.5 pt-3.5 border-t border-slate-800/80 hidden space-y-3">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-[11px] font-mono font-bold text-slate-400 mb-1" for="billing-company">Company Legal Name</label>
+                  <input type="text" id="billing-company" placeholder="e.g. Acme Corp / DevStudio LLC" class="w-full px-3 py-2 bg-slate-900 rounded-lg border border-slate-800 text-white text-xs font-mono focus:outline-none focus:border-purple-500">
+                </div>
+                <div>
+                  <label class="block text-[11px] font-mono font-bold text-slate-400 mb-1" for="billing-email">Finance / Billing Email</label>
+                  <input type="email" id="billing-email" placeholder="finance@acme.com" class="w-full px-3 py-2 bg-slate-900 rounded-lg border border-slate-800 text-white text-xs font-mono focus:outline-none focus:border-purple-500">
+                </div>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label class="block text-[11px] font-mono font-bold text-slate-400 mb-1" for="billing-country">Country / Jurisdiction</label>
+                  <input type="text" id="billing-country" placeholder="e.g. United States, Germany, India" class="w-full px-3 py-2 bg-slate-900 rounded-lg border border-slate-800 text-white text-xs font-mono focus:outline-none focus:border-purple-500">
+                </div>
+                <div>
+                  <label class="block text-[11px] font-mono font-bold text-slate-400 mb-1" for="billing-tax-id">Tax ID / VAT / GSTIN</label>
+                  <input type="text" id="billing-tax-id" placeholder="e.g. US EIN, VAT ID, or GSTIN" class="w-full px-3 py-2 bg-slate-900 rounded-lg border border-slate-800 text-white text-xs font-mono focus:outline-none focus:border-purple-500">
+                </div>
+              </div>
+              <div class="p-2.5 rounded-lg bg-purple-950/40 border border-purple-500/30 text-[11px] font-mono text-purple-300 flex items-start gap-2">
+                <span class="text-sm">🔒</span>
+                <span><strong>Zero Physical Shipping Required:</strong> 100% digital developer community grant. Instant downloadable PDF invoice with corporate tax ID compliance generated upon checkout return.</span>
+              </div>
             </div>
           </div>
 
@@ -342,6 +405,7 @@
         <!-- Leaderboard Filters -->
         <div class="flex items-center bg-slate-900 p-1 rounded-xl border border-slate-800 text-xs font-mono">
           <button class="lb-filter-btn active px-3 py-1.5 rounded-lg bg-slate-800 text-white font-bold" data-filter="all">All Patrons</button>
+          <button class="lb-filter-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-white font-bold" data-filter="enterprise">👑 Enterprise ($250+)</button>
           <button class="lb-filter-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-white font-bold" data-filter="gold">🥇 Gold ($100+)</button>
           <button class="lb-filter-btn px-3 py-1.5 rounded-lg text-slate-400 hover:text-white font-bold" data-filter="recent">⚡ Recent</button>
         </div>
@@ -539,16 +603,131 @@
       </div>
 
       <!-- Action CTAs -->
-      <div class="flex flex-col sm:flex-row gap-3">
-        <button id="celeb-view-leaderboard-btn" type="button" class="flex-1 py-3 px-4 rounded-xl font-bold text-white bg-slate-800 hover:bg-slate-700 border border-slate-700 transition text-xs font-mono flex items-center justify-center gap-1.5">
-          <span>🏆</span>
-          <span>View on Leaderboard</span>
+      <div class="flex flex-col gap-2.5">
+        <button id="celeb-invoice-btn" type="button" class="w-full py-2.5 px-4 rounded-xl font-bold text-slate-200 hover:text-white bg-slate-800 hover:bg-slate-700 border border-slate-700 transition text-xs font-mono flex items-center justify-center gap-1.5 shadow-sm">
+          <span>📄</span>
+          <span>View &amp; Print Digital Tax Invoice</span>
         </button>
-        <button id="celeb-close-btn" type="button" class="flex-1 py-3 px-4 rounded-xl font-bold text-white bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 transition text-xs font-mono flex items-center justify-center gap-1.5">
-          <span>🎖️</span>
-          <span>Open Full Badge Customizer</span>
+        <div class="flex flex-col sm:flex-row gap-2.5">
+          <button id="celeb-view-leaderboard-btn" type="button" class="flex-1 py-3 px-4 rounded-xl font-bold text-white bg-slate-800 hover:bg-slate-700 border border-slate-700 transition text-xs font-mono flex items-center justify-center gap-1.5">
+            <span>🏆</span>
+            <span>View on Leaderboard</span>
+          </button>
+          <button id="celeb-close-btn" type="button" class="flex-1 py-3 px-4 rounded-xl font-bold text-white bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-500 hover:to-purple-500 transition text-xs font-mono flex items-center justify-center gap-1.5">
+            <span>🎖️</span>
+            <span>Open Badge Customizer</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Digital Tax Invoice / Receipt Modal -->
+  <div id="invoice-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-md hidden transition-opacity overflow-y-auto" role="dialog" aria-modal="true" aria-labelledby="invoice-modal-title">
+    <div class="bg-slate-900 border border-slate-700/80 rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl relative my-8 text-left text-slate-200 font-sans print:border-none print:shadow-none print:bg-white print:text-black print:p-0">
+      
+      <!-- Close Button -->
+      <button id="invoice-modal-close-btn" type="button" class="absolute top-5 right-5 text-slate-400 hover:text-white p-2 rounded-lg bg-slate-800/60 hover:bg-slate-800 transition print:hidden" aria-label="Close invoice modal">
+        ✕
+      </button>
+
+      <!-- Invoice Header -->
+      <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4 pb-6 border-b border-slate-800 print:border-slate-300 mb-6">
+        <div>
+          <div class="flex items-center gap-2 mb-1">
+            <span class="text-2xl">📚</span>
+            <span id="invoice-modal-title" class="text-xl font-extrabold tracking-tight text-white print:text-black">DevShelf</span>
+          </div>
+          <p class="text-xs text-slate-400 print:text-slate-600 font-mono">RitualDev Lab • Zero-Paywall Initiative</p>
+          <a href="https://devshelf.ritualdev.in" class="text-xs text-purple-400 hover:underline print:text-purple-700 font-mono">devshelf.ritualdev.in</a>
+        </div>
+        <div class="sm:text-right font-mono">
+          <div class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-emerald-950 text-emerald-300 border border-emerald-500/40 print:border-emerald-600 print:bg-emerald-50 print:text-emerald-800 mb-2">
+            ✓ PAID IN FULL
+          </div>
+          <div class="text-xs text-slate-400 print:text-slate-600">Invoice: <span id="inv-number" class="font-bold text-white print:text-black">INV-DEVSHELF-2026-0001</span></div>
+          <div class="text-xs text-slate-400 print:text-slate-600">Date: <span id="inv-date" class="text-slate-200 print:text-slate-800">2026-10-16</span></div>
+        </div>
+      </div>
+
+      <!-- Parties Involved -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6 text-xs font-mono">
+        <div>
+          <h4 class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Supplier / Beneficiary</h4>
+          <p class="font-bold text-white print:text-black">RitualDev Lab Community Initiative</p>
+          <p class="text-slate-400 print:text-slate-600">Open-Source Developer Tools &amp; Security</p>
+          <p class="text-slate-400 print:text-slate-600">contact: support@ritualdev.in</p>
+          <p class="text-[11px] text-purple-400/90 print:text-purple-800 mt-1">Classification: Digital Developer Grant / Catalog Placement</p>
+        </div>
+        <div>
+          <h4 class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1.5">Billed To (Patron / Sponsor)</h4>
+          <p id="inv-billed-name" class="font-bold text-white print:text-black">Customer Name</p>
+          <p id="inv-billed-email" class="text-slate-400 print:text-slate-600">billing@example.com</p>
+          <p id="inv-billed-country" class="text-slate-400 print:text-slate-600">Country: Global / Digital</p>
+          <p id="inv-billed-tax-id" class="text-slate-400 print:text-slate-600">Tax ID / VAT: Exempt</p>
+        </div>
+      </div>
+
+      <!-- Line Items Table -->
+      <div class="mb-6 overflow-x-auto">
+        <table class="w-full text-xs font-mono border-collapse">
+          <thead>
+            <tr class="border-b border-slate-800 print:border-slate-300 text-slate-400 text-left">
+              <th class="py-2.5 font-bold">Item &amp; Description</th>
+              <th class="py-2.5 font-bold text-center">Type</th>
+              <th class="py-2.5 font-bold text-center">Qty</th>
+              <th class="py-2.5 font-bold text-right">Amount</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-slate-800/80 print:divide-slate-200 text-slate-300 print:text-slate-800">
+            <tr>
+              <td class="py-3 pr-2">
+                <div id="inv-item-title" class="font-bold text-white print:text-black">DevShelf Patron Sponsorship Tier</div>
+                <div id="inv-item-desc" class="text-[11px] text-slate-400 print:text-slate-600">Digital sponsorship funding zero-paywall directory indexing and automated security audits. Includes embeddable verified SVG badges.</div>
+              </td>
+              <td class="py-3 text-center align-top text-[11px] text-purple-400 print:text-purple-800">Digital Service</td>
+              <td class="py-3 text-center align-top">1</td>
+              <td id="inv-item-amount" class="py-3 text-right align-top font-bold text-white print:text-black">$100.00 USD</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Totals & Payment Method -->
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-4 rounded-xl bg-slate-950/80 border border-slate-800 print:bg-slate-100 print:border-slate-300 mb-6 font-mono text-xs">
+        <div>
+          <span class="text-slate-400 print:text-slate-600">Payment Gateway:</span>
+          <span class="font-bold text-white print:text-black ml-1">Dodo Payments (Digital Checkout)</span>
+          <div class="text-[10px] text-slate-500">Ref / Tx ID: <span id="inv-tx-id" class="text-slate-400">tx-live-verified</span></div>
+        </div>
+        <div class="sm:text-right">
+          <div class="text-xs text-slate-400 print:text-slate-600">Shipping &amp; Handling: <span class="text-emerald-400 font-bold">$0.00 (Zero Physical Goods)</span></div>
+          <div class="text-base sm:text-lg font-extrabold text-white print:text-black">Total Paid: <span id="inv-total-amount" class="text-emerald-400 print:text-emerald-700">$100.00 USD</span></div>
+        </div>
+      </div>
+
+      <!-- Legal & Zero Physical Shipping Notice -->
+      <div class="p-3 rounded-lg bg-slate-950/40 border border-slate-800/70 text-[11px] font-mono text-slate-400 leading-relaxed mb-6">
+        🔒 <strong>Digital Delivery Confirmation:</strong> This transaction represents a developer community sponsorship grant and catalog placement service. All benefits (leaderboard ranking, SVG badges, MCP server indexing) are delivered electronically. No physical goods or tangible personal property are shipped or required.
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-slate-800 print:hidden font-mono text-xs">
+        <div class="flex gap-2">
+          <button id="inv-print-btn" type="button" class="px-4 py-2 bg-purple-600 hover:bg-purple-500 text-white font-bold rounded-xl transition flex items-center gap-1.5 shadow-sm">
+            <span>🖨️</span>
+            <span>Print / Save PDF</span>
+          </button>
+          <button id="inv-copy-link-btn" type="button" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold rounded-xl border border-slate-700 transition flex items-center gap-1.5">
+            <span id="inv-copy-icon">📋</span>
+            <span id="inv-copy-text">Copy Receipt Text</span>
+          </button>
+        </div>
+        <button id="inv-done-btn" type="button" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white font-bold rounded-xl transition">
+          Close
         </button>
       </div>
+
     </div>
   </div>
 
@@ -853,7 +1032,10 @@
       previewSubAmount.textContent = isUSD ? `~₹${inrVal}` : `~$${usdVal}`;
 
       // Tier detection
-      if (usdVal >= 100) {
+      if (usdVal >= 250) {
+        previewTierBadge.textContent = '👑 Enterprise Placement';
+        previewTierBadge.className = 'inline-block text-[10px] font-mono px-2 py-0.5 rounded-full bg-gradient-to-r from-amber-500/20 to-purple-500/20 text-amber-300 border border-amber-500/60 font-bold shadow-sm';
+      } else if (usdVal >= 100) {
         previewTierBadge.textContent = '👑 Gold Patron';
         previewTierBadge.className = 'inline-block text-[10px] font-mono px-2 py-0.5 rounded-full bg-amber-950 text-amber-300 border border-amber-500/40';
       } else if (usdVal >= 50) {
@@ -882,6 +1064,11 @@
       const usd = isUSD ? currentAmount : Math.round(currentAmount / 84);
       const inr = isUSD ? Math.round(currentAmount * 84) : currentAmount;
 
+      const billingCompany = (document.getElementById('billing-company')?.value || '').trim();
+      const billingEmail = (document.getElementById('billing-email')?.value || '').trim();
+      const billingCountry = (document.getElementById('billing-country')?.value || '').trim();
+      const billingTaxId = (document.getElementById('billing-tax-id')?.value || '').trim();
+
       if (!name) return;
 
       const safeAvatar = getSafeAvatarUrl(cleanGithub);
@@ -895,7 +1082,11 @@
         url: safeUrl,
         amountUSD: usd,
         amountINR: inr,
-        tier: usd >= 100 ? 'gold' : usd >= 50 ? 'silver' : 'bronze',
+        tier: usd >= 250 ? 'enterprise' : usd >= 100 ? 'gold' : usd >= 50 ? 'silver' : 'bronze',
+        billingCompany,
+        billingEmail,
+        billingCountry,
+        billingTaxId,
         date: new Date().toISOString().split('T')[0],
         comment: comment || 'Proud supporter of zero-paywall developer tooling!'
       };
@@ -915,6 +1106,12 @@
         if (cleanGithub) u.searchParams.set('github', cleanGithub);
         if (safeUrl) u.searchParams.set('url', safeUrl);
         if (comment) u.searchParams.set('sponsor_comment', comment);
+        if (billingCompany) u.searchParams.set('billing_company', billingCompany);
+        if (billingEmail) u.searchParams.set('billing_email', billingEmail);
+        if (billingCountry) u.searchParams.set('billing_country', billingCountry);
+        if (billingTaxId) u.searchParams.set('billing_tax_id', billingTaxId);
+        u.searchParams.set('product_type', 'digital');
+        u.searchParams.set('shipping_required', 'false');
         returnUrl = u.toString();
       } catch (err) {
         console.warn('URL construct error:', err);
@@ -925,8 +1122,12 @@
         currency: currentCurrency,
         sponsor_name: name,
         sponsor_comment: comment,
+        product_type: 'digital',
+        shipping_required: 'false',
         redirect_url: returnUrl
       });
+      if (billingCompany) dodoParams.set('billing_company', billingCompany);
+      if (billingTaxId) dodoParams.set('billing_tax_id', billingTaxId);
 
       const finalCheckoutUrl = `${DODO_BASE_URL}?${dodoParams.toString()}`;
       window.open(finalCheckoutUrl, '_blank', 'noopener,noreferrer');
@@ -938,8 +1139,10 @@
       if (!container) return;
       let patrons = getStoredPatrons();
 
-      if (filter === 'gold') {
-        patrons = patrons.filter(p => p.amountUSD >= 100);
+      if (filter === 'enterprise') {
+        patrons = patrons.filter(p => p.amountUSD >= 250 || p.tier === 'enterprise');
+      } else if (filter === 'gold') {
+        patrons = patrons.filter(p => (p.amountUSD >= 100 && p.amountUSD < 250) && p.tier !== 'enterprise');
       } else if (filter === 'recent') {
         patrons = [...patrons].sort((a, b) => new Date(b.date) - new Date(a.date));
       } else {
@@ -964,8 +1167,22 @@
           glowClass = 'bronze-glow bg-orange-950/20';
         }
 
-        const tierLabel = patron.amountUSD >= 100 ? '👑 Gold Patron' : patron.amountUSD >= 50 ? '🛡️ Silver Backer' : '⚡ Supporter';
-        const tierClass = patron.amountUSD >= 100 ? 'bg-amber-950/80 text-amber-300 border-amber-500/40' : patron.amountUSD >= 50 ? 'bg-slate-800 text-slate-200 border-slate-600' : 'bg-purple-950 text-purple-300 border-purple-500/40';
+        const isEnterprise = patron.amountUSD >= 250 || patron.tier === 'enterprise';
+        const tierLabel = isEnterprise
+          ? '👑 Enterprise Placement'
+          : patron.amountUSD >= 100
+            ? '👑 Gold Patron'
+            : patron.amountUSD >= 50
+              ? '🛡️ Silver Backer'
+              : '⚡ Supporter';
+
+        const tierClass = isEnterprise
+          ? 'bg-gradient-to-r from-amber-500/20 to-purple-500/20 text-amber-300 border-amber-500/60 font-bold'
+          : patron.amountUSD >= 100
+            ? 'bg-amber-950/80 text-amber-300 border-amber-500/40'
+            : patron.amountUSD >= 50
+              ? 'bg-slate-800 text-slate-200 border-slate-600'
+              : 'bg-purple-950 text-purple-300 border-purple-500/40';
 
         const row = document.createElement('div');
         row.className = `p-4 sm:p-5 rounded-xl border ${glowClass} bg-slate-900/80 transition-all hover:bg-slate-900 flex flex-col md:flex-row md:items-center justify-between gap-4`;
@@ -1058,11 +1275,21 @@
             name: patron.name,
             github: cleanGithub,
             amountUSD: usdVal,
-            tier: usdVal >= 100 ? 'gold' : usdVal >= 50 ? 'silver' : 'bronze'
+            tier: usdVal >= 250 ? 'enterprise' : usdVal >= 100 ? 'gold' : usdVal >= 50 ? 'silver' : 'bronze'
           });
         });
 
-        rightGroup.append(amtDiv, dateDiv, badgeBtn);
+        const receiptBtn = document.createElement('button');
+        receiptBtn.type = 'button';
+        receiptBtn.className = 'text-[11px] font-mono px-2 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700/80 transition flex items-center gap-1 shadow-sm';
+        receiptBtn.title = 'View and print digital tax invoice / receipt';
+        receiptBtn.textContent = '📄 Invoice';
+        receiptBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          openInvoiceModal(patron);
+        });
+
+        rightGroup.append(amtDiv, dateDiv, badgeBtn, receiptBtn);
         row.append(leftGroup, rightGroup);
 
         container.appendChild(row);
@@ -1439,7 +1666,10 @@
       celebPatronName.textContent = entry.name;
       celebAmount.textContent = `$${entry.amountUSD.toLocaleString()}`;
 
-      if (entry.tier === 'gold') {
+      if (entry.tier === 'enterprise') {
+        celebTierBadge.textContent = '👑 Enterprise Placement';
+        celebTierBadge.className = 'px-2.5 py-0.5 text-xs font-mono font-bold rounded-full bg-gradient-to-r from-amber-500/20 to-purple-500/20 text-amber-300 border border-amber-500/60 font-bold';
+      } else if (entry.tier === 'gold') {
         celebTierBadge.textContent = '👑 Gold Patron';
         celebTierBadge.className = 'px-2.5 py-0.5 text-xs font-mono font-bold rounded-full bg-amber-950 text-amber-300 border border-amber-500/40';
       } else if (entry.tier === 'silver') {
@@ -1474,6 +1704,11 @@
       });
     });
 
+    document.getElementById('celeb-invoice-btn')?.addEventListener('click', () => {
+      closeCelebrationModal();
+      if (celebrationPatron) openInvoiceModal(celebrationPatron);
+    });
+
     celebViewLeaderboardBtn?.addEventListener('click', () => {
       closeCelebrationModal();
       const lb = document.getElementById('leaderboard');
@@ -1489,6 +1724,111 @@
 
     celebrationModal?.addEventListener('click', (e) => {
       if (e.target === celebrationModal) closeCelebrationModal();
+    });
+
+    // ==========================================
+    // 🏢 Corporate Billing Accordion
+    // ==========================================
+    const toggleCorpBillingBtn = document.getElementById('toggle-corporate-billing');
+    const corpBillingFields = document.getElementById('corporate-billing-fields');
+    const corpBillingArrow = document.getElementById('corporate-billing-arrow');
+    toggleCorpBillingBtn?.addEventListener('click', () => {
+      const isHidden = corpBillingFields.classList.toggle('hidden');
+      corpBillingArrow.textContent = isHidden ? '▼' : '▲';
+    });
+
+    // ==========================================
+    // 📄 Digital Tax Invoice & Receipt Modal
+    // ==========================================
+    const invoiceModal = document.getElementById('invoice-modal');
+    const invNumber = document.getElementById('inv-number');
+    const invDate = document.getElementById('inv-date');
+    const invBilledName = document.getElementById('inv-billed-name');
+    const invBilledEmail = document.getElementById('inv-billed-email');
+    const invBilledCountry = document.getElementById('inv-billed-country');
+    const invBilledTaxId = document.getElementById('inv-billed-tax-id');
+    const invItemTitle = document.getElementById('inv-item-title');
+    const invItemDesc = document.getElementById('inv-item-desc');
+    const invItemAmount = document.getElementById('inv-item-amount');
+    const invTotalAmount = document.getElementById('inv-total-amount');
+    const invTxId = document.getElementById('inv-tx-id');
+    const invPrintBtn = document.getElementById('inv-print-btn');
+    const invCopyLinkBtn = document.getElementById('inv-copy-link-btn');
+    const invCopyText = document.getElementById('inv-copy-text');
+    const invCloseBtn = document.getElementById('invoice-modal-close-btn');
+    const invDoneBtn = document.getElementById('inv-done-btn');
+
+    let currentInvoicePatron = null;
+
+    function openInvoiceModal(patron) {
+      if (!invoiceModal || !patron) return;
+      currentInvoicePatron = patron;
+
+      const usd = Number(patron.amountUSD) || 15;
+      const inr = patron.amountINR ? Number(patron.amountINR) : Math.round(usd * 84);
+      const invoiceCode = String(patron.id || 'TX001').replace(/[^a-zA-Z0-9]/g, '').slice(-6).toUpperCase();
+
+      invNumber.textContent = `INV-DEVSHELF-2026-${invoiceCode}`;
+      invDate.textContent = String(patron.date || new Date().toISOString().split('T')[0]);
+
+      invBilledName.textContent = patron.billingCompany || patron.name || (patron.github ? `@${patron.github}` : 'Verified Community Patron');
+      invBilledEmail.textContent = patron.billingEmail || (patron.github ? `${patron.github}@users.noreply.github.com` : 'direct-digital-grant@devshelf.ritualdev.in');
+      invBilledCountry.textContent = patron.billingCountry ? `Jurisdiction: ${patron.billingCountry}` : 'Jurisdiction: Global / Digital (Zero Physical Goods)';
+      invBilledTaxId.textContent = patron.billingTaxId ? `Tax ID / VAT / GSTIN: ${patron.billingTaxId}` : 'Tax ID / VAT: Exempt (Digital Open-Source Grant)';
+
+      const isEnterprise = patron.tier === 'enterprise' || usd >= 250;
+      const isGold = patron.tier === 'gold' || usd >= 100;
+      const isSilver = patron.tier === 'silver' || usd >= 50;
+
+      if (isEnterprise) {
+        invItemTitle.textContent = 'DevShelf Enterprise Catalog Placement & Zero-Leak Security Audit';
+        invItemDesc.textContent = 'Annual corporate digital sponsorship grant funding zero-paywall directory indexing, verified catalog spotlight placement, and automated AgentShield cryptographic security audits.';
+      } else if (isGold) {
+        invItemTitle.textContent = 'DevShelf Gold Patron Sponsorship Grant';
+        invItemDesc.textContent = 'Community grant funding public API directory maintenance, CI link rot audits, and embeddable SVG badges.';
+      } else if (isSilver) {
+        invItemTitle.textContent = 'DevShelf Silver Backer Sponsorship';
+        invItemDesc.textContent = 'Community grant funding test suites, free tier verification, and community tooling support.';
+      } else {
+        invItemTitle.textContent = 'DevShelf Community Supporter Sponsorship';
+        invItemDesc.textContent = 'Individual developer contribution supporting zero-paywall developer tools.';
+      }
+
+      invItemAmount.textContent = `$${usd.toFixed(2)} USD`;
+      invTotalAmount.textContent = `$${usd.toFixed(2)} USD (~₹${inr.toLocaleString()})`;
+      invTxId.textContent = String(patron.id || 'tx-live-verified');
+
+      invoiceModal.classList.remove('hidden');
+    }
+
+    function closeInvoiceModal() {
+      if (invoiceModal) invoiceModal.classList.add('hidden');
+    }
+
+    invPrintBtn?.addEventListener('click', () => {
+      window.print();
+    });
+
+    invCopyLinkBtn?.addEventListener('click', () => {
+      if (!currentInvoicePatron) return;
+      const text = `DevShelf Digital Receipt\nInvoice: ${invNumber.textContent}\nDate: ${invDate.textContent}\nBilled To: ${invBilledName.textContent}\nAmount: ${invTotalAmount.textContent}\nStatus: PAID IN FULL\nIssuer: RitualDev Lab (https://devshelf.ritualdev.in)\nClassification: 100% Digital Sponsorship Grant (Zero Physical Goods)`;
+      navigator.clipboard.writeText(text).then(() => {
+        invCopyText.textContent = '✓ Copied Receipt!';
+        setTimeout(() => {
+          invCopyText.textContent = 'Copy Receipt Text';
+        }, 2000);
+      });
+    });
+
+    invCloseBtn?.addEventListener('click', closeInvoiceModal);
+    invDoneBtn?.addEventListener('click', closeInvoiceModal);
+    invoiceModal?.addEventListener('click', (e) => {
+      if (e.target === invoiceModal) closeInvoiceModal();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && invoiceModal && !invoiceModal.classList.contains('hidden')) {
+        closeInvoiceModal();
+      }
     });
 
     function checkPaymentReturn() {
@@ -1507,6 +1847,11 @@
         const comment = (params.get('sponsor_comment') || params.get('comment') || '').trim();
         const paymentId = params.get('payment_id') || params.get('session_id') || `tx-${Date.now()}`;
 
+        const billingCompany = (params.get('billing_company') || '').trim();
+        const billingEmail = (params.get('billing_email') || '').trim();
+        const billingCountry = (params.get('billing_country') || '').trim();
+        const billingTaxId = (params.get('billing_tax_id') || '').trim();
+
         const sessionKey = `devshelf_processed_tx_${paymentId}`;
         if (sessionStorage.getItem(sessionKey)) {
           window.history.replaceState({}, document.title, window.location.pathname);
@@ -1517,7 +1862,7 @@
         const isINR = currency === 'INR';
         const usd = isINR ? (rawAmount > 0 ? Math.round(rawAmount / 84) : 15) : (rawAmount > 0 ? rawAmount : 15);
         const inr = isINR ? (rawAmount > 0 ? rawAmount : 1200) : (rawAmount > 0 ? Math.round(rawAmount * 84) : 1200);
-        const tier = usd >= 100 ? 'gold' : usd >= 50 ? 'silver' : 'bronze';
+        const tier = usd >= 250 ? 'enterprise' : usd >= 100 ? 'gold' : usd >= 50 ? 'silver' : 'bronze';
 
         const verifiedEntry = {
           id: 'verified-' + Date.now(),
@@ -1528,6 +1873,10 @@
           amountUSD: usd,
           amountINR: inr,
           tier,
+          billingCompany,
+          billingEmail,
+          billingCountry,
+          billingTaxId,
           date: new Date().toISOString().split('T')[0],
           comment: comment || 'Proud supporter of zero-paywall developer tooling!'
         };

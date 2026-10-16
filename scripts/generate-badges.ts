@@ -10,7 +10,7 @@ const BADGES_DIR = path.join(ROOT_DIR, "site", "api", "v1", "badges");
 export interface BadgeOptions {
   name?: string;
   handle?: string;
-  tier?: "gold" | "silver" | "bronze" | "supporter";
+  tier?: "enterprise" | "gold" | "silver" | "bronze" | "supporter";
   amountUSD?: number;
   style?: "pill" | "card";
 }
@@ -27,17 +27,23 @@ function escapeXml(str: string): string {
 export function generatePillBadgeSvg(options: BadgeOptions): string {
   const tier =
     options.tier ||
-    (options.amountUSD && options.amountUSD >= 100
-      ? "gold"
-      : options.amountUSD && options.amountUSD >= 50
-        ? "silver"
-        : "bronze");
+    (options.amountUSD && options.amountUSD >= 250
+      ? "enterprise"
+      : options.amountUSD && options.amountUSD >= 100
+        ? "gold"
+        : options.amountUSD && options.amountUSD >= 50
+          ? "silver"
+          : "bronze");
 
   let rightBg = "#7c3aed";
   let rightText = "☕ Supporter";
   let borderColor = "rgba(168, 85, 247, 0.4)";
 
-  if (tier === "gold") {
+  if (tier === "enterprise") {
+    rightBg = "#4338ca";
+    rightText = "👑 Enterprise";
+    borderColor = "rgba(245, 158, 11, 0.85)";
+  } else if (tier === "gold") {
     rightBg = "#b45309";
     rightText = "👑 Gold Patron";
     borderColor = "rgba(245, 158, 11, 0.5)";
@@ -74,11 +80,13 @@ export function generatePillBadgeSvg(options: BadgeOptions): string {
 export function generateCardBadgeSvg(options: BadgeOptions): string {
   const tier =
     options.tier ||
-    (options.amountUSD && options.amountUSD >= 100
-      ? "gold"
-      : options.amountUSD && options.amountUSD >= 50
-        ? "silver"
-        : "bronze");
+    (options.amountUSD && options.amountUSD >= 250
+      ? "enterprise"
+      : options.amountUSD && options.amountUSD >= 100
+        ? "gold"
+        : options.amountUSD && options.amountUSD >= 50
+          ? "silver"
+          : "bronze");
   const rawName = options.name || (options.handle ? `@${options.handle}` : "DevShelf Patron");
   const safeName = escapeXml(rawName);
 
@@ -88,7 +96,13 @@ export function generateCardBadgeSvg(options: BadgeOptions): string {
   let tierBadgeText = "#fde68a";
   let icon = "👑";
 
-  if (tier === "silver") {
+  if (tier === "enterprise") {
+    borderStart = "#f59e0b";
+    tierLabel = "Enterprise Placement ★ Verified";
+    tierBadgeBg = "#4338ca";
+    tierBadgeText = "#fde047";
+    icon = "👑";
+  } else if (tier === "silver") {
     borderStart = "#94a3b8";
     tierLabel = "Silver Backer ★ Verified Sponsor";
     tierBadgeBg = "#1e293b";
@@ -132,7 +146,13 @@ export function generateCardBadgeSvg(options: BadgeOptions): string {
 export async function buildStaticBadges() {
   await fs.mkdir(BADGES_DIR, { recursive: true });
 
-  const tiers: Array<BadgeOptions["tier"]> = ["gold", "silver", "bronze", "supporter"];
+  const tiers: Array<BadgeOptions["tier"]> = [
+    "enterprise",
+    "gold",
+    "silver",
+    "bronze",
+    "supporter",
+  ];
   for (const t of tiers) {
     const pill = generatePillBadgeSvg({ tier: t });
     const card = generateCardBadgeSvg({ tier: t });
@@ -195,7 +215,7 @@ export async function buildStaticBadges() {
   }
 
   console.log(
-    `🎖️ [DevShelf Badge Engine] Generated static SVG badges and site/api/v1/sponsors.json`,
+    "🎖️ [DevShelf Badge Engine] Generated static SVG badges and site/api/v1/sponsors.json",
   );
 }
 

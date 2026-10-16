@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="380" height="92" viewBox="0 0 380 92" fill="none" role="img" aria-label="DevShelf Sponsor Card: DevShelf Patron">
+  <defs>
+    <linearGradient id="card-bg" x1="0" y1="0" x2="380" y2="92" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#090d16"/>
+      <stop offset="1" stop-color="#111827"/>
+    </linearGradient>
+    <linearGradient id="card-border" x1="0" y1="0" x2="380" y2="92" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f59e0b" stop-opacity="0.8"/>
+      <stop offset="1" stop-color="#8b5cf6" stop-opacity="0.4"/>
+    </linearGradient>
+  </defs>
+  <rect width="380" height="92" rx="14" fill="url(#card-bg)"/>
+  <rect x="0.5" y="0.5" width="379" height="91" rx="13.5" stroke="url(#card-border)"/>
+  <circle cx="46" cy="46" r="23" fill="#0f172a" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="46" y="53" font-size="20" text-anchor="middle">👑</text>
+  <g font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif">
+    <text x="82" y="34" fill="#ffffff" font-size="14" font-weight="700">DevShelf Patron</text>
+    <text x="82" y="53" fill="#f59e0b" font-size="11" font-weight="600">Enterprise Placement ★ Verified</text>
+    <text x="82" y="73" fill="#64748b" font-family="monospace" font-size="10">devshelf.ritualdev.in/sponsors</text>
+  </g>
+  <rect x="302" y="16" width="62" height="20" rx="10" fill="#4338ca" stroke="#f59e0b" stroke-width="1"/>
+  <text x="333" y="30" fill="#fde047" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif" font-size="10" font-weight="700" text-anchor="middle">✓ Backer</text>
+</svg>
