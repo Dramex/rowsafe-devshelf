@@ -14,8 +14,8 @@ export const DEFAULT_CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
 
 export function getMilestone(totalCount) {
   const count = Number(totalCount);
-  if (!Number.isFinite(count) || count < 0) {
-    return "530+";
+  if (!Number.isFinite(count) || count <= 0) {
+    return "0+";
   }
   return `${Math.floor(count / 10) * 10}+`;
 }
