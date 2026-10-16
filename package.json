@@ -36,7 +36,7 @@
     "mcp": "node bin/mcp.js",
     "build:css": "tailwindcss -i site/input.css -o site/tailwind.min.css --minify",
     "generate:counts": "tsx scripts/generate-counts.ts",
-    "build": "pnpm run build:css && tsx scripts/build-site.ts && tsx scripts/build-readme.ts && tsx scripts/generate-seo.ts && tsx scripts/generate-counts.ts",
+    "build": "pnpm run build:css && tsx scripts/build-site.ts && tsx scripts/build-readme.ts && tsx scripts/generate-seo.ts && tsx scripts/generate-counts.ts && tsx scripts/generate-badges.ts",
     "test": "tsx --test \"tests/**/*.test.ts\"",
     "validate": "tsx scripts/validate-shelf.ts",
     "validate:pr": "tsx scripts/validate-pr.ts",
