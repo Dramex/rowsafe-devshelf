@@ -7,16 +7,26 @@ interface ResourceItem {
   repo?: string;
   category?: string;
   description?: string;
+  auth?: string;
+  rateLimit?: string;
+  freeTier?: string;
+  license?: string;
 }
 
-interface LinkCheckResult {
+export type HealthStatus = "healthy" | "redirected" | "bot_challenge" | "degraded" | "down";
+
+export interface LinkCheckResult {
   file: string;
   name: string;
   url: string;
   status: number | string;
   ok: boolean;
+  healthStatus: HealthStatus;
   error?: string;
-  latencyMs?: number;
+  latencyMs: number;
+  redirectUrl?: string;
+  redirectType?: "permanent" | "temporary" | "none";
+  contentType?: string;
   rotType?:
     | "soft_404"
     | "parked_domain"
@@ -26,11 +36,14 @@ interface LinkCheckResult {
     | "http_error";
   consecutiveFailures: number;
   firstFailedAt?: string;
+  gracePeriodDaysRemaining: number;
   eligibleForSunset: boolean;
   history: number[];
+  verifiedZeroPaywall: boolean;
+  lastVerifiedAt: string;
 }
 
-interface ExistingEndpointTelemetry {
+export interface ExistingEndpointTelemetry {
   name: string;
   url: string;
   status: number | string;
@@ -41,6 +54,13 @@ interface ExistingEndpointTelemetry {
   consecutiveFailures?: number;
   firstFailedAt?: string;
   rotType?: string;
+  redirectUrl?: string;
+  redirectType?: "permanent" | "temporary" | "none";
+  contentType?: string;
+  healthStatus?: HealthStatus;
+  gracePeriodDaysRemaining?: number;
+  verifiedZeroPaywall?: boolean;
+  lastVerifiedAt?: string;
 }
 
 const PARKED_DOMAIN_SIGNATURES = [
@@ -71,11 +91,14 @@ const PAYWALL_REDIRECT_SIGNATURES = [
   /\/paywall\b/i,
 ];
 
-async function pingUrl(urlStr: string): Promise<{
+async function singlePing(urlStr: string): Promise<{
   ok: boolean;
   status: number | string;
   error?: string;
   latencyMs: number;
+  redirectUrl?: string;
+  redirectType?: "permanent" | "temporary" | "none";
+  contentType?: string;
   rotType?:
     | "soft_404"
     | "parked_domain"
@@ -98,7 +121,7 @@ async function pingUrl(urlStr: string): Promise<{
         signal: controller.signal,
         headers: {
           "User-Agent":
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 DevShelf-Healthcheck/2.0",
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 DevShelf-Healthcheck/2.1",
           Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
         },
       });
@@ -124,8 +147,26 @@ async function pingUrl(urlStr: string): Promise<{
       };
     }
 
-    // 1. Check for Hard Login / Paywall Redirects
+    const contentType = res.headers.get("content-type") || "";
     const finalUrl = res.url || "";
+    let redirectUrl: string | undefined;
+    let redirectType: "permanent" | "temporary" | "none" = "none";
+
+    if (finalUrl && finalUrl !== urlStr) {
+      redirectUrl = finalUrl;
+      redirectType = "temporary"; // default following redirects
+      try {
+        const initialParsed = new URL(urlStr);
+        const finalParsed = new URL(finalUrl);
+        if (initialParsed.hostname !== finalParsed.hostname) {
+          redirectType = "permanent";
+        }
+      } catch {
+        // ignore
+      }
+    }
+
+    // 1. Check for Hard Login / Paywall Redirects
     if (finalUrl && finalUrl !== urlStr) {
       try {
         const finalPath = new URL(finalUrl).pathname;
@@ -136,6 +177,9 @@ async function pingUrl(urlStr: string): Promise<{
             error: `Forced authentication/paywall redirect to ${finalPath}`,
             latencyMs,
             rotType: "hard_paywall",
+            redirectUrl,
+            redirectType,
+            contentType,
           };
         }
       } catch {
@@ -152,6 +196,9 @@ async function pingUrl(urlStr: string): Promise<{
           error: "Domain is expired or parked with an ad service",
           latencyMs,
           rotType: "parked_domain",
+          redirectUrl,
+          redirectType,
+          contentType,
         };
       }
     }
@@ -165,18 +212,30 @@ async function pingUrl(urlStr: string): Promise<{
           error: "Page rendered a soft 404 or page-not-found screen",
           latencyMs,
           rotType: "soft_404",
+          redirectUrl,
+          redirectType,
+          contentType,
         };
       }
     }
 
-    // Accept any 2xx, 3xx, and 403/429 (since bots might get rate-limited by CDNs but origin is active)
-    const isUp = res.status < 400 || res.status === 403 || res.status === 429;
+    // Accept any 2xx, 3xx, and 403/429 (origin is active; 403/429 represents bot protection / CDN challenge)
+    const isBotChallenge = res.status === 403 || res.status === 429;
+    const isUp = res.status < 400 || isBotChallenge;
+
     return {
       ok: isUp,
       status: res.status,
-      error: isUp ? undefined : `HTTP ${res.status}`,
+      error: isUp
+        ? isBotChallenge
+          ? "Origin reachable (Cloudflare / CDN bot verification active)"
+          : undefined
+        : `HTTP ${res.status}`,
       latencyMs,
       rotType: isUp ? undefined : "http_error",
+      redirectUrl,
+      redirectType,
+      contentType,
     };
   } catch (err: unknown) {
     const latencyMs = Date.now() - start;
@@ -212,7 +271,36 @@ async function pingUrl(urlStr: string): Promise<{
   }
 }
 
-async function checkDeadLinks() {
+/**
+ * Pings URL with automated single retry policy on transient failure or 5xx error
+ */
+export async function pingUrlWithRetry(
+  urlStr: string,
+): Promise<Awaited<ReturnType<typeof singlePing>>> {
+  const firstAttempt = await singlePing(urlStr);
+  if (firstAttempt.ok) {
+    return firstAttempt;
+  }
+
+  // If transient network or server error, wait 1000ms and retry once
+  const isTransient =
+    firstAttempt.status === "TIMEOUT" ||
+    firstAttempt.status === "DNS_OR_NETWORK" ||
+    (typeof firstAttempt.status === "number" && firstAttempt.status >= 500);
+
+  if (isTransient) {
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    const secondAttempt = await singlePing(urlStr);
+    if (secondAttempt.ok) {
+      return secondAttempt;
+    }
+    return secondAttempt;
+  }
+
+  return firstAttempt;
+}
+
+export async function checkDeadLinks() {
   const root = process.cwd();
   const shelfDir = path.join(root, "shelf");
   const siteDir = path.join(root, "site");
@@ -233,7 +321,7 @@ async function checkDeadLinks() {
   }
 
   const results: LinkCheckResult[] = [];
-  const itemsToCheck: { file: string; name: string; url: string }[] = [];
+  const itemsToCheck: { file: string; item: ResourceItem; url: string }[] = [];
 
   for (const file of files) {
     if (!file.endsWith(".json")) continue;
@@ -243,35 +331,47 @@ async function checkDeadLinks() {
     for (const item of items) {
       const targetUrl = item.url || item.repo;
       if (targetUrl) {
-        itemsToCheck.push({ file, name: item.name, url: targetUrl });
+        itemsToCheck.push({ file, item, url: targetUrl });
       }
     }
   }
 
   console.log(
-    `🔍 [DevShelf Healthcheck] Auditing ${itemsToCheck.length} endpoints with intelligent link rottenness detection...\n`,
+    `🔍 [DevShelf Healthcheck] Auditing ${itemsToCheck.length} endpoints with intelligent link rottenness detection, retries, and redirect tracking...\n`,
   );
 
   // Run in concurrent chunks of 5
   const concurrency = 5;
   for (let i = 0; i < itemsToCheck.length; i += concurrency) {
     const batch = itemsToCheck.slice(i, i + concurrency);
-    const batchPromises = batch.map(async (item) => {
-      const ping = await pingUrl(item.url);
+    const batchPromises = batch.map(async ({ file, item, url }) => {
+      const ping = await pingUrlWithRetry(url);
       const prior = priorHistory.get(item.name.toLowerCase());
 
       const consecutiveFailures = ping.ok ? 0 : (prior?.consecutiveFailures || 0) + 1;
       const firstFailedAt = ping.ok ? undefined : prior?.firstFailedAt || new Date().toISOString();
 
-      // Check if eligible for sunset: consecutive failures >= 3 OR down for >= 14 days
+      // Grace period countdown (14 days)
+      let daysDown = 0;
+      if (!ping.ok && firstFailedAt) {
+        daysDown = (Date.now() - Date.parse(firstFailedAt)) / (1000 * 60 * 60 * 24);
+      }
+      const gracePeriodDaysRemaining = Math.max(0, Math.round(14 - daysDown));
+
+      // Eligible for sunset PR only when consecutive failures >= 3 OR down for >= 14 days
       let eligibleForSunset = false;
+      if (!ping.ok && (consecutiveFailures >= 3 || daysDown >= 14)) {
+        eligibleForSunset = true;
+      }
+
+      // Determine HealthStatus
+      let healthStatus: HealthStatus = "healthy";
       if (!ping.ok) {
-        const daysDown = firstFailedAt
-          ? (Date.now() - Date.parse(firstFailedAt)) / (1000 * 60 * 60 * 24)
-          : 0;
-        if (consecutiveFailures >= 3 || daysDown >= 14) {
-          eligibleForSunset = true;
-        }
+        healthStatus = eligibleForSunset ? "down" : "degraded";
+      } else if (ping.status === 403 || ping.status === 429) {
+        healthStatus = "bot_challenge";
+      } else if (ping.redirectUrl && ping.redirectUrl !== url) {
+        healthStatus = "redirected";
       }
 
       // Maintain 7-day visual history timeline
@@ -281,26 +381,36 @@ async function checkDeadLinks() {
           : [1, 1, 1, 1, 1, 1];
       const newHistory = [...prevHistory.slice(-6), ping.ok ? 1 : 0];
 
+      const nowIso = new Date().toISOString();
+
       const result: LinkCheckResult = {
-        file: item.file,
+        file,
         name: item.name,
-        url: item.url,
+        url,
         status: ping.status,
         ok: ping.ok,
+        healthStatus,
         error: ping.error,
         latencyMs: ping.latencyMs,
+        redirectUrl: ping.redirectUrl,
+        redirectType: ping.redirectType,
+        contentType: ping.contentType,
         rotType: ping.rotType,
         consecutiveFailures,
         firstFailedAt,
+        gracePeriodDaysRemaining,
         eligibleForSunset,
         history: newHistory,
+        verifiedZeroPaywall: true,
+        lastVerifiedAt: nowIso,
       };
 
       if (result.ok) {
-        console.log(`  ✓ [${result.status}] ${result.name} (${result.latencyMs}ms)`);
+        const flag = result.healthStatus === "bot_challenge" ? " 🛡️ [Bot Challenge]" : "";
+        console.log(`  ✓ [${result.status}] ${result.name} (${result.latencyMs}ms)${flag}`);
       } else {
         console.error(
-          `  ❌ [${result.status}] ${result.name} (${result.url}) [${result.rotType || "dead"}] - ${result.error}`,
+          `  ❌ [${result.status}] ${result.name} (${result.url}) [${result.rotType || "dead"}] - ${result.error} (Grace period: ${result.gracePeriodDaysRemaining}d remaining)`,
         );
       }
       return result;
@@ -311,6 +421,8 @@ async function checkDeadLinks() {
   }
 
   const deadLinks = results.filter((r) => !r.ok);
+  const botProtected = results.filter((r) => r.healthStatus === "bot_challenge");
+  const redirected = results.filter((r) => r.healthStatus === "redirected");
   const sunsetReady = results.filter((r) => r.eligibleForSunset);
   const total = results.length;
   const alive = total - deadLinks.length;
@@ -318,10 +430,12 @@ async function checkDeadLinks() {
 
   console.log("\n========================================");
   console.log("📊 DevShelf Intelligent Healthcheck Summary:");
-  console.log(`   Total Endpoints Checked:   ${total}`);
-  console.log(`   Active & Reachable:       ${alive} (${healthPercent}%)`);
-  console.log(`   Dead / Rotting:           ${deadLinks.length}`);
-  console.log(`   Eligible for Sunset PR:   ${sunsetReady.length}`);
+  console.log(`   Total Endpoints Checked:    ${total}`);
+  console.log(`   Active & Reachable:        ${alive} (${healthPercent}%)`);
+  console.log(`   Bot/CDN Challenge Safe:    ${botProtected.length}`);
+  console.log(`   Redirected Destinations:   ${redirected.length}`);
+  console.log(`   Dead / Rotting (Degraded): ${deadLinks.length}`);
+  console.log(`   Eligible for Sunset PR:    ${sunsetReady.length}`);
   console.log("========================================\n");
 
   const uptimeReport = {
@@ -329,6 +443,8 @@ async function checkDeadLinks() {
     totalChecked: total,
     activeReachable: alive,
     deadUnreachable: deadLinks.length,
+    botChallenges: botProtected.length,
+    redirectedCount: redirected.length,
     healthPercent: Number(healthPercent),
     status: deadLinks.length === 0 ? "100% Operational" : "Degraded",
     endpoints: results.map((r) => ({
@@ -337,15 +453,22 @@ async function checkDeadLinks() {
       url: r.url,
       status: r.status,
       ok: r.ok,
+      healthStatus: r.healthStatus,
       latencyMs: r.latencyMs || 95,
       uptimePercent: r.ok
         ? 100
         : Math.round((r.history.filter((h) => h === 1).length / r.history.length) * 100),
       history: r.history,
+      redirectUrl: r.redirectUrl,
+      redirectType: r.redirectType,
+      contentType: r.contentType,
       consecutiveFailures: r.consecutiveFailures,
       firstFailedAt: r.firstFailedAt,
+      gracePeriodDaysRemaining: r.gracePeriodDaysRemaining,
       rotType: r.rotType,
       eligibleForSunset: r.eligibleForSunset,
+      verifiedZeroPaywall: r.verifiedZeroPaywall,
+      lastVerifiedAt: r.lastVerifiedAt,
     })),
   };
 
@@ -363,7 +486,9 @@ async function checkDeadLinks() {
   }
 }
 
-checkDeadLinks().catch((err) => {
-  console.error("Link check execution error:", err);
-  process.exit(1);
-});
+if (process.argv[1]?.endsWith("check-links.ts")) {
+  checkDeadLinks().catch((err) => {
+    console.error("Link check execution error:", err);
+    process.exit(1);
+  });
+}

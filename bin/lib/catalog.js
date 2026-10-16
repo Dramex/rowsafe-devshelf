@@ -7,6 +7,11 @@ const __dirname = path.dirname(__filename);
 
 let cachedCatalog = null;
 
+export function getMilestone(totalCount) {
+  const count = Number(totalCount) || 530;
+  return `${Math.floor(count / 10) * 10}+`;
+}
+
 /**
  * Load DevShelf catalog data via 3-tier fallback strategy:
  * 1. Local pre-built site/data.json
@@ -14,7 +19,7 @@ let cachedCatalog = null;
  * 3. Assembly from shelf/*.json source files
  *
  * @param {{ forceReload?: boolean }} [options]
- * @returns {Promise<{ totalCount: number, resources: Array<any>, reposCount?: number, counts?: Record<string, number> }>}
+ * @returns {Promise<{ totalCount: number, milestone: string, resources: Array<any>, reposCount?: number, counts?: Record<string, number> }>}
  */
 export async function loadCatalog(options = {}) {
   if (cachedCatalog && !options.forceReload) {
@@ -27,7 +32,10 @@ export async function loadCatalog(options = {}) {
     try {
       const raw = fs.readFileSync(localDataPath, "utf8");
       cachedCatalog = JSON.parse(raw);
-      return cachedCatalog;
+      if (cachedCatalog) {
+        cachedCatalog.milestone = getMilestone(cachedCatalog.totalCount);
+        return cachedCatalog;
+      }
     } catch {
       // Fall through to remote
     }
@@ -40,7 +48,10 @@ export async function loadCatalog(options = {}) {
     });
     if (res.ok) {
       cachedCatalog = await res.json();
-      return cachedCatalog;
+      if (cachedCatalog) {
+        cachedCatalog.milestone = getMilestone(cachedCatalog.totalCount);
+        return cachedCatalog;
+      }
     }
   } catch {
     // Remote failed
@@ -60,6 +71,7 @@ export async function loadCatalog(options = {}) {
     }
     cachedCatalog = {
       totalCount: resources.length,
+      milestone: getMilestone(resources.length),
       resources,
     };
     return cachedCatalog;

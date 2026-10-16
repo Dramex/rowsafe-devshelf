@@ -5,8 +5,13 @@ async function generateCounts() {
   const root = process.cwd();
   const shelfDir = path.join(root, "shelf");
   const siteDir = path.join(root, "site");
+  const dataDir = path.join(root, "data");
   const pkgPath = path.join(root, "package.json");
   const indexPath = path.join(siteDir, "index.html");
+  const apiV1Dir = path.join(siteDir, "api", "v1");
+
+  await fs.mkdir(dataDir, { recursive: true });
+  await fs.mkdir(apiV1Dir, { recursive: true });
 
   const files = await fs.readdir(shelfDir);
   let totalCount = 0;
@@ -20,6 +25,8 @@ async function generateCounts() {
     totalCount += items.length;
   }
 
+  const milestone = `${Math.floor(totalCount / 10) * 10}+`;
+
   // Load site/data.json if it exists to get exact reposCount
   let reposCount = 0;
   try {
@@ -31,10 +38,44 @@ async function generateCounts() {
   }
 
   console.log(
-    `📊 Total verified catalog items: ${totalCount} across ${Object.keys(shelfCounts).length} shelf files`,
+    `📊 Total verified catalog items: ${totalCount} (${milestone}) across ${Object.keys(shelfCounts).length} shelf files`,
   );
 
-  // Update site/index.html fallback markup
+  // 1. Write single source of truth data/counts.json and site/api/v1/counts.json
+  const countsPayload = {
+    totalCount,
+    milestone,
+    exactCount: totalCount,
+    shelfCounts,
+    reposCount,
+    updatedAt: new Date().toISOString(),
+  };
+
+  await fs.writeFile(
+    path.join(dataDir, "counts.json"),
+    `${JSON.stringify(countsPayload, null, 2)}\n`,
+    "utf8",
+  );
+  await fs.writeFile(
+    path.join(apiV1Dir, "counts.json"),
+    `${JSON.stringify(countsPayload, null, 2)}\n`,
+    "utf8",
+  );
+  console.log(`✅ Generated data/counts.json and site/api/v1/counts.json (${milestone})`);
+
+  // 2. Sync package.json description
+  if (await fileExists(pkgPath)) {
+    const rawPkg = await fs.readFile(pkgPath, "utf8");
+    const pkg = JSON.parse(rawPkg);
+    const updatedDesc = pkg.description.replace(/\b\d+\+/, milestone);
+    if (pkg.description !== updatedDesc) {
+      pkg.description = updatedDesc;
+      await fs.writeFile(pkgPath, `${JSON.stringify(pkg, null, 2)}\n`, "utf8");
+      console.log(`✅ Synced package.json description to ${milestone}`);
+    }
+  }
+
+  // 3. Update site/index.html fallback markup
   if (await fileExists(indexPath)) {
     let indexHtml = await fs.readFile(indexPath, "utf8");
 
@@ -42,6 +83,12 @@ async function generateCounts() {
     indexHtml = indexHtml.replace(
       /<span id="stat-total"[^>]*>[^<]+<\/span>/,
       `<span id="stat-total" class="font-bold text-white">${totalCount} Resources</span>`,
+    );
+
+    // Replace hero-total-count
+    indexHtml = indexHtml.replace(
+      /<span id="hero-total-count">\d+\+<\/span>/,
+      `<span id="hero-total-count">${milestone}</span>`,
     );
 
     // Replace stat-repos if known
@@ -126,8 +173,31 @@ async function generateCounts() {
       `<code id="progress-ascii-bar" class="text-purple-300 font-bold hidden sm:inline">${asciiBar}</code>`,
     );
 
+    // Uniform replacement of legacy 500+ / 520+ text in hero/footer/metadata
+    indexHtml = indexHtml.replace(
+      /Curated from \d+\+ verified zero-paywall resources/g,
+      `Curated from ${milestone} verified zero-paywall resources`,
+    );
+    indexHtml = indexHtml.replace(
+      /verified index of \d+\+ developer utilities/g,
+      `verified index of ${milestone} developer utilities`,
+    );
+    indexHtml = indexHtml.replace(/Browse \d+\+ Tools Index/g, `Browse ${milestone} Tools Index`);
+    indexHtml = indexHtml.replace(
+      /Directory Index \(\d+\+ Tools\)/g,
+      `Directory Index (${milestone} Tools)`,
+    );
+    indexHtml = indexHtml.replace(
+      /zero-paywall directory of \d+\+ verified developer tools/g,
+      `zero-paywall directory of ${milestone} verified developer tools`,
+    );
+    indexHtml = indexHtml.replace(
+      /indexing \d+\+ verified free developer tools/g,
+      `indexing ${milestone} verified free developer tools`,
+    );
+
     await fs.writeFile(indexPath, indexHtml, "utf8");
-    console.log("✅ Updated site/index.html metrics.");
+    console.log("✅ Updated site/index.html metrics & unified count claims.");
   }
 }
 

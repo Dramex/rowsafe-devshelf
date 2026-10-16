@@ -31,6 +31,7 @@ async function generateSeo() {
   const resources: any[] = data.resources || [];
 
   const domain = "https://devshelf.ritualdev.in";
+  const milestone = `${Math.floor(resources.length / 10) * 10}+`;
   const today = new Date().toISOString().split("T")[0];
   const sitemapUrls: string[] = [
     `  <url>\n    <loc>${domain}/</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>daily</changefreq>\n    <priority>1.0</priority>\n  </url>`,
@@ -350,7 +351,7 @@ async function generateSeo() {
           ← Back to DevShelf Directory
         </a>
         <a href="../directory.html" class="text-xs text-slate-400 hover:text-slate-200 transition font-mono">
-          All Tools Index (520+) →
+          All Tools Index (${milestone}) →
         </a>
         <span class="text-xs text-slate-500 font-mono">
           Verified Zero-Paywall Resource

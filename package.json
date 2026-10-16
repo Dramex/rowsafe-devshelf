@@ -3,7 +3,7 @@
   "version": "1.1.2",
   "private": false,
   "type": "module",
-  "description": "The open-source community directory for discovering 520+ developer tools, free APIs, AI agents, and open-source projects. Includes terminal CLI and MCP server.",
+  "description": "The open-source community directory for discovering 530+ developer tools, free APIs, AI agents, and open-source projects. Includes terminal CLI and MCP server.",
   "license": "MIT",
   "repository": {
     "type": "git",

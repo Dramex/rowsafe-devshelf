@@ -304,6 +304,7 @@ async function build() {
   const filledBlocks = Math.round(progressRatio * barBlocks);
   const emptyBlocks = barBlocks - filledBlocks;
   const progressBar = "█".repeat(filledBlocks) + "░".repeat(emptyBlocks);
+  const milestone = `${Math.floor(totalItems / 10) * 10}+`;
 
   const md = `<div align="center">
 
@@ -442,7 +443,7 @@ ${BT}bash
 # Launch interactive Terminal UI (fuzzy search, category browsing, and 1-click open)
 npx devshelf
 
-# Instant search across all 520+ curated resources
+# Instant search across all ${milestone} curated resources
 npx devshelf search "postgres"
 npx devshelf search "auth" --open
 
@@ -538,7 +539,7 @@ DevShelf is backed by a 100% free, CORS-enabled, static public REST API with zer
 
 | Endpoint | Method | Description |
 | :--- | :--- | :--- |
-| **[${B}/api/v1/tools.json${B}](https://devshelf.ritualdev.in/api/v1/tools.json)** | ${B}GET${B} | All 500+ curated developer tools, APIs, and AI models |
+| **[${B}/api/v1/tools.json${B}](https://devshelf.ritualdev.in/api/v1/tools.json)** | ${B}GET${B} | All ${milestone} curated developer tools, APIs, and AI models |
 | **[${B}/api/v1/stats.json${B}](https://devshelf.ritualdev.in/api/v1/stats.json)** | ${B}GET${B} | Catalog telemetry, repo counts, and category breakdowns |
 | **[${B}/api/v1/categories.json${B}](https://devshelf.ritualdev.in/api/v1/categories.json)** | ${B}GET${B} | Category listing and dedicated JSON endpoints |
 
@@ -548,7 +549,7 @@ DevShelf is backed by a 100% free, CORS-enabled, static public REST API with zer
 
 ## 🧩 IDE & Launcher Extensions
 
-Query and explore 500+ free developer tools directly within your workflow:
+Query and explore ${milestone} free developer tools directly within your workflow:
 
 - **[Raycast Extension](extensions/raycast/)** &mdash; Instant tool search & random gem picker from your desktop spotlight (${B}Cmd+Shift+B${B} to copy badges).
 - **[VS Code Extension](extensions/vscode/)** &mdash; Command Palette integration (${B}Ctrl+Shift+P${B} -> ${B}DevShelf: Search${B}).

@@ -1,6 +1,6 @@
 # 🧩 DevShelf Extensions (Raycast & VS Code)
 
-DevShelf brings 500+ curated developer tools and verified free APIs directly into your workflow via native launcher and IDE extensions.
+DevShelf brings 530+ curated developer tools and verified free APIs directly into your workflow via native launcher and IDE extensions.
 
 ---
 
@@ -10,7 +10,7 @@ Search and roll random developer tools right from the Raycast spotlight bar.
 
 - **Directory**: [`extensions/raycast/`](../extensions/raycast/)
 - **Commands**:
-  - `Search Developer Tools & APIs`: Filter across 500+ free resources with instant copy actions.
+  - `Search Developer Tools & APIs`: Filter across 530+ free resources with instant copy actions.
   - `Random Free Developer Gem`: Roll a random verified open-source tool.
   - Hotkey `Cmd+Shift+B` to instantly copy your project's "Featured on DevShelf" README badge.
 

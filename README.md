@@ -135,7 +135,7 @@ Stay in flow without leaving your terminal. DevShelf includes an interactive fuz
 # Launch interactive Terminal UI (fuzzy search, category browsing, and 1-click open)
 npx devshelf
 
-# Instant search across all 520+ curated resources
+# Instant search across all 530+ curated resources
 npx devshelf search "postgres"
 npx devshelf search "auth" --open
 
@@ -231,7 +231,7 @@ DevShelf is backed by a 100% free, CORS-enabled, static public REST API with zer
 
 | Endpoint | Method | Description |
 | :--- | :--- | :--- |
-| **[`/api/v1/tools.json`](https://devshelf.ritualdev.in/api/v1/tools.json)** | `GET` | All 500+ curated developer tools, APIs, and AI models |
+| **[`/api/v1/tools.json`](https://devshelf.ritualdev.in/api/v1/tools.json)** | `GET` | All 530+ curated developer tools, APIs, and AI models |
 | **[`/api/v1/stats.json`](https://devshelf.ritualdev.in/api/v1/stats.json)** | `GET` | Catalog telemetry, repo counts, and category breakdowns |
 | **[`/api/v1/categories.json`](https://devshelf.ritualdev.in/api/v1/categories.json)** | `GET` | Category listing and dedicated JSON endpoints |
 
@@ -241,7 +241,7 @@ DevShelf is backed by a 100% free, CORS-enabled, static public REST API with zer
 
 ## 🧩 IDE & Launcher Extensions
 
-Query and explore 500+ free developer tools directly within your workflow:
+Query and explore 530+ free developer tools directly within your workflow:
 
 - **[Raycast Extension](extensions/raycast/)** &mdash; Instant tool search & random gem picker from your desktop spotlight (`Cmd+Shift+B` to copy badges).
 - **[VS Code Extension](extensions/vscode/)** &mdash; Command Palette integration (`Ctrl+Shift+P` -> `DevShelf: Search`).

@@ -1,6 +1,6 @@
 # ⚡ DevShelf Public API (v1)
 
-The **DevShelf Public REST API** provides open, programmatic access to the entire curated catalog of 500+ verified developer tools, free APIs, AI frameworks, CLI utilities, and developer perks.
+The **DevShelf Public REST API** provides open, programmatic access to the entire curated catalog of 530+ verified developer tools, free APIs, AI frameworks, CLI utilities, and developer perks.
 
 - **No API Key Required**: Instant access with zero registration.
 - **100% CORS Enabled**: Query directly from client-side SPAs, browser extensions, or edge workers.
@@ -21,7 +21,7 @@ https://devshelf.ritualdev.in/api/v1
 
 | Method | Endpoint | Description |
 | :--- | :--- | :--- |
-| `GET` | [`/tools.json`](https://devshelf.ritualdev.in/api/v1/tools.json) | Retrieve all 500+ curated developer tools and APIs |
+| `GET` | [`/tools.json`](https://devshelf.ritualdev.in/api/v1/tools.json) | Retrieve all 530+ curated developer tools and APIs |
 | `GET` | [`/stats.json`](https://devshelf.ritualdev.in/api/v1/stats.json) | Get real-time catalog telemetry and category counts |
 | `GET` | [`/categories.json`](https://devshelf.ritualdev.in/api/v1/categories.json) | List all available categories and dedicated endpoints |
 | `GET` | [`/categories/:slug.json`](https://devshelf.ritualdev.in/api/v1/categories/ai.json) | Query items for a specific category (`ai`, `cli`, `apis`, `cloud`, etc.) |

@@ -28,7 +28,7 @@ const TOOLS = [
   {
     name: "search_tools",
     description:
-      "Search 520+ verified zero-paywall developer tools, open-source repositories, free public APIs, and AI agents. Returns name, description, URL, license, auth, and free tier details.",
+      "Search 530+ verified zero-paywall developer tools, open-source repositories, free public APIs, and AI agents. Returns name, description, URL, license, auth, and free tier details.",
     inputSchema: {
       type: "object",
       properties: {
@@ -444,7 +444,7 @@ async function handleToolCall(name, args) {
   throw new Error(`Unknown tool: ${name}`);
 }
 
-export function startMcpServer() {
+export async function startMcpServer() {
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
@@ -548,8 +548,12 @@ export function startMcpServer() {
     }
   });
 
+  const catalog = await getCatalog().catch(() => null);
+  const milestone =
+    catalog?.milestone ||
+    (catalog?.totalCount ? `${Math.floor(catalog.totalCount / 10) * 10}+` : "530+");
   process.stderr.write(
-    "🚀 [DevShelf MCP Server] Running on stdio transport (520+ verified tools ready).\n",
+    `🚀 [DevShelf MCP Server] Running on stdio transport (${milestone} verified tools ready).\n`,
   );
 }
 

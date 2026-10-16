@@ -55,6 +55,41 @@
         "type": "array",
         "items": { "type": "string" },
         "description": "Optional telemetry status tags"
+      },
+      "lastCheckedAt": {
+        "type": "string",
+        "description": "ISO timestamp of most recent HTTP endpoint reachability check"
+      },
+      "lastVerifiedAt": {
+        "type": "string",
+        "description": "ISO timestamp when entry existence was verified by maintainer or automated pipeline"
+      },
+      "pricingVerifiedAt": {
+        "type": "string",
+        "description": "ISO timestamp when zero-paywall pricing terms and free tier were verified"
+      },
+      "healthStatus": {
+        "type": "string",
+        "enum": ["healthy", "degraded", "down", "redirected", "bot_challenge", "unknown"],
+        "description": "Live endpoint operational status"
+      },
+      "authRequirements": {
+        "type": "string",
+        "description": "Detailed authentication requirement (e.g. none, free api key, oauth, registration)"
+      },
+      "freeTierLimits": {
+        "type": "string",
+        "description": "Specific free tier limits or perpetual zero-cost quotas"
+      },
+      "verifiedZeroPaywall": {
+        "type": "boolean",
+        "description": "Whether the resource is verified to have an authentic, permanent zero-paywall tier"
+      },
+      "redirectUrl": {
+        "type": "string",
+        "format": "uri",
+        "pattern": "^https?://",
+        "description": "Tracked redirect target URL if destination moved"
       }
     },
     "additionalProperties": false

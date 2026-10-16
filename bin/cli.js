@@ -251,12 +251,15 @@ async function runInteractiveTui(data) {
 
   const resources = data.resources || [];
 
+  const milestone =
+    data.milestone || (data.totalCount ? `${Math.floor(data.totalCount / 10) * 10}+` : "530+");
+
   while (true) {
     console.clear();
     printHeader();
     console.log(`
   ${c.bold}Main Menu:${c.reset}
-    ${c.purple}[1]${c.reset} 🔍 Search 500+ Tools, APIs & AI Agents
+    ${c.purple}[1]${c.reset} 🔍 Search ${milestone} Tools, APIs & AI Agents
     ${c.purple}[2]${c.reset} 📂 Browse Categories
     ${c.purple}[3]${c.reset} 🎲 Pick a Random Resource
     ${c.purple}[4]${c.reset} 🤝 Contributor Matchmaker (Live Good First Issues)
