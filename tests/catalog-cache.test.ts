@@ -74,7 +74,7 @@ describe("DevShelf CLI Persistent Cache & Provenance Suite (D2)", () => {
           totalCount: 533,
           updatedAt: "2026-10-16T14:00:00.000Z",
         }),
-        { status: 200, headers: { "Content-Type": "application/json" } }
+        { status: 200, headers: { "Content-Type": "application/json" } },
       );
     };
 
@@ -133,7 +133,7 @@ describe("DevShelf CLI Persistent Cache & Provenance Suite (D2)", () => {
           totalCount: 999,
           updatedAt: "2026-10-16T15:00:00.000Z",
         }),
-        { status: 200, headers: { "Content-Type": "application/json" } }
+        { status: 200, headers: { "Content-Type": "application/json" } },
       );
     };
 

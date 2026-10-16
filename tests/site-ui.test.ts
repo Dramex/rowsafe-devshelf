@@ -17,7 +17,7 @@ describe("DevShelf Site UI, A11y & Verification Architecture Suite", () => {
     assert.match(
       html,
       /<meta\s+name=["']viewport["']\s+content=["'][^"']*width=device-width[^"']*initial-scale=1\.0[^"']*["']/i,
-      "Mobile viewport meta tag must be present for responsive layouts"
+      "Mobile viewport meta tag must be present for responsive layouts",
     );
   });
 
@@ -29,7 +29,11 @@ describe("DevShelf Site UI, A11y & Verification Architecture Suite", () => {
     assert.match(html, /placeholder=["'][^"']+["']/i, "Search input must provide placeholder");
 
     // Keyboard shortcut hint
-    assert.match(html, /class=["'][^"']*kbd[^"']*["']|\/\s*to\s*search|\bkbd\b/i, "Must surface '/' shortcut indicator");
+    assert.match(
+      html,
+      /class=["'][^"']*kbd[^"']*["']|\/\s*to\s*search|\bkbd\b/i,
+      "Must surface '/' shortcut indicator",
+    );
   });
 
   test("site/index.html provides category filters and links to status dashboard", () => {
@@ -58,7 +62,11 @@ describe("DevShelf Site UI, A11y & Verification Architecture Suite", () => {
     assert.match(html, /id=["']empty-state["']/i, "Must have #empty-state container");
     assert.match(html, /No matching resources found/i, "Must provide empty state message");
     assert.match(html, /id=["']reset-filters-btn["']/i, "Must have reset filters button");
-    assert.match(code, /emptyState\.classList\.remove\(["']hidden["']\)/, "app.js must display empty state when 0 matches");
+    assert.match(
+      code,
+      /emptyState\.classList\.remove\(["']hidden["']\)/,
+      "app.js must display empty state when 0 matches",
+    );
   });
 
   test("site/status.html documents the 3 distinct verification tiers", () => {
@@ -85,15 +93,15 @@ describe("DevShelf Site UI, A11y & Verification Architecture Suite", () => {
     assert.match(
       html,
       /Sponsor &amp; Partner Policy|Sponsoring never bypasses health audits/i,
-      "Status dashboard must disclose sponsor editorial independence"
+      "Status dashboard must disclose sponsor editorial independence",
     );
 
     // CLI sponsors command output
-    const stdout = execSync('node bin/cli.js sponsors', { encoding: "utf8", cwd: root });
+    const stdout = execSync("node bin/cli.js sponsors", { encoding: "utf8", cwd: root });
     assert.match(
       stdout,
       /Editorial Independence: Sponsoring does not bypass DevShelf zero-paywall audits/i,
-      "CLI sponsors command must disclose editorial independence"
+      "CLI sponsors command must disclose editorial independence",
     );
   });
 });

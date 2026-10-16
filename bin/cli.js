@@ -517,7 +517,9 @@ async function main() {
       }
 
       console.log(`  ${c.green}✔ Successfully refreshed DevShelf catalog!${c.reset}`);
-      console.log(`    Total Resources:    ${c.purple}${c.bold}${updated.totalCount}${c.reset} (${updated.milestone})`);
+      console.log(
+        `    Total Resources:    ${c.purple}${c.bold}${updated.totalCount}${c.reset} (${updated.milestone})`,
+      );
       console.log(`    Catalog Timestamp:  ${c.gray}${updated.catalogTimestamp}${c.reset}`);
       console.log(`    Catalog Source:     ${c.green}${updated.catalogSource}${c.reset}`);
       console.log(`    Local Cache File:   ${c.dim}${getCacheFilePath()}${c.reset}\n`);
@@ -527,7 +529,9 @@ async function main() {
         process.exit(1);
       }
       console.log(`  ${c.red}✖ Failed to refresh catalog:${c.reset} ${err.message}`);
-      console.log(`  ${c.gray}The CLI will continue using existing cached or bundled data.${c.reset}\n`);
+      console.log(
+        `  ${c.gray}The CLI will continue using existing cached or bundled data.${c.reset}\n`,
+      );
       process.exit(1);
     }
     return;

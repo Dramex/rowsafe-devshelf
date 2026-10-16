@@ -34,8 +34,16 @@ describe("DevShelf Unified Catalog Assembly & Fallback Parity Suite (D3)", () =>
       assert.strictEqual(a.type, b.type, `Resource ${a.name} type mismatch`);
       assert.strictEqual(a.section, b.section, `Resource ${a.name} section mismatch`);
       assert.strictEqual(a.description, b.description, `Resource ${a.name} description mismatch`);
-      assert.strictEqual(a.alternativeTo, b.alternativeTo, `Resource ${a.name} alternativeTo mismatch`);
-      assert.strictEqual(a.dockerCompose, b.dockerCompose, `Resource ${a.name} dockerCompose mismatch`);
+      assert.strictEqual(
+        a.alternativeTo,
+        b.alternativeTo,
+        `Resource ${a.name} alternativeTo mismatch`,
+      );
+      assert.strictEqual(
+        a.dockerCompose,
+        b.dockerCompose,
+        `Resource ${a.name} dockerCompose mismatch`,
+      );
       assert.strictEqual(a.repo, b.repo, `Resource ${a.name} repo mismatch`);
       assert.strictEqual(a.url, b.url, `Resource ${a.name} url mismatch`);
       assert.deepStrictEqual(a.statusTags, b.statusTags, `Resource ${a.name} statusTags mismatch`);

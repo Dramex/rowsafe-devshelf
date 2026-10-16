@@ -93,7 +93,9 @@ export async function fetchLiveCatalog(timeoutMs = 4000, fetchFn = fetch) {
   });
 
   if (!res.ok) {
-    throw new Error(`Failed to fetch live catalog: HTTP ${res.status} ${res.statusText || ""}`.trim());
+    throw new Error(
+      `Failed to fetch live catalog: HTTP ${res.status} ${res.statusText || ""}`.trim(),
+    );
   }
 
   const data = await res.json();
@@ -196,9 +198,8 @@ export async function loadCatalog(options = {}) {
     const fetchedTime = persistent.fetchedAt ? new Date(persistent.fetchedAt).getTime() : 0;
     persistent.catalogSource = "cached";
     persistent.isStale = true;
-    persistent.cacheAgeHours = fetchedTime > 0
-      ? Math.round(((now - fetchedTime) / (1000 * 60 * 60)) * 10) / 10
-      : undefined;
+    persistent.cacheAgeHours =
+      fetchedTime > 0 ? Math.round(((now - fetchedTime) / (1000 * 60 * 60)) * 10) / 10 : undefined;
     persistent.milestone = getMilestone(persistent.totalCount || persistent.resources.length);
     cachedCatalog = persistent;
     return cachedCatalog;

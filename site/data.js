@@ -1,5 +1,5 @@
 window.DEVSHELF_DATA = {
-  "updatedAt": "2026-10-16T13:59:12.521Z",
+  "updatedAt": "2026-10-16T17:07:56.011Z",
   "totalCount": 533,
   "reposCount": 330,
   "facets": {

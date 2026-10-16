@@ -4,13 +4,43 @@ import { getAlternativeTo, getDockerCompose } from "./catalog-enrichment.js";
 
 export const SHELF_ORDER = [
   { file: "ai-tools.json", type: "ai", section: "AI Agents & Local LLMs", countKey: "aiTools" },
-  { file: "cli-tools.json", type: "cli", section: "CLI & Productivity Tools", countKey: "cliTools" },
-  { file: "testing-qa.json", type: "testing", section: "Testing & QA Reliability", countKey: "testingQa" },
+  {
+    file: "cli-tools.json",
+    type: "cli",
+    section: "CLI & Productivity Tools",
+    countKey: "cliTools",
+  },
+  {
+    file: "testing-qa.json",
+    type: "testing",
+    section: "Testing & QA Reliability",
+    countKey: "testingQa",
+  },
   { file: "apis.json", type: "api", section: "Free & Public APIs", countKey: "apis" },
-  { file: "free-cloud.json", type: "cloud", section: "Free Cloud & Developer Tiers", countKey: "freeCloud" },
-  { file: "perks.json", type: "perks", section: "Developer Discounts & Startup Perks", countKey: "perks" },
-  { file: "boilerplates.json", type: "boilerplate", section: "One-Click Deployment Boilerplates", countKey: "boilerplates" },
-  { file: "contributors-wanted.json", type: "contributors", section: "Contributors Wanted", countKey: "contributors" },
+  {
+    file: "free-cloud.json",
+    type: "cloud",
+    section: "Free Cloud & Developer Tiers",
+    countKey: "freeCloud",
+  },
+  {
+    file: "perks.json",
+    type: "perks",
+    section: "Developer Discounts & Startup Perks",
+    countKey: "perks",
+  },
+  {
+    file: "boilerplates.json",
+    type: "boilerplate",
+    section: "One-Click Deployment Boilerplates",
+    countKey: "boilerplates",
+  },
+  {
+    file: "contributors-wanted.json",
+    type: "contributors",
+    section: "Contributors Wanted",
+    countKey: "contributors",
+  },
 ];
 
 /**

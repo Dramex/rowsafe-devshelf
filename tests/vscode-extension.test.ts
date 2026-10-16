@@ -38,7 +38,7 @@ describe("VS Code Extension: DevShelf Error Boundary & Resilience Suite (D1)", (
     const result = await fetchDevShelfTools(
       "https://example.com/api.json",
       5000,
-      mockFetch as unknown as typeof fetch
+      mockFetch as unknown as typeof fetch,
     );
 
     assert.strictEqual(result.totalCount, 2);
@@ -58,13 +58,13 @@ describe("VS Code Extension: DevShelf Error Boundary & Resilience Suite (D1)", (
         await fetchDevShelfTools(
           "https://example.com/api.json",
           5000,
-          mockFetch as unknown as typeof fetch
+          mockFetch as unknown as typeof fetch,
         );
       },
       {
         name: "Error",
         message: /HTTP 504: Gateway Timeout/,
-      }
+      },
     );
   });
 
@@ -80,13 +80,13 @@ describe("VS Code Extension: DevShelf Error Boundary & Resilience Suite (D1)", (
         await fetchDevShelfTools(
           "https://example.com/api.json",
           5000,
-          mockFetch as unknown as typeof fetch
+          mockFetch as unknown as typeof fetch,
         );
       },
       {
         name: "Error",
         message: /Failed to parse catalog JSON/,
-      }
+      },
     );
   });
 
@@ -102,21 +102,18 @@ describe("VS Code Extension: DevShelf Error Boundary & Resilience Suite (D1)", (
         await fetchDevShelfTools(
           "https://example.com/api.json",
           5000,
-          mockFetch as unknown as typeof fetch
+          mockFetch as unknown as typeof fetch,
         );
       },
       {
         name: "Error",
         message: /'tools' must be an array/,
-      }
+      },
     );
   });
 
   test("fetchDevShelfTools aborts and times out on stalled network request", async () => {
-    const mockFetch = async (
-      _url: string | URL | Request,
-      init?: RequestInit
-    ) => {
+    const mockFetch = async (_url: string | URL | Request, init?: RequestInit) => {
       return new Promise<Response>((_resolve, reject) => {
         if (init?.signal) {
           init.signal.addEventListener("abort", () => {
@@ -133,13 +130,13 @@ describe("VS Code Extension: DevShelf Error Boundary & Resilience Suite (D1)", (
         await fetchDevShelfTools(
           "https://example.com/api.json",
           50, // 50ms timeout
-          mockFetch as unknown as typeof fetch
+          mockFetch as unknown as typeof fetch,
         );
       },
       {
         name: "Error",
         message: /DevShelf API request timed out after 50ms/,
-      }
+      },
     );
   });
 
@@ -186,7 +183,10 @@ describe("VS Code Extension: DevShelf Error Boundary & Resilience Suite (D1)", (
     const mockFetch = async () => {
       attempts++;
       if (attempts === 1) {
-        return new Response("Service Unavailable", { status: 503, statusText: "Service Unavailable" });
+        return new Response("Service Unavailable", {
+          status: 503,
+          statusText: "Service Unavailable",
+        });
       }
       return new Response(JSON.stringify(validMockCatalog), {
         status: 200,
@@ -259,7 +259,7 @@ describe("VS Code Extension: DevShelf Error Boundary & Resilience Suite (D1)", (
     assert.match(messageShown, /🎲 Random Pick:/);
     assert.ok(
       openedUrl === "https://github.com/RitualDev-Lab/DevShelf" ||
-        openedUrl === "https://huggingface.co"
+        openedUrl === "https://huggingface.co",
     );
   });
 
