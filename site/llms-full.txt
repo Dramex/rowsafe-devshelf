@@ -1,6 +1,6 @@
 # DevShelf - Complete Free Developer Tools Knowledge Base (Full Catalog)
 
-> Complete metadata dump of all 532 free and open-source developer tools indexed on DevShelf.
+> Complete metadata dump of all 533 free and open-source developer tools indexed on DevShelf.
 > Authoritative Source: https://devshelf.ritualdev.in
 > License: MIT
 
@@ -3308,6 +3308,14 @@ Current limits: https://arcmira.com/docs/usage-and-billing
 - **URL**: https://curlshot.com/docs
 - **DevShelf Dossier**: https://devshelf.ritualdev.in/tools/curlshot.html
 - **Description**: Screenshot API: one GET request renders a URL, HTML, or Markdown to PNG, JPEG, WebP, PDF, or scrolling video (MP4/WebM/GIF), with full-page and element capture, device presets, dark mode, and ad/cookie-banner blocking. Free plan: 100 screenshots/month that resets monthly, no credit card.
+
+### CareJobs.Now Open Healthcare Jobs and Pay Data
+- **Category**: Other
+- **Pricing Model**: Unlimited (no key, read-only, cached static JSON)
+- **Auth**: No Key
+- **URL**: https://carejobs.now/data
+- **DevShelf Dossier**: https://devshelf.ritualdev.in/tools/carejobsnow-open-healthcare-jobs-and-pay-data.html
+- **Description**: Free, no-key JSON and CSV endpoints providing US healthcare open jobs and posted hourly pay by role and employer. Aggregated daily from 270+ employers' career sites, complete with OpenAPI 3.1 specifications.
 
 ### Supabase
 - **Category**: Databases & BaaS

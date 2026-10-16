@@ -2,8 +2,8 @@
   "version": "1.1.2",
   "docs": "https://devshelf.ritualdev.in/docs/api.html",
   "license": "https://github.com/RitualDev-Lab/DevShelf/blob/main/LICENSE",
-  "updatedAt": "2026-10-15T05:59:32.286Z",
-  "totalCount": 532,
+  "updatedAt": "2026-10-16T06:37:32.215Z",
+  "totalCount": 533,
   "tools": [
     {
       "name": "AgentShield",
@@ -5687,6 +5687,18 @@
       "auth": "Free API Key",
       "cors": "Yes",
       "rateLimit": "100 screenshots/month (resets monthly), 10 requests/minute; failed renders and cache hits not counted",
+      "https": true,
+      "type": "api",
+      "section": "Free & Public APIs"
+    },
+    {
+      "name": "CareJobs.Now Open Healthcare Jobs and Pay Data",
+      "url": "https://carejobs.now/data",
+      "category": "Other",
+      "description": "Free, no-key JSON and CSV endpoints providing US healthcare open jobs and posted hourly pay by role and employer. Aggregated daily from 270+ employers' career sites, complete with OpenAPI 3.1 specifications.",
+      "auth": "No Key",
+      "cors": "Yes",
+      "rateLimit": "Unlimited (no key, read-only, cached static JSON)",
       "https": true,
       "type": "api",
       "section": "Free & Public APIs"

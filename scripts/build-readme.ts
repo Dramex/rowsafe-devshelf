@@ -756,6 +756,13 @@ DevShelf is initiated by the team at [RitualDev Lab](https://github.com/RitualDe
       </a><br />
       <sub>📸 CurlShot (PR #79)</sub>
     </td>
+    <td align="center" width="160">
+      <a href="https://github.com/yumaheymans">
+        <img src="https://github.com/yumaheymans.png" width="70" style="border-radius: 50%;" alt="yumaheymans"/><br />
+        <sub><b>yumaheymans</b></sub>
+      </a><br />
+      <sub>🏥 CareJobs.Now (PR #83)</sub>
+    </td>
   </tr>
 </table>
 

@@ -4,7 +4,7 @@
 
 [← Back to Main Directory](../README.md) • [🌐 Live Search App](https://devshelf.ritualdev.in) • [➕ Submit New Resource](../README.md#-how-to-submit-your-project-or-api)
 
-[![Total APIs](https://img.shields.io/badge/APIs-101_Curated-blueviolet?style=for-the-badge)](https://devshelf.ritualdev.in)
+[![Total APIs](https://img.shields.io/badge/APIs-102_Curated-blueviolet?style=for-the-badge)](https://devshelf.ritualdev.in)
 
 **Jump to Subcategory:**
 [AI & Machine Learning](#ai-machine-learning) • [Animals & Fun](#animals-fun) • [Books & Literature](#books-literature) • [Development & Testing](#development-testing) • [Entertainment & Media](#entertainment-media) • [Finance & Crypto](#finance-crypto) • [Food & Health](#food-health) • [Games & Media](#games-media) • [Geocoding & IP](#geocoding-ip) • [Media & Images](#media-images) • [News & Media](#news-media) • [Other](#other) • [Science & Astronomy](#science-astronomy) • [Travel & Transit](#travel-transit) • [Weather & Climate](#weather-climate)
@@ -154,12 +154,13 @@
 | [**Dev.to API**](https://developers.forem.com/api/v1) | 🔑 Free Key | `30 req/30sec` | REST API for DEV Community (Forem) accessing articles, tag listings, user feeds, and comments. |
 | [**Reddit JSON API**](https://www.reddit.com/dev/api) | 🟢 No Key | `60 req/min` | Append .json to almost any public Reddit URL to get structured JSON post data and subreddit feeds. |
 
-### <a id="other"></a>Other (2)
+### <a id="other"></a>Other (3)
 
 | API & URL | Auth | Rate Limit | Description |
 | :--- | :---: | :---: | :--- |
 | [**Court Rules**](https://www.courtrules.app/api) | 🔑 Free Key | `Generous Free Tier` | Free federal court rules, local rules, judge standing orders and filing deadlines, with a deadline calculator for every district. |
 | [**Invokely**](https://invokely.ai/docs) | 🔑 Free Key | `500 calls/month; MCP trial 25/day per IP` | Hosted MCP and REST API for official statistics by indicator, place and period. Each value includes a source citation. The free plan has 500 calls a month with no card; an MCP trial allows 25 calls a day per IP without an account. |
+| [**CareJobs.Now Open Healthcare Jobs and Pay Data**](https://carejobs.now/data) | 🟢 No Key | `Unlimited (no key, read-only, cached static JSON)` | Free, no-key JSON and CSV endpoints providing US healthcare open jobs and posted hourly pay by role and employer. Aggregated daily from 270+ employers' career sites, complete with OpenAPI 3.1 specifications. |
 
 ### <a id="science-astronomy"></a>Science & Astronomy (6)
 

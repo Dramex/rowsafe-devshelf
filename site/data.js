@@ -1,6 +1,6 @@
 window.DEVSHELF_DATA = {
-  "updatedAt": "2026-10-15T05:59:32.286Z",
-  "totalCount": 532,
+  "updatedAt": "2026-10-16T06:37:32.215Z",
+  "totalCount": 533,
   "reposCount": 330,
   "facets": {
     "repos": 330
@@ -9,7 +9,7 @@ window.DEVSHELF_DATA = {
     "aiTools": 90,
     "cliTools": 116,
     "testingQa": 62,
-    "apis": 101,
+    "apis": 102,
     "freeCloud": 71,
     "contributors": 21,
     "perks": 30,
@@ -5698,6 +5698,18 @@ window.DEVSHELF_DATA = {
       "auth": "Free API Key",
       "cors": "Yes",
       "rateLimit": "100 screenshots/month (resets monthly), 10 requests/minute; failed renders and cache hits not counted",
+      "https": true,
+      "type": "api",
+      "section": "Free & Public APIs"
+    },
+    {
+      "name": "CareJobs.Now Open Healthcare Jobs and Pay Data",
+      "url": "https://carejobs.now/data",
+      "category": "Other",
+      "description": "Free, no-key JSON and CSV endpoints providing US healthcare open jobs and posted hourly pay by role and employer. Aggregated daily from 270+ employers' career sites, complete with OpenAPI 3.1 specifications.",
+      "auth": "No Key",
+      "cors": "Yes",
+      "rateLimit": "Unlimited (no key, read-only, cached static JSON)",
       "https": true,
       "type": "api",
       "section": "Free & Public APIs"
