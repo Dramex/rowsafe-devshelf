@@ -358,7 +358,18 @@ async function main() {
   try {
     existingIssues = execFileSync(
       "gh",
-      ["issue", "list", "--state", "open", "--label", "trial-bait", "--json", "title", "--jq", ".[].title"],
+      [
+        "issue",
+        "list",
+        "--state",
+        "open",
+        "--label",
+        "trial-bait",
+        "--json",
+        "title",
+        "--jq",
+        ".[].title",
+      ],
       { encoding: "utf8", stdio: ["pipe", "pipe", "ignore"] },
     );
   } catch {

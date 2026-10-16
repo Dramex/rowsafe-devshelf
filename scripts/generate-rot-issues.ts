@@ -67,7 +67,18 @@ async function generateRotIssues() {
   try {
     existingIssueTitles = execFileSync(
       "gh",
-      ["issue", "list", "--state", "open", "--label", "broken-link", "--json", "title", "--jq", ".[].title"],
+      [
+        "issue",
+        "list",
+        "--state",
+        "open",
+        "--label",
+        "broken-link",
+        "--json",
+        "title",
+        "--jq",
+        ".[].title",
+      ],
       {
         encoding: "utf8",
         stdio: ["pipe", "pipe", "ignore"],
