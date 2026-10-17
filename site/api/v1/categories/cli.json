@@ -1362,7 +1362,7 @@
       "repo": "https://github.com/rowsafe/rowsafe",
       "url": "https://rowsafe.sh",
       "category": "Database & SQL",
-      "description": "Apache-2.0 agent and CLI for RowSafe database protection and management, with an MCP server for coding agents. Requires a RowSafe account and its separate hosted service.",
+      "description": "Apache-2.0 PostgreSQL CLI and local MCP server for health checks, diagnostics and tuning directly from a database URL, without a RowSafe account or installed agent. Hosted backups, point-in-time recovery and restore tests require an enrolled agent and a RowSafe account.",
       "language": "Go",
       "license": "Apache-2.0",
       "featured": false,
