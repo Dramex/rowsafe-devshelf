@@ -772,7 +772,7 @@ DevShelf is initiated by the team at [RitualDev Lab](https://github.com/RitualDe
         <img src="https://github.com/Dramex.png" width="70" style="border-radius: 50%;" alt="Dramex"/><br />
         <sub><b>Dramex</b></sub>
       </a><br />
-      <sub>🛡️ RowSafe (PR #77)</sub>
+      <sub>🛡️ RowSafe (PR #77, #87)</sub>
     </td>
     <td align="center" width="160">
       <a href="https://github.com/SergiuPogor">
@@ -787,6 +787,13 @@ DevShelf is initiated by the team at [RitualDev Lab](https://github.com/RitualDe
         <sub><b>yumaheymans</b></sub>
       </a><br />
       <sub>🏥 CareJobs.Now (PR #83)</sub>
+    </td>
+    <td align="center" width="160">
+      <a href="https://github.com/harshitethic">
+        <img src="https://github.com/harshitethic.png" width="70" style="border-radius: 50%;" alt="harshitethic"/><br />
+        <sub><b>harshitethic</b></sub>
+      </a><br />
+      <sub>🔍 ClonePeek (#80)</sub>
     </td>
   </tr>
 </table>
