@@ -1,6 +1,6 @@
 # DevShelf - Complete Free Developer Tools Knowledge Base (Full Catalog)
 
-> Complete metadata dump of all 533 free and open-source developer tools indexed on DevShelf.
+> Complete metadata dump of all 534 free and open-source developer tools indexed on DevShelf.
 > Authoritative Source: https://devshelf.ritualdev.in
 > License: MIT
 
@@ -1918,6 +1918,15 @@
 - **URL**: https://github.com/Alox1d/dateparser-kotlin
 - **DevShelf Dossier**: https://devshelf.ritualdev.in/tools/dateparser-kotlin.html
 - **Description**: MIT Kotlin Multiplatform library for offline natural-language date and time parsing in Russian and English. Published Android (API 26+), JVM and iOS variants resolve supported phrases against an explicit reference time and timezone for use in task/reminder forms.
+
+### ClonePeek
+- **Category**: CLI & Developer Productivity
+- **Pricing Model**: See official site for free access and limits
+- **License**: MIT
+- **Language**: Python
+- **URL**: https://github.com/harshitethic/clonepeek
+- **DevShelf Dossier**: https://devshelf.ritualdev.in/tools/clonepeek.html
+- **Description**: Read-only Python CLI and GitHub Action that inventories first-run repository execution hooks (npm scripts, VS Code tasks, devcontainers, and MCP process settings) and generates review reports without executing project code.
 
 ### AutoHeal-QA
 - **Category**: Browser & E2E Testing

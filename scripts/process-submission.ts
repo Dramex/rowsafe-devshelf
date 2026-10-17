@@ -1,4 +1,4 @@
-﻿import fs from "node:fs/promises";
+import fs from "node:fs/promises";
 import path from "node:path";
 
 interface ProjectSubmission {
@@ -87,13 +87,22 @@ async function run() {
     issueLabels.includes("api") || data["api name"] || data["api website or documentation url"];
 
   if (isApi) {
-    const name = data["api name"];
-    const url = data["api website or documentation url"];
+    const name = data["api name"] || data.name;
+    const rawUrl = data["api website or documentation url"] || data.url || data["api url"] || "";
+    const url = rawUrl.trim().replace(/\/+$/, "");
     const category = data.category || "Development & Testing";
-    const description = data["short description"];
-    const auth = data["authentication required"] || "No Key";
-    const cors = data["cors support (usable from browser)"] || "Unknown";
-    const rateLimit = data["free tier rate limit"] || "Generous Free Tier";
+    let description = (
+      data["short description"] ||
+      data["short description (1-2 sentences)"] ||
+      data.description ||
+      ""
+    ).trim();
+    if (description.length > 300) {
+      description = `${description.slice(0, 297).replace(/\s+\S*$/, "")}...`;
+    }
+    const auth = data["authentication required"] || data.auth || "No Key";
+    const cors = data["cors support (usable from browser)"] || data.cors || "Yes";
+    const rateLimit = data["free tier rate limit"] || data["rate limit"] || "Unlimited";
 
     if (!name || !url || !description) {
       throw new Error("Missing required API fields (name, url, or description).");
@@ -128,12 +137,28 @@ async function run() {
     console.log(`✅ Successfully added API: ${name}`);
   } else {
     // Project submission
-    const name = data["project name"];
-    const repo = data["github repository url"];
+    const name = (data["project name"] || data.name || data["tool name"] || "").trim();
+    const rawRepo =
+      data["github repository url"] ||
+      data["repository url"] ||
+      data["repo url"] ||
+      data.repo ||
+      data["github url"] ||
+      "";
+    const repo = rawRepo.trim().replace(/\/+$/, "");
     const category = data.category || "CLI & Developer Productivity";
-    const description = data["short description (1-2 sentences)"];
-    const language = data["primary language / stack"] || "TypeScript";
-    const license = data["open source license"] || "MIT";
+    let description = (
+      data["short description (1-2 sentences)"] ||
+      data["short description"] ||
+      data.description ||
+      ""
+    ).trim();
+    if (description.length > 300) {
+      description = `${description.slice(0, 297).replace(/\s+\S*$/, "")}...`;
+    }
+    const language =
+      data["primary language / stack"] || data.language || data.stack || "TypeScript";
+    const license = data["open source license"] || data.license || "MIT";
 
     if (!name || !repo || !description) {
       throw new Error("Missing required project fields (name, repo, or description).");

@@ -1252,5 +1252,14 @@
     "language": "Kotlin Multiplatform, kotlinx-datetime",
     "license": "MIT",
     "featured": false
+  },
+  {
+    "name": "ClonePeek",
+    "repo": "https://github.com/harshitethic/clonepeek",
+    "category": "CLI & Developer Productivity",
+    "description": "Read-only Python CLI and GitHub Action that inventories first-run repository execution hooks (npm scripts, VS Code tasks, devcontainers, and MCP process settings) and generates review reports without executing project code.",
+    "language": "Python",
+    "license": "MIT",
+    "featured": false
   }
 ]

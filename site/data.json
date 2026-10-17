@@ -1,13 +1,13 @@
 {
-  "updatedAt": "2026-10-16T17:07:56.011Z",
-  "totalCount": 533,
-  "reposCount": 330,
+  "updatedAt": "2026-10-17T09:29:26.909Z",
+  "totalCount": 534,
+  "reposCount": 331,
   "facets": {
-    "repos": 330
+    "repos": 331
   },
   "counts": {
     "aiTools": 90,
-    "cliTools": 116,
+    "cliTools": 117,
     "testingQa": 62,
     "apis": 102,
     "freeCloud": 71,
@@ -3323,6 +3323,17 @@
       "category": "Dev Utilities & Libraries",
       "description": "MIT Kotlin Multiplatform library for offline natural-language date and time parsing in Russian and English. Published Android (API 26+), JVM and iOS variants resolve supported phrases against an explicit reference time and timezone for use in task/reminder forms.",
       "language": "Kotlin Multiplatform, kotlinx-datetime",
+      "license": "MIT",
+      "featured": false,
+      "type": "cli",
+      "section": "CLI & Productivity Tools"
+    },
+    {
+      "name": "ClonePeek",
+      "repo": "https://github.com/harshitethic/clonepeek",
+      "category": "CLI & Developer Productivity",
+      "description": "Read-only Python CLI and GitHub Action that inventories first-run repository execution hooks (npm scripts, VS Code tasks, devcontainers, and MCP process settings) and generates review reports without executing project code.",
+      "language": "Python",
       "license": "MIT",
       "featured": false,
       "type": "cli",
